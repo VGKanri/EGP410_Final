@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AddBoidAIMessage.h" />
+    <ClInclude Include="..\pathfinding\Pathfinding\steering\StateManager.h" />
     <ClInclude Include="AddDynamicArriveAIMessage.h" />
     <ClInclude Include="AddDynamicSeekAIMessage.h" />
     <ClInclude Include="AddWanderAndFleeAIMessage.h" />
@@ -24,7 +24,6 @@
     <ClInclude Include="DynamicArriveSteering.h" />
     <ClInclude Include="DynamicSeekSteering.h" />
     <ClInclude Include="ExitGameMessage.h" />
-    <ClInclude Include="Game.h" />
     <ClInclude Include="GameMessage.h" />
     <ClInclude Include="GameMessageManager.h" />
     <ClInclude Include="GraphicsBuffer.h" />
@@ -33,7 +32,6 @@
     <ClInclude Include="GroupAlignmentSteering.h" />
     <ClInclude Include="Hitbox.h" />
     <ClInclude Include="Hitcircle.h" />
-    <ClInclude Include="InputManager.h" />
     <ClInclude Include="Kinematic.h" />
     <ClInclude Include="KinematicArriveSteering.h" />
     <ClInclude Include="KinematicSeekSteering.h" />
@@ -43,7 +41,6 @@
     <ClInclude Include="SeperationSteering.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="SpriteManager.h" />
-    <ClInclude Include="StateManager.h" />
     <ClInclude Include="Steering.h" />
     <ClInclude Include="UnitManager.h" />
     <ClInclude Include="Wall.h" />
@@ -51,6 +48,7 @@
     <ClInclude Include="WanderAndSeekSteering.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\pathfinding\Pathfinding\steering\StateManager.cpp" />
     <ClCompile Include="AddBoidAIMessage.cpp" />
     <ClCompile Include="AddDynamicArriveAIMessage.cpp" />
     <ClCompile Include="AddDynamicSeekAIMessage.cpp" />
@@ -63,7 +61,6 @@
     <ClCompile Include="DynamicArriveSteering.cpp" />
     <ClCompile Include="DynamicSeekSteering.cpp" />
     <ClCompile Include="ExitGameMessage.cpp" />
-    <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameMessage.cpp" />
     <ClCompile Include="GameMessageManager.cpp" />
     <ClCompile Include="GraphicsBuffer.cpp" />
@@ -72,18 +69,15 @@
     <ClCompile Include="GroupAlignmentSteering.cpp" />
     <ClCompile Include="Hitbox.cpp" />
     <ClCompile Include="Hitcircle.cpp" />
-    <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Kinematic.cpp" />
     <ClCompile Include="KinematicArriveSteering.cpp" />
     <ClCompile Include="KinematicSeekSteering.cpp" />
     <ClCompile Include="KinematicUnit.cpp" />
     <ClCompile Include="KinematicWanderSteering.cpp" />
-    <ClCompile Include="main.cpp" />
     <ClCompile Include="PlayerMoveToMessage.cpp" />
     <ClCompile Include="SeperationSteering.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="SpriteManager.cpp" />
-    <ClCompile Include="StateManager.cpp" />
     <ClCompile Include="Steering.cpp" />
     <ClCompile Include="UnitManager.cpp" />
     <ClCompile Include="Wall.cpp" />

@@ -12,11 +12,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Editor", "Editor\Editor.vcx
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "game", "Game\game.vcxproj", "{09059697-DB0D-44AE-B867-2437B1E3D875}"
 	ProjectSection(ProjectDependencies) = postProject
-		{07ED8114-0659-4424-9468-50DBBEA5882A} = {07ED8114-0659-4424-9468-50DBBEA5882A}
 		{B881029E-EB26-4143-A310-87D4D8AE0830} = {B881029E-EB26-4143-A310-87D4D8AE0830}
 	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "steering", "..\..\steering\water.vcxproj", "{07ED8114-0659-4424-9468-50DBBEA5882A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,10 +33,6 @@ Global
 		{09059697-DB0D-44AE-B867-2437B1E3D875}.Debug|Win32.Build.0 = Debug|Win32
 		{09059697-DB0D-44AE-B867-2437B1E3D875}.Release|Win32.ActiveCfg = Release|Win32
 		{09059697-DB0D-44AE-B867-2437B1E3D875}.Release|Win32.Build.0 = Release|Win32
-		{07ED8114-0659-4424-9468-50DBBEA5882A}.Debug|Win32.ActiveCfg = Debug|Win32
-		{07ED8114-0659-4424-9468-50DBBEA5882A}.Debug|Win32.Build.0 = Debug|Win32
-		{07ED8114-0659-4424-9468-50DBBEA5882A}.Release|Win32.ActiveCfg = Release|Win32
-		{07ED8114-0659-4424-9468-50DBBEA5882A}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
