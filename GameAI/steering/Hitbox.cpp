@@ -13,7 +13,7 @@ mpShowBoxes(gpGame->getStateManager()->getCollisionBoxes())
 {
 
 }
-
+/*
 Hitbox::Hitbox(Vector2D position, float width, float height):
 mpShowBoxes(gpGame->getStateManager()->getCollisionBoxes())
 {
@@ -31,7 +31,7 @@ mpShowBoxes(gpGame->getStateManager()->getCollisionBoxes())
 	maxX = x2;
 	maxY = y2;
 }
-
+*/
 Hitbox::~Hitbox()
 {
 

@@ -43,20 +43,11 @@
     <ClCompile Include="Steering.cpp">
       <Filter>Source Files\Steering</Filter>
     </ClCompile>
-    <ClCompile Include="Game.cpp">
-      <Filter>Source Files\Util</Filter>
-    </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files\Util</Filter>
-    </ClCompile>
     <ClCompile Include="SpriteManager.cpp">
       <Filter>Source Files\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="GraphicsBufferManager.cpp">
       <Filter>Source Files\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="InputManager.cpp">
-      <Filter>Source Files\Util</Filter>
     </ClCompile>
     <ClCompile Include="ExitGameMessage.cpp">
       <Filter>Source Files\Messaging</Filter>
@@ -81,9 +72,6 @@
     </ClCompile>
     <ClCompile Include="AddWanderAndFleeAIMessage.cpp">
       <Filter>Source Files\Messaging</Filter>
-    </ClCompile>
-    <ClCompile Include="StateManager.cpp">
-      <Filter>Source Files\Util</Filter>
     </ClCompile>
     <ClCompile Include="Hitbox.cpp">
       <Filter>Source Files\Collision</Filter>
@@ -114,6 +102,9 @@
     </ClCompile>
     <ClCompile Include="Hitcircle.cpp">
       <Filter>Source Files\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="..\pathfinding\Pathfinding\steering\StateManager.cpp">
+      <Filter>Source Files\Util</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -162,17 +153,11 @@
     <ClInclude Include="Defines.h">
       <Filter>Header Files\Util</Filter>
     </ClInclude>
-    <ClInclude Include="Game.h">
-      <Filter>Header Files\Util</Filter>
-    </ClInclude>
     <ClInclude Include="SpriteManager.h">
       <Filter>Header Files\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="GraphicsBufferManager.h">
       <Filter>Header Files\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="InputManager.h">
-      <Filter>Header Files\Util</Filter>
     </ClInclude>
     <ClInclude Include="UnitManager.h">
       <Filter>Header Files\Units</Filter>
@@ -198,9 +183,6 @@
     <ClInclude Include="AddWanderAndFleeAIMessage.h">
       <Filter>Header Files\Messaging</Filter>
     </ClInclude>
-    <ClInclude Include="StateManager.h">
-      <Filter>Header Files\Util</Filter>
-    </ClInclude>
     <ClInclude Include="Hitbox.h">
       <Filter>Header Files\Collision</Filter>
     </ClInclude>
@@ -225,11 +207,11 @@
     <ClInclude Include="GroupAlignmentSteering.h">
       <Filter>Header Files\Steering</Filter>
     </ClInclude>
-    <ClInclude Include="AddBoidAIMessage.h">
-      <Filter>Header Files\Messaging</Filter>
-    </ClInclude>
     <ClInclude Include="Hitcircle.h">
       <Filter>Header Files\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="..\pathfinding\Pathfinding\steering\StateManager.h">
+      <Filter>Header Files\Util</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

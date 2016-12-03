@@ -67,5 +67,3 @@ float genRandomBinomial();//range -1:1 from "Artificial Intelligence for Games",
 float genRandomFloat();//range 0:1 from "Artificial Intelligence for Games", Millington and Funge
 float mapRotationToRange( float rotation, float low, float high );
 float lerp(int value, int start, int end);//returns float representing how far value is between start and end
-
-const double PI = std::atan(1.0)*4;//could proved useful!

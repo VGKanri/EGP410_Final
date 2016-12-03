@@ -9,6 +9,7 @@
 
 #include <allegro5\allegro_primitives.h>
 
+/*
 Hitcircle::Hitcircle():
 mpShowCircles(gpGame->getStateManager()->getCollisionBoxes())
 {
@@ -21,7 +22,7 @@ mpShowCircles(gpGame->getStateManager()->getCollisionBoxes())
 	mPos = position;
 	mRadius = radius;
 }
-
+*/
 //logic behind collision code comes from stack overflow user e.James
 //http://stackoverflow.com/questions/401847/circle-rectangle-collision-detection-intersection
 bool Hitcircle::checkCollision(Hitbox& otherBox)
