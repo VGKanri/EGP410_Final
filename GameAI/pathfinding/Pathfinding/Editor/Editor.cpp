@@ -3,6 +3,7 @@
 
 #include "Game.h"
 #include "Editor.h"
+#include "EditorInputManager.h"
 #include "GraphicsSystem.h"
 #include "GraphicsBuffer.h"
 #include "GraphicsBufferManager.h"
@@ -19,7 +20,7 @@ const IDType BACKGROUND_ID = ENDING_SEQUENTIAL_ID + 1;
 
 Editor::Editor()
 :Game()
-,mpGrid(NULL)
+,mpGrid()
 ,mpGridVisualizer(NULL)
 {
 }
@@ -38,9 +39,15 @@ bool Editor::init()
 		return false;
 	}
 
-	mpGrid = new Grid(mpGraphicsSystem->getWidth(), mpGraphicsSystem->getHeight(), GRID_SQUARE_SIZE);
+	for (int i = 0; i < ROOM_AMOUNT; ++i)
+	{
+		mpGrid[i] = new Grid(mpGraphicsSystem->getWidth(), mpGraphicsSystem->getHeight(), GRID_SQUARE_SIZE);
+	}
+	
+	mpGridVisualizer = new GridVisualizer(mpGrid[0]);
 
-	mpGridVisualizer = new GridVisualizer( mpGrid );
+	mpInputManager = new EditorInputManager();
+	mpInputManager->init();
 
 	//load buffers
 	mpGraphicsBufferManager->loadBuffer( BACKGROUND_ID, "wallpaper.bmp");
@@ -61,8 +68,14 @@ void Editor::cleanup()
 	delete mpGridVisualizer;
 	mpGridVisualizer = NULL;
 
-	delete mpGrid;
-	mpGrid = NULL;
+	for (int i = 0; i < ROOM_AMOUNT; ++i)
+	{
+		delete mpGrid[i];
+		mpGrid[i] = NULL;
+	}
+
+	delete mpInputManager;
+	mpInputManager = NULL;
 }
 
 void Editor::beginLoop()
@@ -73,19 +86,7 @@ void Editor::beginLoop()
 
 void Editor::processLoop()
 {
-	ALLEGRO_MOUSE_STATE mouseState;
-	al_get_mouse_state( &mouseState );
-
-	if( al_mouse_button_down( &mouseState, 1 ) )//left mouse click
-	{
-		mpGrid->setValueAtPixelXY( mouseState.x, mouseState.y, BLOCKING_VALUE );
-		mpGridVisualizer->setModified();
-	}
-	else if( al_mouse_button_down( &mouseState, 2 ) )//right mouse down
-	{
-		mpGrid->setValueAtPixelXY( mouseState.x, mouseState.y, CLEAR_VALUE );
-		mpGridVisualizer->setModified();
-	}
+	mpInputManager->update();
 
 	//copy to back buffer
 	mpGridVisualizer->draw(*(mpGraphicsSystem->getBackBuffer()));
@@ -101,10 +102,10 @@ bool Editor::endLoop()
 
 void Editor::saveGrid( ofstream& theStream )
 {
-	mpGrid->save( theStream );
+	mpGrid[0]->save( theStream );
 }
 
 void Editor::loadGrid( std::ifstream& theStream )
 {
-	mpGrid->load(theStream);
+	mpGrid[0]->load(theStream);
 }

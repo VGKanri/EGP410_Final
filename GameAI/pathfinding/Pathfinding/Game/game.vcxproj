@@ -55,7 +55,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\CommonPathfindingLib;..\..\..\..\DeanLib;..\..\..\..\External Libs\Allegro5\include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\CommonPathfindingLib;..\..\..\..\DeanLib;..\..\..\..\External Libs\Allegro5\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
