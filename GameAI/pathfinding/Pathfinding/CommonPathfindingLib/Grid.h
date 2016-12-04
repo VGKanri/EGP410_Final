@@ -11,10 +11,10 @@ const int BLOCKING_VALUE = 1;
 const int PLAYER_SPAWN = 2;
 const int ENEMY_SPAWN = 3;
 const int CANDY_SPAWN = 4;
-const int DOOR_TO_1 = 5;
-const int DOOR_TO_2 = 6;
-const int DOOR_TO_3 = 7;
-const int DOOR_TO_4 = 8;
+const int DOOR_1 = 5;
+const int DOOR_2 = 6;
+const int DOOR_3 = 7;
+const int DOOR_4 = 8;
 
 class Grid:public Trackable
 {

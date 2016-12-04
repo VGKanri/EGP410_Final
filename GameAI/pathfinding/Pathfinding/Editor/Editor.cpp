@@ -4,6 +4,7 @@
 #include "Game.h"
 #include "Editor.h"
 #include "EditorInputManager.h"
+#include "EditorGUI.h"
 #include "GraphicsSystem.h"
 #include "GraphicsBuffer.h"
 #include "GraphicsBufferManager.h"
@@ -27,7 +28,8 @@ Editor::Editor()
 
 Editor::~Editor()
 {
-	cleanup();
+	//clean up is already called in main
+	//cleanup();
 }
 
 bool Editor::init()
@@ -45,6 +47,8 @@ bool Editor::init()
 	}
 	
 	mpGridVisualizer = new GridVisualizer(mpGrid[0]);
+
+	mpEditorGUI = new EditorGUI();
 
 	mpInputManager = new EditorInputManager();
 	mpInputManager->init();
@@ -68,6 +72,9 @@ void Editor::cleanup()
 	delete mpGridVisualizer;
 	mpGridVisualizer = NULL;
 
+	delete mpEditorGUI;
+	mpEditorGUI = NULL;
+
 	for (int i = 0; i < ROOM_AMOUNT; ++i)
 	{
 		delete mpGrid[i];
@@ -90,6 +97,7 @@ void Editor::processLoop()
 
 	//copy to back buffer
 	mpGridVisualizer->draw(*(mpGraphicsSystem->getBackBuffer()));
+	mpEditorGUI->draw();
 
 	//should be last thing in processLoop
 	Game::processLoop();
