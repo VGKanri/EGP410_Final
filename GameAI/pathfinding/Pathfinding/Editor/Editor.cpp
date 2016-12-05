@@ -34,6 +34,10 @@ Editor::~Editor()
 
 bool Editor::init()
 {
+	//these variables are used to keep track of what room or tile to edit
+	mCurrentRoom = 0;
+	mTileType = BLOCKING_VALUE;
+
 	bool retVal = Game::init();
 	if( retVal == false )
 	{

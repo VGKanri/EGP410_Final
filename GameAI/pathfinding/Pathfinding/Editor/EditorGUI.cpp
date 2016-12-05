@@ -6,7 +6,7 @@
 EditorGUI::EditorGUI()
 {
 	mTileTypeText = "Wall";
-	mRoomNumText = "1";
+	mRoomNumText = "Room 1";
 	mTileBaseText = "Current Tile Type: ";
 	mRoomBaseText = "Current Room: ";
 	mHelpText = "'H' - Help Menu";

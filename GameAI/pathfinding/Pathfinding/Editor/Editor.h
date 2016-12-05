@@ -41,10 +41,10 @@ public:
 	inline EditorGUI* getEditorGUI() { return mpEditorGUI; };
 
 	inline int getTileType() const { return mTileType; };
-	inline int setTileType(const int TileType) { mTileType = TileType; };
+	inline void setTileType(const int TileType) { mTileType = TileType; };
 
 	inline int getCurrentRoom() const { return mCurrentRoom; };
-	inline int setCurrentRoom(int newRoom) { mCurrentRoom = newRoom; };
+	inline void setCurrentRoom(int newRoom) { mCurrentRoom = newRoom; };
 
 	virtual bool init();
 	virtual void cleanup();
