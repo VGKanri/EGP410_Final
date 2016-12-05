@@ -18,6 +18,12 @@ GridVisualizer::~GridVisualizer()
 {
 }
 
+void GridVisualizer::switchGrid(Grid* pGrid)
+{
+	mpGrid = pGrid;
+	mDirty = true;
+}
+
 void GridVisualizer::refresh()
 {	
 	if( mDirty )

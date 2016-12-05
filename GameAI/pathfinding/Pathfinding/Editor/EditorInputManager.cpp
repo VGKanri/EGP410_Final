@@ -101,6 +101,7 @@ void EditorInputManager::update()
 					pEditor->setCurrentRoom(3);
 				}
 
+				pEditor->getGridVisualizer()->switchGrid(pEditor->getGrid());
 				pEditor->getEditorGUI()->setRoomNumText(pEditor->getCurrentRoom());
 			}
 			else if (mEvent.keyboard.keycode == ALLEGRO_KEY_RIGHT)
@@ -114,6 +115,7 @@ void EditorInputManager::update()
 					pEditor->setCurrentRoom(0);
 				}
 
+				pEditor->getGridVisualizer()->switchGrid(pEditor->getGrid());
 				pEditor->getEditorGUI()->setRoomNumText(pEditor->getCurrentRoom());
 			}
 

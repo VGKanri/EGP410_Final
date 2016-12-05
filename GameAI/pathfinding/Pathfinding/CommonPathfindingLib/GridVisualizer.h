@@ -16,6 +16,7 @@ public:
 	GridVisualizer( Grid* pGrid );
 	~GridVisualizer();
 
+	void switchGrid(Grid* pGrid);
 	void addColor( int index, const ALLEGRO_COLOR& color );
 	void removeAllEntriesOfColor( const ALLEGRO_COLOR& color );
 	void removeEntry( int index, const ALLEGRO_COLOR& color );

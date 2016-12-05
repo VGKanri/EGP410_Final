@@ -36,7 +36,7 @@ public:
 	Editor();
 	virtual ~Editor();
 
-	inline Grid* getGrid() { return mpGrid[0]; };
+	inline Grid* getGrid() { return mpGrid[mCurrentRoom]; };
 	inline GridVisualizer* getGridVisualizer() { return mpGridVisualizer; };
 	inline EditorGUI* getEditorGUI() { return mpEditorGUI; };
 
