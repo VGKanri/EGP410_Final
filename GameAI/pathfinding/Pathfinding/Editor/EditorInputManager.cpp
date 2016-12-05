@@ -42,7 +42,7 @@ void EditorInputManager::update()
 
 	if (al_mouse_button_down(&mouseState, 1))//left mouse click
 	{
-		pEditor->getGrid()->setValueAtPixelXY(mouseState.x, mouseState.y, BLOCKING_VALUE);
+		pEditor->getGrid()->setValueAtPixelXY(mouseState.x, mouseState.y, pEditor->getTileType());
 		pEditor->getGridVisualizer()->setModified();
 	}
 
@@ -67,7 +67,6 @@ void EditorInputManager::update()
 			//saving and loading the editor
 			else if (mEvent.keyboard.keycode == ALLEGRO_KEY_S)
 			{
-				Editor* pEditor = dynamic_cast<Editor*>(gpGame);
 				if (pEditor != NULL)
 				{
 					std::ofstream theStream(FILE_NAME1);
@@ -79,7 +78,6 @@ void EditorInputManager::update()
 			}
 			else if (mEvent.keyboard.keycode == ALLEGRO_KEY_L)
 			{
-				Editor* pEditor = dynamic_cast<Editor*>(gpGame);
 				if (pEditor != NULL)
 				{
 					std::ifstream theStream(FILE_NAME1);
@@ -94,8 +92,6 @@ void EditorInputManager::update()
 			//The following inputs are for cycling through rooms
 			else if (mEvent.keyboard.keycode == ALLEGRO_KEY_LEFT)
 			{
-				Editor* pEditor = dynamic_cast<Editor*>(gpGame);
-
 				if (pEditor->getCurrentRoom() > 0)
 				{
 					pEditor->setCurrentRoom(pEditor->getCurrentRoom() - 1);
@@ -109,8 +105,6 @@ void EditorInputManager::update()
 			}
 			else if (mEvent.keyboard.keycode == ALLEGRO_KEY_RIGHT)
 			{
-				Editor* pEditor = dynamic_cast<Editor*>(gpGame);
-
 				if (pEditor->getCurrentRoom() < 3)
 				{
 					pEditor->setCurrentRoom(pEditor->getCurrentRoom() + 1);
@@ -126,57 +120,41 @@ void EditorInputManager::update()
 			//the following inputs are for choosing tile type
 			else if (mEvent.keyboard.keycode == ALLEGRO_KEY_1)
 			{
-				Editor* pEditor = dynamic_cast<Editor*>(gpGame);
-
 				pEditor->setTileType(BLOCKING_VALUE);
 				pEditor->getEditorGUI()->setTileTypeText(BLOCKING_VALUE);
 			}
 			else if (mEvent.keyboard.keycode == ALLEGRO_KEY_2)
 			{
-				Editor* pEditor = dynamic_cast<Editor*>(gpGame);
-
 				pEditor->setTileType(PLAYER_SPAWN);
 				pEditor->getEditorGUI()->setTileTypeText(PLAYER_SPAWN);
 			}
 			else if (mEvent.keyboard.keycode == ALLEGRO_KEY_3)
 			{
-				Editor* pEditor = dynamic_cast<Editor*>(gpGame);
-
 				pEditor->setTileType(ENEMY_SPAWN);
 				pEditor->getEditorGUI()->setTileTypeText(ENEMY_SPAWN);
 			}
 			else if (mEvent.keyboard.keycode == ALLEGRO_KEY_4)
 			{
-				Editor* pEditor = dynamic_cast<Editor*>(gpGame);
-
 				pEditor->setTileType(CANDY_SPAWN);
 				pEditor->getEditorGUI()->setTileTypeText(CANDY_SPAWN);
 			}
 			else if (mEvent.keyboard.keycode == ALLEGRO_KEY_5)
 			{
-				Editor* pEditor = dynamic_cast<Editor*>(gpGame);
-
 				pEditor->setTileType(DOOR_1);
 				pEditor->getEditorGUI()->setTileTypeText(DOOR_1);
 			}
 			else if (mEvent.keyboard.keycode == ALLEGRO_KEY_6)
 			{
-				Editor* pEditor = dynamic_cast<Editor*>(gpGame);
-
 				pEditor->setTileType(DOOR_2);
 				pEditor->getEditorGUI()->setTileTypeText(DOOR_2);
 			}
 			else if (mEvent.keyboard.keycode == ALLEGRO_KEY_7)
 			{
-				Editor* pEditor = dynamic_cast<Editor*>(gpGame);
-
 				pEditor->setTileType(DOOR_3);
 				pEditor->getEditorGUI()->setTileTypeText(DOOR_3);
 			}
 			else if (mEvent.keyboard.keycode == ALLEGRO_KEY_8)
 			{
-				Editor* pEditor = dynamic_cast<Editor*>(gpGame);
-
 				pEditor->setTileType(DOOR_4);
 				pEditor->getEditorGUI()->setTileTypeText(DOOR_4);
 			}

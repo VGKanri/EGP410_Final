@@ -7,6 +7,7 @@
 #include "Vector2D.h"
 #include "Game.h"
 
+
 GridVisualizer::GridVisualizer( Grid* pGrid )
 :mpGrid(pGrid)
 ,mDirty(true)
@@ -18,12 +19,18 @@ GridVisualizer::~GridVisualizer()
 }
 
 void GridVisualizer::refresh()
-{
-	const ALLEGRO_COLOR& color = BLACK_COLOR; 
+{	
 	if( mDirty )
 	{
 		//remove old entries first
-		removeAllEntriesOfColor( color );
+		removeAllEntriesOfColor(WALL_COLOR);
+		removeAllEntriesOfColor(PLAYER_COLOR);
+		removeAllEntriesOfColor(ENEMY_COLOR);
+		removeAllEntriesOfColor(CANDY_COLOR);
+		removeAllEntriesOfColor(DOOR_1_COLOR);
+		removeAllEntriesOfColor(DOOR_2_COLOR);
+		removeAllEntriesOfColor(DOOR_3_COLOR);
+		removeAllEntriesOfColor(DOOR_4_COLOR);
 
 		int size = mpGrid->getGridWidth() * mpGrid->getGridHeight();
 		//get any non-zero squares and send them to the visualizer
@@ -31,7 +38,34 @@ void GridVisualizer::refresh()
 		{
 			if( mpGrid->getValueAtIndex(i) != 0 )
 			{
-				addColor( i, color );
+ 				switch (mpGrid->getValueAtIndex(i))
+				{
+				case BLOCKING_VALUE:
+					addColor(i, WALL_COLOR);
+					break;
+				case PLAYER_SPAWN:
+					addColor(i, PLAYER_COLOR);
+					break;
+				case ENEMY_SPAWN:
+					addColor(i, ENEMY_COLOR);
+					break;
+				case CANDY_SPAWN:
+					addColor(i, CANDY_COLOR);
+					break;
+				case DOOR_1:
+					addColor(i, DOOR_1_COLOR);
+					break;
+				case DOOR_2:
+					addColor(i, DOOR_2_COLOR);
+					break;
+				case DOOR_3:
+					addColor(i, DOOR_3_COLOR);
+					break;
+				case DOOR_4:
+					addColor(i, DOOR_4_COLOR);
+					break;
+				}
+				
 			}
 		}
 	}
@@ -108,6 +142,36 @@ void GridVisualizer::draw( GraphicsBuffer& dest )
 			else if (iter->first.r == stopColor.r && iter->first.g == stopColor.g && iter->first.b == stopColor.b)
 			{
 				al_draw_text(gpGame->getFont(), al_map_rgb(0, 0, 0), ulPos.getX() + squareSize / 2, ulPos.getY(), ALLEGRO_ALIGN_CENTER, "G");
+			}
+
+			//these should only apply for the editor. May need to set a flag for this later on
+			else if (iter->first.r == PLAYER_COLOR.r && iter->first.g == PLAYER_COLOR.g && iter->first.b == PLAYER_COLOR.b)
+			{
+				al_draw_text(gpGame->getFont(), al_map_rgb(0, 0, 0), ulPos.getX() + squareSize / 2, ulPos.getY(), ALLEGRO_ALIGN_CENTER, "P");
+			}
+			else if (iter->first.r == ENEMY_COLOR.r && iter->first.g == ENEMY_COLOR.g && iter->first.b == ENEMY_COLOR.b)
+			{
+				al_draw_text(gpGame->getFont(), al_map_rgb(0, 0, 0), ulPos.getX() + squareSize / 2, ulPos.getY(), ALLEGRO_ALIGN_CENTER, "E");
+			}
+			else if (iter->first.r == CANDY_COLOR.r && iter->first.g == CANDY_COLOR.g && iter->first.b == CANDY_COLOR.b)
+			{
+				al_draw_text(gpGame->getFont(), al_map_rgb(0, 0, 0), ulPos.getX() + squareSize / 2, ulPos.getY(), ALLEGRO_ALIGN_CENTER, "C");
+			}
+			else if (iter->first.r == DOOR_1_COLOR.r && iter->first.g == DOOR_1_COLOR.g && iter->first.b == DOOR_1_COLOR.b)
+			{
+				al_draw_text(gpGame->getFont(), al_map_rgb(0, 0, 0), ulPos.getX() + squareSize / 2, ulPos.getY(), ALLEGRO_ALIGN_CENTER, "1");
+			}
+			else if (iter->first.r == DOOR_2_COLOR.r && iter->first.g == DOOR_2_COLOR.g && iter->first.b == DOOR_2_COLOR.b)
+			{
+				al_draw_text(gpGame->getFont(), al_map_rgb(0, 0, 0), ulPos.getX() + squareSize / 2, ulPos.getY(), ALLEGRO_ALIGN_CENTER, "2");
+			}
+			else if (iter->first.r == DOOR_3_COLOR.r && iter->first.g == DOOR_3_COLOR.g && iter->first.b == DOOR_3_COLOR.b)
+			{
+				al_draw_text(gpGame->getFont(), al_map_rgb(0, 0, 0), ulPos.getX() + squareSize / 2, ulPos.getY(), ALLEGRO_ALIGN_CENTER, "3");
+			}
+			else if (iter->first.r == DOOR_4_COLOR.r && iter->first.g == DOOR_4_COLOR.g && iter->first.b == DOOR_4_COLOR.b)
+			{
+				al_draw_text(gpGame->getFont(), al_map_rgb(0, 0, 0), ulPos.getX() + squareSize / 2, ulPos.getY(), ALLEGRO_ALIGN_CENTER, "4");
 			}
 			//mpBuffer->fillRegion( ulPos, Vector2D( ulPos.getX() + squareSize, ulPos.getY() + squareSize ), iter->first );
 		}
