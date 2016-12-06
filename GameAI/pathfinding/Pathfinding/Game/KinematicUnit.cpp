@@ -12,7 +12,7 @@ using namespace std;
 
 Steering gNullSteering(gZeroVector2D, 0.0f);
 
-KinematicUnit::KinematicUnit(Sprite *pSprite, const Vector2D &position, float orientation, const Vector2D &velocity, float rotationVel, std::shared_ptr<float> maxVelocity, std::shared_ptr<float> reactionRadius, std::shared_ptr<float> maxRotational, float maxAcceleration)
+KinematicUnit::KinematicUnit(Sprite *pSprite, const Vector2D position, float orientation, const Vector2D &velocity, float rotationVel, std::shared_ptr<float> maxVelocity, std::shared_ptr<float> reactionRadius, std::shared_ptr<float> maxRotational, float maxAcceleration)
 	:Kinematic(position, orientation, velocity, rotationVel)
 	, mpSprite(pSprite)
 	, mpCurrentSteering(NULL)
@@ -20,6 +20,10 @@ KinematicUnit::KinematicUnit(Sprite *pSprite, const Vector2D &position, float or
 	, mReactionRadius(reactionRadius)
 	, mMaxRotationalVelocity(maxRotational)
 	, mMaxAcceleration(maxAcceleration)
+{
+}
+
+KinematicUnit::KinematicUnit()
 {
 }
 

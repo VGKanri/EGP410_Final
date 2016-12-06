@@ -19,6 +19,7 @@ class Kinematic : public Trackable
 {
 public:
 	Kinematic(const Vector2D& position, float orientation, const Vector2D& velocity, float rotationVel);
+	Kinematic();
 	~Kinematic();
 
 	//move and rotate based on current velocities

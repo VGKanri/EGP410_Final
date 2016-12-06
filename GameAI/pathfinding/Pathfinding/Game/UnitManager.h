@@ -5,6 +5,7 @@
 #include <map>
 
 #include "KinematicUnit.h"
+#include "Player.h"
 
 class Sprite;
 

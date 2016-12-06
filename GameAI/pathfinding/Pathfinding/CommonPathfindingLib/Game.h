@@ -26,6 +26,7 @@ extern GameApp* gpGameApp;
 
 
 const IDType BACKGROUND_SPRITE_ID = 0;
+const IDType PLAYER_SPRITE_ID;
 
 class Game:public Trackable
 {

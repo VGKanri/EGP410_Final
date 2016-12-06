@@ -22,6 +22,8 @@ void UnitManager::addUnit(Sprite* sprite, Vector2D& pos, Vector2D& vel, std::sha
 	, std::shared_ptr<float> maxRotational, float maxAccel, std::string id, bool isPlayer)
 {
 	//mpUnitList->emplace(id, new KinematicUnit(sprite, pos, 1, vel, 0.0f, maxVel, reactionRadius, maxRotational, maxAccel, isPlayer));
+	if (isPlayer)
+		mpUnitList->emplace(id, new Player(sprite, pos, 1, vel, 0.0f, maxVel, reactionRadius, maxRotational, maxAccel));
 }
 
 void UnitManager::removeUnit(std::string id)

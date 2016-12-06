@@ -92,19 +92,30 @@ bool GameApp::init()
 	mpDijkstra = new Dijkstra(mpGridGraph);
 	mpAStar = new AStar(mpGridGraph);
 
+	mpUnitManager = new UnitManager();
+
 	//set default pathfinder to Dijkstra
 	mpPathfinder = mpDijkstra;
 	mPathfindType = DIJKSTRA;
 
 	//load buffers
 	mpGraphicsBufferManager->loadBuffer( BACKGROUND_ID, "wallpaper.bmp");
+	mpGraphicsBufferManager->loadBuffer(PLAYER_SPRITE_ID, "MeanDeanLawson.png");
 
 	//setup sprites
 	GraphicsBuffer* pBackGroundBuffer = mpGraphicsBufferManager->getBuffer( BACKGROUND_ID );
+	GraphicsBuffer* pPlayerBuffer = mpGraphicsBufferManager->getBuffer(PLAYER_SPRITE_ID);
 	if( pBackGroundBuffer != NULL )
 	{
 		mpSpriteManager->createAndManageSprite( BACKGROUND_SPRITE_ID, pBackGroundBuffer, 0, 0, pBackGroundBuffer->getWidth(), pBackGroundBuffer->getHeight() );
 	}
+
+	if (pPlayerBuffer != NULL)
+	{
+		mpSpriteManager->createAndManageSprite(PLAYER_SPRITE_ID, pPlayerBuffer, 0, 0, pPlayerBuffer->getWidth(), pPlayerBuffer->getHeight());
+	}
+
+	mpUnitManager->addUnit(mpSpriteManager->getSprite(PLAYER_SPRITE_ID), Vector2D(100,100), Vector2D(10, 10), 10.0f,
 
 	//debug display
 	PathfindingDebugContent* pContent = new PathfindingDebugContent( mpPathfinder );

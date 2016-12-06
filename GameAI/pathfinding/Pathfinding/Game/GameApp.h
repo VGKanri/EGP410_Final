@@ -53,6 +53,7 @@ public:
 	inline InputManager* getInputManager() { return mpInputManager; };
 	inline const PathfindType getPathfindType() const { return mPathfindType; };
 	inline UnitManager* getUnitManager() { return mpUnitManager; };
+	//inline void setPtr(float ptr) { mPtr = ptr; };
 
 	void changePathfindType(PathfindType type); //changes mpPathfinder to match pathfindertype that is passed in
 
@@ -72,5 +73,8 @@ private:
 	UnitManager* mpUnitManager;
 
 	PathfindType mPathfindType;
+
+	//Shared pointers
+	std::shared_ptr<float> mPtr;
 };
 

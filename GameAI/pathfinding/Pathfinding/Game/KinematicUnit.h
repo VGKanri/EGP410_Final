@@ -27,16 +27,26 @@ const float MIN_VELOCITY_TO_TURN_SQUARED = 1.0f;
 class KinematicUnit : public Kinematic
 {
 public:
-	KinematicUnit(Sprite* pSprite, const Vector2D& position, float orientation, const Vector2D& velocity, float rotationVel, std::shared_ptr<float> maxVelocity, std::shared_ptr<float> reactionRadius, std::shared_ptr<float> maxRotational, float maxAcceleration = 1.0f);
+	KinematicUnit(Sprite* pSprite, const Vector2D position, float orientation, const Vector2D& velocity, float rotationVel, std::shared_ptr<float> maxVelocity, std::shared_ptr<float> reactionRadius, std::shared_ptr<float> maxRotational, float maxAcceleration = 1.0f);
+	KinematicUnit();
 	~KinematicUnit();
 
 	//getters and setters
-	void setTarget(const Vector2D& target) { mTarget = target; };
 	const Vector2D& getPosition() const { return mPosition; };
 	float getMaxVelocity() const { return *mMaxVelocity; };
 	Vector2D getVelocity() const { return mVelocity; };
 	float getMaxAcceleration() const { return mMaxAcceleration; };
+	
+	void setTarget(const Vector2D& target) { mTarget = target; };
 	void setVelocity(const Vector2D& velocity) { mVelocity = velocity; };
+	void setSprite(Sprite* sprite) { mpSprite = sprite; };
+	void setPosition(Vector2D pos) { mPosition = pos; };
+	void setOrientation(float orientation) { mOrientation = orientation; };
+	void setRotVelocity(float rotVel) { mRotationVel = rotVel; };
+	void setMaxVelocity(std::shared_ptr<float> maxVel) { mMaxVelocity = maxVel; };
+	void setReactionRadius(std::shared_ptr<float> reactRad) { mReactionRadius = reactRad; };
+	void setMaxRotational(std::shared_ptr<float> maxRot) { mMaxRotationalVelocity = maxRot; };
+	void setMaxAcceleration(float maxAccel) { mMaxAcceleration = maxAccel; };
 
 	//check collision
 	//bool checkCollisionWithWalls();

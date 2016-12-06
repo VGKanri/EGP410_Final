@@ -11,6 +11,10 @@ Kinematic::Kinematic(const Vector2D &position, float orientation, const Vector2D
 {
 }
 
+Kinematic::Kinematic()
+{
+}
+
 Kinematic::~Kinematic()
 {
 }
