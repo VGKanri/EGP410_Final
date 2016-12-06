@@ -21,6 +21,7 @@
 #include "GridVisualizer.h"
 #include "DebugDisplay.h"
 #include "PathfindingDebugContent.h"
+#include "UnitManager.h"
 
 #include <fstream>
 #include <vector>

@@ -5,6 +5,7 @@
 #include "ExitGameMessage.h"
 #include "PathToMessage.h"
 #include "ChangePathfindingMessage.h"
+#include "ChangePlayerDirectionMessage.h"
 
 InputManager::InputManager()
 {
@@ -76,6 +77,31 @@ void InputManager::update()
 			if (mEvent.keyboard.keycode == ALLEGRO_KEY_A)
 			{
 				GameMessage* pMessage = new ChangePathfindingMessage(ASTAR, mStartPos, mGoalPos);
+				gpGameApp->getMessageManager()->addMessage(pMessage, 0);
+			}
+
+			//Player Input keyboard events
+			if (mEvent.keyboard.keycode == ALLEGRO_KEY_UP) //For if the player hits the up arrow
+			{
+				GameMessage* pMessage = new ChangePlayerDirectionMessage(0);
+				gpGameApp->getMessageManager()->addMessage(pMessage, 0);
+			}
+
+			if (mEvent.keyboard.keycode == ALLEGRO_KEY_RIGHT)
+			{
+				GameMessage* pMessage = new ChangePlayerDirectionMessage(1);
+				gpGameApp->getMessageManager()->addMessage(pMessage, 0);
+			}
+
+			if (mEvent.keyboard.keycode == ALLEGRO_KEY_DOWN)
+			{
+				GameMessage* pMessage = new ChangePlayerDirectionMessage(2);
+				gpGameApp->getMessageManager()->addMessage(pMessage, 0);
+			}
+
+			if (mEvent.keyboard.keycode == ALLEGRO_KEY_LEFT)
+			{
+				GameMessage* pMessage = new ChangePlayerDirectionMessage(3);
 				gpGameApp->getMessageManager()->addMessage(pMessage, 0);
 			}
 		}

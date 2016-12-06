@@ -80,6 +80,7 @@
   <ItemGroup>
     <ClInclude Include="AStar.h" />
     <ClInclude Include="ChangePathfindingMessage.h" />
+    <ClInclude Include="ChangePlayerDirectionMessage.h" />
     <ClInclude Include="Connection.h" />
     <ClInclude Include="DebugContent.h" />
     <ClInclude Include="DebugDisplay.h" />
@@ -105,10 +106,12 @@
     <ClInclude Include="PathToMessage.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Steering.h" />
+    <ClInclude Include="UnitManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AStar.cpp" />
     <ClCompile Include="ChangePathfindingMessage.cpp" />
+    <ClCompile Include="ChangePlayerDirectionMessage.cpp" />
     <ClCompile Include="Connection.cpp" />
     <ClCompile Include="DebugDisplay.cpp" />
     <ClCompile Include="DepthFirstPathfinder.cpp" />
@@ -129,7 +132,9 @@
     <ClCompile Include="Pathfinder.cpp" />
     <ClCompile Include="PathfindingDebugContent.cpp" />
     <ClCompile Include="PathToMessage.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="Steering.cpp" />
+    <ClCompile Include="UnitManager.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -20,6 +20,7 @@ class GridGraph;
 class GridPathfinder;
 class DebugDisplay;
 class InputManager;
+class UnitManager;
 
 const float LOOP_TARGET_TIME = 33.3f;//how long should each frame of execution take? 30fps = 33.3ms/frame
 
@@ -51,6 +52,7 @@ public:
 	inline GridGraph* getGridGraph() { return mpGridGraph; };
 	inline InputManager* getInputManager() { return mpInputManager; };
 	inline const PathfindType getPathfindType() const { return mPathfindType; };
+	inline UnitManager* getUnitManager() { return mpUnitManager; };
 
 	void changePathfindType(PathfindType type); //changes mpPathfinder to match pathfindertype that is passed in
 
@@ -66,6 +68,8 @@ private:
 	GridPathfinder* mpPathfinder;
 	GridPathfinder* mpDijkstra;
 	GridPathfinder* mpAStar;
+
+	UnitManager* mpUnitManager;
 
 	PathfindType mPathfindType;
 };
