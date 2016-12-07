@@ -16,4 +16,19 @@ void ChangePlayerDirectionMessage::process()
 {
 	//Add in get UnitManager Here and process direction change
 	std::cout << "My direction is: " << mDirection << std::endl;
+	switch (mDirection)
+	{
+	case 0:
+		gpGameApp->getUnitManager()->getUnit("player")->setVelocity(Vector2D(0, -3));
+		break;
+	case 1:
+		gpGameApp->getUnitManager()->getUnit("player")->setVelocity(Vector2D(3, 0));
+		break;
+	case 2:
+		gpGameApp->getUnitManager()->getUnit("player")->setVelocity(Vector2D(0, 3));
+		break;
+	case 3:
+		gpGameApp->getUnitManager()->getUnit("player")->setVelocity(Vector2D(-3, 0));
+		break;
+	}
 }
