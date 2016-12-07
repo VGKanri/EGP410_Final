@@ -10,6 +10,8 @@
 	for the user to use the editor correctly.
 	This also might handle the help feature*/
 
+const std::string HELP_PNG_PATH = "../Assets/HelpMenu.png";
+
 class EditorGUI : public Trackable
 {
 public:
@@ -18,19 +20,27 @@ public:
 
 	void setTileTypeText(int tileType);
 	void setRoomNumText(int roomNum);
+	inline void toggleHelpMenu() { mDrawHelpMenu = !mDrawHelpMenu; };
 
 	void draw();
 
 private:
 	ALLEGRO_FONT* mpFont;
+	ALLEGRO_BITMAP* mpHelpPNG;
+
+	bool mDrawHelpMenu;
+
+	Vector2D mHelpPNGPos;
 
 	Vector2D mTileTextPos;
 	Vector2D mRoomNumTextPos;
 	Vector2D mHelpTextPos;
+	Vector2D mExitTextPos;
 
 	std::string mTileTypeText;
 	std::string mRoomNumText;
 	std::string mTileBaseText;
 	std::string mRoomBaseText;
 	std::string mHelpText;
+	std::string mExitText;
 };

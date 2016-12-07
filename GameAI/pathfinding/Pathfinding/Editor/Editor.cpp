@@ -112,12 +112,12 @@ bool Editor::endLoop()
 	return Game::endLoop();
 }
 
-void Editor::saveGrid( ofstream& theStream )
+void Editor::saveGrid( ofstream& theStream, int roomNum )
 {
-	mpGrid[0]->save( theStream );
+	mpGrid[roomNum]->save( theStream );
 }
 
-void Editor::loadGrid( std::ifstream& theStream )
+void Editor::loadGrid( std::ifstream& theStream, int roomNum )
 {
-	mpGrid[0]->load(theStream);
+	mpGrid[roomNum]->load(theStream);
 }

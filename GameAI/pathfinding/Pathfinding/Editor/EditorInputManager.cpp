@@ -70,10 +70,22 @@ void EditorInputManager::update()
 				if (pEditor != NULL)
 				{
 					std::ofstream theStream(FILE_NAME1);
-					pEditor->saveGrid(theStream);
+					pEditor->saveGrid(theStream, 0);
 					theStream.close();
-					std::cout << "Grid saved!\n";
-					Sleep(1000);//very bogus
+
+					theStream.open(FILE_NAME2);
+					pEditor->saveGrid(theStream, 1);
+					theStream.close();
+
+					theStream.open(FILE_NAME3);
+					pEditor->saveGrid(theStream, 2);
+					theStream.close();
+
+					theStream.open(FILE_NAME4);
+					pEditor->saveGrid(theStream, 3);
+					theStream.close();
+
+					std::cout << "All Grids saved!\n";
 				}
 			}
 			else if (mEvent.keyboard.keycode == ALLEGRO_KEY_L)
@@ -81,12 +93,30 @@ void EditorInputManager::update()
 				if (pEditor != NULL)
 				{
 					std::ifstream theStream(FILE_NAME1);
-					pEditor->loadGrid(theStream);
+					pEditor->loadGrid(theStream, 0);
 					theStream.close();
+
+					theStream.open(FILE_NAME2);
+					pEditor->loadGrid(theStream, 1);
+					theStream.close();
+
+					theStream.open(FILE_NAME3);
+					pEditor->loadGrid(theStream, 2);
+					theStream.close();
+
+					theStream.open(FILE_NAME4);
+					pEditor->loadGrid(theStream, 3);
+					theStream.close();
+
 					pEditor->getGridVisualizer()->setModified();
-					std::cout << "Grid loaded!\n";
-					Sleep(1000);//very bogus
+					std::cout << "All Grids loaded!\n";
 				}
+			}
+
+			//toggle the drawing of the help menu
+			else if (mEvent.keyboard.keycode == ALLEGRO_KEY_H)
+			{
+				pEditor->getEditorGUI()->toggleHelpMenu();
 			}
 
 			//The following inputs are for cycling through rooms

@@ -10,10 +10,16 @@ EditorGUI::EditorGUI()
 	mTileBaseText = "Current Tile Type: ";
 	mRoomBaseText = "Current Room: ";
 	mHelpText = "'H' - Help Menu";
+	mExitText = "'Esc' - Exit Editor";
 
 	mTileTextPos = Vector2D(25, 25);
 	mRoomNumTextPos = Vector2D(25, mTileTextPos.getY() + 25);
 	mHelpTextPos = Vector2D(999, 25);
+	mExitTextPos = Vector2D(999, 50);
+
+	mHelpPNGPos = Vector2D(724, 0);
+
+	mDrawHelpMenu = false;
 
 	//actually load the font
 	mpFont = al_load_ttf_font("cour.ttf", 20, 0);
@@ -22,11 +28,15 @@ EditorGUI::EditorGUI()
 		printf("ttf font file not loaded properly!\n");
 		assert(0);
 	}
+
+	//load the png
+	mpHelpPNG = al_load_bitmap(HELP_PNG_PATH.c_str());
 }
 
 EditorGUI::~EditorGUI()
 {
 	al_destroy_font(mpFont);
+	al_destroy_bitmap(mpHelpPNG);
 }
 
 //apologies for the ugly switch statement,
@@ -92,4 +102,10 @@ void EditorGUI::draw()
 	al_draw_text(mpFont, al_map_rgb(255, 255, 255), mTileTextPos.getX(), mTileTextPos.getY(), ALLEGRO_ALIGN_LEFT, tileDisplay.c_str());
 	al_draw_text(mpFont, al_map_rgb(255, 255, 255), mRoomNumTextPos.getX(), mRoomNumTextPos.getY(), ALLEGRO_ALIGN_LEFT, roomDisplay.c_str());
 	al_draw_text(mpFont, al_map_rgb(255, 255, 255), mHelpTextPos.getX(), mHelpTextPos.getY(), ALLEGRO_ALIGN_RIGHT, mHelpText.c_str());
+	al_draw_text(mpFont, al_map_rgb(255, 255, 255), mHelpTextPos.getX(), mExitTextPos.getY(), ALLEGRO_ALIGN_RIGHT, mExitText.c_str());
+
+	if (mDrawHelpMenu)
+	{
+		al_draw_bitmap(mpHelpPNG, mHelpPNGPos.getX(), mHelpPNGPos.getY(), 0);
+	}
 }

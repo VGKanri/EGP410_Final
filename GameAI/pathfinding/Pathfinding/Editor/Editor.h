@@ -54,8 +54,8 @@ public:
 	virtual void processLoop();
 	virtual bool endLoop();
 
-	void saveGrid( std::ofstream& theStream );
-	void loadGrid( std::ifstream& theStream );
+	void saveGrid( std::ofstream& theStream, int roomNum);
+	void loadGrid( std::ifstream& theStream, int roomNum);
 
 private:
 	Grid* mpGrid[ROOM_AMOUNT]; //array of rooms
