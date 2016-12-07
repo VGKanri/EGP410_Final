@@ -26,6 +26,7 @@ class GridVisualizer;
 class GraphicsBuffer;
 class EditorInputManager;
 class EditorGUI;
+class SoundManager;
 
 const float LOOP_TARGET_TIME = 33.3f;//how long should each frame of execution take? 30fps = 33.3ms/frame
 const int ROOM_AMOUNT = 4;
@@ -62,6 +63,7 @@ private:
 	GridVisualizer* mpGridVisualizer;
 	EditorInputManager* mpInputManager;
 	EditorGUI* mpEditorGUI;
+	SoundManager* mpSoundManager;
 
 	int mTileType; //keeps track of current tile type being drawn
 	int mCurrentRoom; //keeps track of what room you are currently editing

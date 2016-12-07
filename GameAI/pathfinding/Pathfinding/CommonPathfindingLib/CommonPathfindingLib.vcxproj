@@ -18,6 +18,9 @@
     <ClInclude Include="GraphicsSystem.h" />
     <ClInclude Include="Grid.h" />
     <ClInclude Include="GridVisualizer.h" />
+    <ClInclude Include="Song.h" />
+    <ClInclude Include="SoundEffect.h" />
+    <ClInclude Include="SoundManager.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="SpriteManager.h" />
   </ItemGroup>
@@ -28,6 +31,9 @@
     <ClCompile Include="GraphicsSystem.cpp" />
     <ClCompile Include="Grid.cpp" />
     <ClCompile Include="GridVisualizer.cpp" />
+    <ClCompile Include="Song.cpp" />
+    <ClCompile Include="SoundEffect.cpp" />
+    <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="SpriteManager.cpp" />
   </ItemGroup>

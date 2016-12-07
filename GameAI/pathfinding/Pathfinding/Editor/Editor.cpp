@@ -8,6 +8,7 @@
 #include "GraphicsSystem.h"
 #include "GraphicsBuffer.h"
 #include "GraphicsBufferManager.h"
+#include "SoundManager.h"
 #include "Grid.h"
 #include "GridVisualizer.h"
 #include "Sprite.h"
@@ -57,6 +58,10 @@ bool Editor::init()
 	mpInputManager = new EditorInputManager();
 	mpInputManager->init();
 
+	mpSoundManager = new SoundManager();
+	mpSoundManager->init();
+	mpSoundManager->playSong(BOINGBURG_KEY);
+
 	//load buffers
 	mpGraphicsBufferManager->loadBuffer( BACKGROUND_ID, "wallpaper.bmp");
 
@@ -87,6 +92,9 @@ void Editor::cleanup()
 
 	delete mpInputManager;
 	mpInputManager = NULL;
+
+	delete mpSoundManager;
+	mpSoundManager = NULL;
 }
 
 void Editor::beginLoop()
