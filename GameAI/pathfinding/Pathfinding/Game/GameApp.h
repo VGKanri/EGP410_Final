@@ -25,6 +25,10 @@ class UnitManager;
 
 const float LOOP_TARGET_TIME = 33.3f;//how long should each frame of execution take? 30fps = 33.3ms/frame
 
+const std::string FILE_NAME = "../Game/pathgrid";
+
+const int MAP_SIZE = 4;
+
 enum PathfindType
 {
 	DIJKSTRA,
@@ -49,8 +53,10 @@ public:
 	inline GameMessageManager* getMessageManager() { return mpMessageManager; };
 	inline GridVisualizer* getGridVisualizer() { return mpGridVisualizer; };
 	inline GridPathfinder* getPathfinder() { return mpPathfinder; };
-	inline Grid* getGrid() { return mpGrid; };
-	inline GridGraph* getGridGraph() { return mpGridGraph; };
+	inline Grid* getGrid(int gridNum) { return mpGrid[gridNum]; };
+	inline Grid* getGrid() { return mpGrid[0]; };
+	inline GridGraph* getGridGraph(int gridNum) { return mpGridGraph[gridNum]; };
+	inline GridGraph* getGridGraph() { return mpGridGraph[0]; };
 	inline InputManager* getInputManager() { return mpInputManager; };
 	inline const PathfindType getPathfindType() const { return mPathfindType; };
 	inline UnitManager* getUnitManager() { return mpUnitManager; };
@@ -60,9 +66,9 @@ public:
 
 private:
 	GameMessageManager* mpMessageManager;
-	Grid* mpGrid;
+	Grid* mpGrid[MAP_SIZE];
 	GridVisualizer* mpGridVisualizer;
-	GridGraph* mpGridGraph;
+	GridGraph* mpGridGraph[MAP_SIZE];
 
 	DebugDisplay* mpDebugDisplay;
 	InputManager* mpInputManager;

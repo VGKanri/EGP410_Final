@@ -24,6 +24,7 @@
 #include "UnitManager.h"
 
 #include <fstream>
+#include <sstream>
 #include <vector>
 
 GameApp* gpGameApp = NULL;
@@ -34,8 +35,8 @@ const std::string gFileName = "pathgrid.txt";
 
 GameApp::GameApp()
 :mpMessageManager(NULL)
-,mpGrid(NULL)
-,mpGridGraph(NULL)
+,mpGrid()
+,mpGridGraph()
 ,mpPathfinder(NULL)
 ,mpDebugDisplay(NULL)
 {
@@ -79,19 +80,32 @@ bool GameApp::init()
 	mpMessageManager = new GameMessageManager();
 
 	//create and load the Grid, GridBuffer, and GridRenderer
-	mpGrid = new Grid(mpGraphicsSystem->getWidth(), mpGraphicsSystem->getHeight(), GRID_SQUARE_SIZE);
-	mpGridVisualizer = new GridVisualizer( mpGrid );
-	std::ifstream theStream( gFileName );
-	mpGrid->load( theStream );
+	std::ifstream fs;
+	std::stringstream ss;
+
+	for (int i = 0; i < MAP_SIZE; ++i)
+	{
+		mpGrid[i] = new Grid(mpGraphicsSystem->getWidth(), mpGraphicsSystem->getHeight(), GRID_SQUARE_SIZE);
+		
+		ss << FILE_NAME << i + 1 << ".txt";
+		fs.open(ss.str());
+		mpGrid[i]->load(fs);
+		fs.close();
+		ss.clear();
+	}
+
+	mpGridVisualizer = new GridVisualizer( mpGrid[0] );
 
 	//create the GridGraph for pathfinding
-	mpGridGraph = new GridGraph(mpGrid);
-	//init the nodes and connections
-	mpGridGraph->init();
+	for (int i = 0; i < MAP_SIZE; ++i)
+	{
+		mpGridGraph[i] = new GridGraph(mpGrid[i]);
+		mpGridGraph[i]->init(); //inits nodes and connections
+	}
 
 	//init pathfinders
-	mpDijkstra = new Dijkstra(mpGridGraph);
-	mpAStar = new AStar(mpGridGraph);
+	mpDijkstra = new Dijkstra(mpGridGraph[0]);
+	mpAStar = new AStar(mpGridGraph[0]);
 
 	mpUnitManager = new UnitManager();
 
@@ -134,14 +148,20 @@ void GameApp::cleanup()
 	delete mpInputManager;
 	mpInputManager = NULL;
 
-	delete mpGrid;
-	mpGrid = NULL;
+	for (int i = 0; i < MAP_SIZE; ++i)
+	{
+		delete mpGrid[i];
+		mpGrid[i] = NULL;
+	}
 
 	delete mpGridVisualizer;
 	mpGridVisualizer = NULL;
 
-	delete mpGridGraph;
-	mpGridGraph = NULL;
+	for (int i = 0; i < MAP_SIZE; ++i)
+	{
+		delete mpGridGraph[i];
+		mpGridGraph[i] = NULL;
+	}
 
 	delete mpDijkstra;
 	mpDijkstra = NULL;
@@ -170,7 +190,7 @@ void GameApp::processLoop()
 	mpGridVisualizer->draw( *pBackBuffer );
 #ifdef VISUALIZE_PATH
 	//show pathfinder visualizer
-	mpPathfinder->drawVisualization(mpGrid, pBackBuffer);
+	mpPathfinder->drawVisualization(mpGrid[0], pBackBuffer);
 #endif
 
 	mpDebugDisplay->draw( pBackBuffer );
