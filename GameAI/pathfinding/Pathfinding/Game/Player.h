@@ -2,14 +2,6 @@
 
 #include "KinematicUnit.h"
 
-enum CURRENT_DIRECTION
-{
-	UP = 0,
-	RIGHT = 1,
-	DOWN = 2,
-	LEFT = 3
-};
-
 class Player : public KinematicUnit
 {
 private:

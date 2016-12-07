@@ -6,6 +6,7 @@
 
 #include "KinematicUnit.h"
 #include "Player.h"
+#include "Enemy.h"
 
 class Sprite;
 

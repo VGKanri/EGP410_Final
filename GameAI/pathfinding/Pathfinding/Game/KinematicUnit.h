@@ -24,6 +24,14 @@ extern Steering gNullSteering;//global object - can point to it for a "NULL" Ste
 							  //(keeps unit from spinning in place after stopping
 const float MIN_VELOCITY_TO_TURN_SQUARED = 1.0f;
 
+enum CURRENT_DIRECTION
+{
+	UP = 0,
+	RIGHT = 1,
+	DOWN = 2,
+	LEFT = 3
+};
+
 class KinematicUnit : public Kinematic
 {
 public:
@@ -36,6 +44,7 @@ public:
 	float getMaxVelocity() const { return *mMaxVelocity; };
 	Vector2D getVelocity() const { return mVelocity; };
 	float getMaxAcceleration() const { return mMaxAcceleration; };
+	Steering* getSteering() const { return mpCurrentSteering; };
 	
 	void setTarget(const Vector2D& target) { mTarget = target; };
 	void setVelocity(const Vector2D& velocity) { mVelocity = velocity; };
@@ -47,6 +56,7 @@ public:
 	void setReactionRadius(std::shared_ptr<float> reactRad) { mReactionRadius = reactRad; };
 	void setMaxRotational(std::shared_ptr<float> maxRot) { mMaxRotationalVelocity = maxRot; };
 	void setMaxAcceleration(float maxAccel) { mMaxAcceleration = maxAccel; };
+	void setSteering(Steering* pSteering);
 
 	//check collision
 	//bool checkCollisionWithWalls();
@@ -83,6 +93,6 @@ private:
 	bool mBounceVertically;//if false bounce horizontally
 	//Hitcircle mHitcircle;
 
-	void setSteering(Steering* pSteering);
+	//void setSteering(Steering* pSteering);
 
 };

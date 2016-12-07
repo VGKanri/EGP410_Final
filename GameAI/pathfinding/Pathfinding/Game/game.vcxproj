@@ -118,6 +118,7 @@
     <ClCompile Include="DebugDisplay.cpp" />
     <ClCompile Include="DepthFirstPathfinder.cpp" />
     <ClCompile Include="Dijkstra.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="ExitGameMessage.cpp" />
     <ClCompile Include="GameApp.cpp" />
     <ClCompile Include="GameMessage.cpp" />

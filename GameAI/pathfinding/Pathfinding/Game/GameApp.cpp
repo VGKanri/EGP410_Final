@@ -116,10 +116,13 @@ bool GameApp::init()
 	//load buffers
 	mpGraphicsBufferManager->loadBuffer( BACKGROUND_ID, "wallpaper.bmp");
 	mpGraphicsBufferManager->loadBuffer(PLAYER_SPRITE_ID, "MeanDeanLawson.png");
+	mpGraphicsBufferManager->loadBuffer(ENEMY_SPRITE_ID, "Serguei.png");
 
 	//setup sprites
 	GraphicsBuffer* pBackGroundBuffer = mpGraphicsBufferManager->getBuffer( BACKGROUND_ID );
 	GraphicsBuffer* pPlayerBuffer = mpGraphicsBufferManager->getBuffer(PLAYER_SPRITE_ID);
+	GraphicsBuffer* pEnemyBuffer = mpGraphicsBufferManager->getBuffer(ENEMY_SPRITE_ID);
+
 	if( pBackGroundBuffer != NULL )
 	{
 		mpSpriteManager->createAndManageSprite( BACKGROUND_SPRITE_ID, pBackGroundBuffer, 0, 0, pBackGroundBuffer->getWidth(), pBackGroundBuffer->getHeight() );
@@ -130,7 +133,13 @@ bool GameApp::init()
 		mpSpriteManager->createAndManageSprite(PLAYER_SPRITE_ID, pPlayerBuffer, 0, 0, pPlayerBuffer->getWidth(), pPlayerBuffer->getHeight());
 	}
 
+	if (pEnemyBuffer != NULL)
+	{
+		mpSpriteManager->createAndManageSprite(ENEMY_SPRITE_ID, pEnemyBuffer, 0, 0, pEnemyBuffer->getWidth(), pEnemyBuffer->getHeight());
+	}
+
 	mpUnitManager->addUnit(mpSpriteManager->getSprite(PLAYER_SPRITE_ID), Vector2D(100, 100), Vector2D(0, 0), mPtr, mPtr, mPtr, 1.0f, "player", true);
+	mpUnitManager->addUnit(mpSpriteManager->getSprite(ENEMY_SPRITE_ID), Vector2D(200, 200), Vector2D(0, 0), mPtr, mPtr, mPtr, 1.0f, "enemy", false);
 
 	//debug display
 	PathfindingDebugContent* pContent = new PathfindingDebugContent( mpPathfinder );
