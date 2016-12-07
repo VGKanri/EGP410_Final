@@ -39,6 +39,7 @@ GameApp::GameApp()
 ,mpPathfinder(NULL)
 ,mpDebugDisplay(NULL)
 {
+	mPtr = make_shared<float>(5.0f);
 }
 
 GameApp::~GameApp()
@@ -115,7 +116,7 @@ bool GameApp::init()
 		mpSpriteManager->createAndManageSprite(PLAYER_SPRITE_ID, pPlayerBuffer, 0, 0, pPlayerBuffer->getWidth(), pPlayerBuffer->getHeight());
 	}
 
-	//mpUnitManager->addUnit(mpSpriteManager->getSprite(PLAYER_SPRITE_ID), Vector2D(100,100), Vector2D(10, 10), 10.0f,
+	mpUnitManager->addUnit(mpSpriteManager->getSprite(PLAYER_SPRITE_ID), Vector2D(100, 100), Vector2D(0, 0), mPtr, mPtr, mPtr, 1.0f, "player", true);
 
 	//debug display
 	PathfindingDebugContent* pContent = new PathfindingDebugContent( mpPathfinder );
@@ -150,6 +151,9 @@ void GameApp::cleanup()
 
 	delete mpDebugDisplay;
 	mpDebugDisplay = NULL;
+
+	delete mpUnitManager;
+	mpUnitManager = NULL;
 }
 
 void GameApp::beginLoop()
@@ -175,6 +179,7 @@ void GameApp::processLoop()
 
 	mpInputManager->update();
 
+	mpUnitManager->update(LOOP_TARGET_TIME / 1000.0f);
 	//should be last thing in processLoop
 	Game::processLoop();
 }

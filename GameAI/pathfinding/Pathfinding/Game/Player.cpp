@@ -22,6 +22,8 @@ void Player::update(float time)
 	//PUT IN CHECK WALL COLLISION STUFF HERE
 
 	Kinematic::update(time);
+
+
 	
 	//Hitbox / Hitcircle Stuff goes here
 }

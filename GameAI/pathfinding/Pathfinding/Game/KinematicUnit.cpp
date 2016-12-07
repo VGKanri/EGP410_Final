@@ -29,7 +29,7 @@ KinematicUnit::KinematicUnit()
 
 KinematicUnit::~KinematicUnit()
 {
-	delete mpCurrentSteering;
+	//delete mpCurrentSteering;
 }
 
 void KinematicUnit::draw(GraphicsBuffer* pBuffer)
