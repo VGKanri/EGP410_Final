@@ -8,6 +8,7 @@ Champlain College
 */
 
 #include "Game.h"
+#include <memory>
 
 //forward declarations
 class GraphicsBuffer;
