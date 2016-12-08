@@ -1,4 +1,5 @@
 #include "Animation.h"
+#include "Sprite.h"
 
 Animation::Animation(double timing, bool loop, int startingSprite)
 {
