@@ -20,19 +20,19 @@ void ChangePlayerDirectionMessage::process()
 	{
 	case 0:
 		gpGameApp->getUnitManager()->getUnit("player")->setVelocity(Vector2D(0, -PLAYER_SPEED));
-		gpGameApp->getUnitManager()->getPlayer()->changeState(up);
+		gpGameApp->getUnitManager()->getPlayer()->changeState(PlayerState::UP);
 		break;
 	case 1:
 		gpGameApp->getUnitManager()->getUnit("player")->setVelocity(Vector2D(PLAYER_SPEED, 0));
-		gpGameApp->getUnitManager()->getPlayer()->changeState(right_);
+		gpGameApp->getUnitManager()->getPlayer()->changeState(PlayerState::RIGHT);
 		break;
 	case 2:
 		gpGameApp->getUnitManager()->getUnit("player")->setVelocity(Vector2D(0, PLAYER_SPEED));
-		gpGameApp->getUnitManager()->getPlayer()->changeState(down);
+		gpGameApp->getUnitManager()->getPlayer()->changeState(PlayerState::DOWN);
 		break;
 	case 3:
 		gpGameApp->getUnitManager()->getUnit("player")->setVelocity(Vector2D(-PLAYER_SPEED, 0));
-		gpGameApp->getUnitManager()->getPlayer()->changeState(left_);
+		gpGameApp->getUnitManager()->getPlayer()->changeState(PlayerState::LEFT);
 		break;
 	}
 }

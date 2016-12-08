@@ -58,21 +58,21 @@ void Player::changeState(PlayerState newState)
 
 	switch (mState)
 	{
-	case up:
+	case PlayerState::UP:
 		mpCurrentAnimation = mpUpAnimation;
 		break;
-	case left_:
+	case PlayerState::LEFT:
 		mpCurrentAnimation = mpSideAnimation;
 		mFlip = true;
 		break;
-	case right_:
+	case PlayerState::RIGHT:
 		mpCurrentAnimation = mpSideAnimation;
 		mFlip = false;
 		break;
-	case down:
+	case PlayerState::DOWN:
 		mpCurrentAnimation = mpDownAnimation;
 		break;
-	case idle:
+	case PlayerState::IDLE:
 		mpCurrentAnimation = mpIdleAnimation;
 		break;
 	}

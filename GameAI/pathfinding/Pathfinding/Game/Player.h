@@ -10,13 +10,13 @@ const float PLAYER_SPEED = 120;
 class Animation;
 class GraphicsBuffer;
 
-enum PlayerState
+enum class PlayerState
 {
-	up,
-	left_,
-	right_,
-	down,
-	idle
+	UP,
+	LEFT,
+	RIGHT,
+	DOWN,
+	IDLE
 };
 
 class Player : public KinematicUnit
@@ -31,7 +31,7 @@ private:
 
 	GraphicsBuffer* mpSpriteSheet;
 
-	PlayerState mState = idle;
+	PlayerState mState = PlayerState::IDLE;
 
 	bool mAlmightyCandy; //Boolean to determine if the player has eaten the almighty candy recently
 	CURRENT_DIRECTION mDirection;
