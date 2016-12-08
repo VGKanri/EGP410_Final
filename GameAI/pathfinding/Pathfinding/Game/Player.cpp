@@ -43,7 +43,7 @@ void Player::update(float time)
 
 	//ANIMATION UPDATE
 	mpCurrentAnimation->update(time);
-	//mpSprite = mpCurrentAnimation->getCurrentSprite();
+	mpSprite = mpCurrentAnimation->getCurrentSprite();
 
 	//PUT IN CHECK WALL COLLISION STUFF HERE
 
