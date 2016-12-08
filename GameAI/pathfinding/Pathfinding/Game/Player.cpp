@@ -63,9 +63,11 @@ void Player::changeState(PlayerState newState)
 		break;
 	case left_:
 		mpCurrentAnimation = mpSideAnimation;
+		mFlip = true;
 		break;
 	case right_:
 		mpCurrentAnimation = mpSideAnimation;
+		mFlip = false;
 		break;
 	case down:
 		mpCurrentAnimation = mpDownAnimation;
