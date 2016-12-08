@@ -23,7 +23,7 @@ class DebugDisplay;
 class InputManager;
 class UnitManager;
 
-const float LOOP_TARGET_TIME = 33.3f;//how long should each frame of execution take? 30fps = 33.3ms/frame
+const float LOOP_TARGET_TIME = 16.3f;//how long should each frame of execution take? 30fps = 33.3ms/frame
 
 const std::string FILE_NAME = "../Game/pathgrid";
 

@@ -5,13 +5,15 @@
 
 class Sprite;
 
+const double TIMING = 1.0 / 20.0;
+
 class Animation : public Trackable
 {
 public:
-	Animation(double timing = 1.0 / 15.0, bool loop = true, int startingSprite = 0);
+	Animation(double timing = TIMING, bool loop = true, int startingSprite = 0);
 	~Animation();
 
-	void setParameters(double timing = 1.0 / 15.0, bool loop = true, int startingSprite = 0);
+	void setParameters(double timing = TIMING, bool loop = true, int startingSprite = 0);
 
 	inline int getAnimationLength() const { return mSpriteList.size(); };
 	inline Sprite* getCurrentSprite() { return mSpriteList[mCurrentSprite]; }

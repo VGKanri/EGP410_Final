@@ -5,6 +5,7 @@
 
 const std::string PLAYER_SHEET_PATH = "../Assets/rocketSpriteSheet.png";
 const int SPRITE_SIZE = 32;
+const float PLAYER_SPEED = 120;
 
 class Animation;
 class GraphicsBuffer;

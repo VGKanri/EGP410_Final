@@ -40,6 +40,7 @@ GameApp::GameApp()
 ,mpDebugDisplay(NULL)
 {
 	mPtr = make_shared<float>(5.0f);
+	mLoopTargetTime = LOOP_TARGET_TIME;
 }
 
 GameApp::~GameApp()
@@ -195,22 +196,24 @@ void GameApp::processLoop()
 	//get back buffer
 	GraphicsBuffer* pBackBuffer = mpGraphicsSystem->getBackBuffer();
 	//copy to back buffer
-	mpGridVisualizer->draw( *pBackBuffer );
+	mpGridVisualizer->draw(*pBackBuffer);
 #ifdef VISUALIZE_PATH
 	//show pathfinder visualizer
 	mpPathfinder->drawVisualization(mpGrid[0], pBackBuffer);
 #endif
 
-	mpDebugDisplay->draw( pBackBuffer );
+	mpDebugDisplay->draw(pBackBuffer);
 
 	mpMessageManager->processMessagesForThisframe();
 
 	mpInputManager->update();
 
+	//mpUnitManager->update(mpLoopTimer->getElapsedTime());
 	mpUnitManager->update(LOOP_TARGET_TIME / 1000.0f);
 	//should be last thing in processLoop
 	Game::processLoop();
 }
+	
 
 bool GameApp::endLoop()
 {
