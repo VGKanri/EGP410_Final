@@ -115,7 +115,7 @@ bool GameApp::init()
 
 	//load buffers
 	mpGraphicsBufferManager->loadBuffer( BACKGROUND_ID, "wallpaper.bmp");
-	mpGraphicsBufferManager->loadBuffer(PLAYER_SPRITE_ID, "MeanDeanLawson.png");
+	mpGraphicsBufferManager->loadBuffer(PLAYER_SPRITE_ID, "../Assets/rocket.png");
 	mpGraphicsBufferManager->loadBuffer(ENEMY_SPRITE_ID, "Serguei.png");
 
 	//setup sprites

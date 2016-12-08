@@ -16,6 +16,9 @@ SoundManager::~SoundManager()
 void SoundManager::init()
 {
 	mpSongs.emplace(BOINGBURG_KEY, new Song(BOINGBURG_PATH));
+	mpSongs.emplace(TITLE_THEME_KEY, new Song(TITLE_THEME_PATH));
+	mpSongs.emplace(BATTLE_THEME_KEY, new Song(BATTLE_THEME_PATH));
+	mpSongs.emplace(POWER_UP_KEY, new Song(POWER_UP_PATH));
 }
 
 void SoundManager::cleanUp()
