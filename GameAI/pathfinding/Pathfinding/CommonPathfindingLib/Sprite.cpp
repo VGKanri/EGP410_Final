@@ -16,6 +16,8 @@ Sprite::Sprite( GraphicsBuffer* pBuffer, float sx, float sy, float sw, float sh 
 Sprite::~Sprite()
 {
 	//nothing to do right now as the bitmap is always a subBitmap
+	al_destroy_bitmap(mpBitmap);
+	mpBitmap = NULL;
 }
 
 void Sprite::draw( GraphicsBuffer& dest, float dx, float dy, float rotationInRadians, int flags )

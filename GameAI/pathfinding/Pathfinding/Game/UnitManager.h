@@ -30,6 +30,7 @@ public:
 	void removeUnit(std::string id);
 
 	KinematicUnit* getUnit(std::string id);
+	inline Player* getPlayer() { return dynamic_cast<Player*>(mpUnitList->at("player")); };
 	inline const int getUnitCount() { return mUnitCount; };
 	inline const int getMapSize() { return mpUnitList->size(); };
 

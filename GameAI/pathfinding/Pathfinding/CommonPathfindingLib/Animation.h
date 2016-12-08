@@ -1,0 +1,32 @@
+#pragma once
+
+#include <vector>
+#include <Trackable.h>
+
+class Sprite;
+
+class Animation : public Trackable
+{
+public:
+	Animation(double timing = 1.0 / 15.0, bool loop = true, int startingSprite = 0);
+	~Animation();
+
+	void setParameters(double timing = 1.0 / 15.0, bool loop = true, int startingSprite = 0);
+
+	inline int getAnimationLength() const { return mSpriteList.size(); };
+	inline Sprite* getCurrentSprite() { return mSpriteList[mCurrentSprite]; }
+
+	inline void resetAnimation() { mCurrentSprite = 0; }
+
+	void addSpriteAt(Sprite *pSprite, int location);
+	void pushSprite(Sprite *pSprite);
+
+	void update(const double &deltaTime);
+
+private:
+	std::vector<Sprite*> mSpriteList;
+	double mAnimationTiming;
+	bool mLoop;
+	int mCurrentSprite;
+	double mCurrentTime;
+};

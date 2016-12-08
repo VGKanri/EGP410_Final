@@ -19,16 +19,20 @@ void ChangePlayerDirectionMessage::process()
 	switch (mDirection)
 	{
 	case 0:
-		gpGameApp->getUnitManager()->getUnit("player")->setVelocity(Vector2D(0, -5));
+		gpGameApp->getUnitManager()->getUnit("player")->setVelocity(Vector2D(0, -25));
+		gpGameApp->getUnitManager()->getPlayer()->changeState(up);
 		break;
 	case 1:
-		gpGameApp->getUnitManager()->getUnit("player")->setVelocity(Vector2D(5, 0));
+		gpGameApp->getUnitManager()->getUnit("player")->setVelocity(Vector2D(25, 0));
+		gpGameApp->getUnitManager()->getPlayer()->changeState(right_);
 		break;
 	case 2:
-		gpGameApp->getUnitManager()->getUnit("player")->setVelocity(Vector2D(0, 5));
+		gpGameApp->getUnitManager()->getUnit("player")->setVelocity(Vector2D(0, 25));
+		gpGameApp->getUnitManager()->getPlayer()->changeState(down);
 		break;
 	case 3:
-		gpGameApp->getUnitManager()->getUnit("player")->setVelocity(Vector2D(-5, 0));
+		gpGameApp->getUnitManager()->getUnit("player")->setVelocity(Vector2D(-25, 0));
+		gpGameApp->getUnitManager()->getPlayer()->changeState(left_);
 		break;
 	}
 }

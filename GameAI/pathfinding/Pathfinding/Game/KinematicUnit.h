@@ -37,7 +37,7 @@ class KinematicUnit : public Kinematic
 public:
 	KinematicUnit(Sprite* pSprite, const Vector2D position, float orientation, const Vector2D& velocity, float rotationVel, std::shared_ptr<float> maxVelocity, std::shared_ptr<float> reactionRadius, std::shared_ptr<float> maxRotational, float maxAcceleration = 1.0f);
 	KinematicUnit();
-	~KinematicUnit();
+	virtual ~KinematicUnit();
 
 	//getters and setters
 	const Vector2D& getPosition() const { return mPosition; };
@@ -81,7 +81,7 @@ public:
 	void boid();
 	*/
 
-private:
+protected:
 	Sprite* mpSprite;
 	Steering* mpCurrentSteering;
 	CollisionAvoidanceSteering* mpCollisionAvoidance;
