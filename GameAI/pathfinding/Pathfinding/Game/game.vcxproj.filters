@@ -61,6 +61,12 @@
     <Filter Include="Source Files\Util">
       <UniqueIdentifier>{aef01a31-117c-49ef-9f71-cdbaaa16c9f2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Menus">
+      <UniqueIdentifier>{2ac16a78-33a6-40de-bd06-b8b953930966}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Menus">
+      <UniqueIdentifier>{26cd4c58-70e9-47c4-8470-3be30f8ef620}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameApp.h">
@@ -159,6 +165,15 @@
     <ClInclude Include="Hitcircle.h">
       <Filter>Header Files\Util</Filter>
     </ClInclude>
+    <ClInclude Include="Menu.h">
+      <Filter>Header Files\Menus</Filter>
+    </ClInclude>
+    <ClInclude Include="MainMenu.h">
+      <Filter>Header Files\Menus</Filter>
+    </ClInclude>
+    <ClInclude Include="HelpMenu.h">
+      <Filter>Header Files\Menus</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -250,6 +265,9 @@
     </ClCompile>
     <ClCompile Include="Hitcircle.cpp">
       <Filter>Source Files\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMenu.cpp">
+      <Filter>Source Files\Menus</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
