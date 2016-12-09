@@ -51,7 +51,7 @@ bool Editor::init()
 		mpGrid[i] = new Grid(mpGraphicsSystem->getWidth(), mpGraphicsSystem->getHeight(), GRID_SQUARE_SIZE);
 	}
 	
-	mpGridVisualizer = new GridVisualizer(mpGrid[0]);
+	mpGridVisualizer = new GridVisualizer(mpGrid[0], true);
 
 	mpEditorGUI = new EditorGUI();
 

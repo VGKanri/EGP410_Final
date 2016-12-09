@@ -7,6 +7,7 @@
 #include "GraphicsBuffer.h"
 #include "InputManager.h"
 #include "GraphicsBufferManager.h"
+#include "SoundManager.h"
 #include "Sprite.h"
 #include "SpriteManager.h"
 #include "Vector2D.h"
@@ -74,6 +75,36 @@ bool GameApp::init()
 		return false;
 	}
 
+	//load buffers
+	mpGraphicsBufferManager->loadBuffer(BACKGROUND_ID, "../Assets/background.png");
+	mpGraphicsBufferManager->loadBuffer(PLAYER_SPRITE_ID, "../Assets/rocket.png");
+	mpGraphicsBufferManager->loadBuffer(ENEMY_SPRITE_ID, "Serguei.png");
+	mpGraphicsBufferManager->loadBuffer(WALL_SPRITE_ID, "../Assets/wall.png");
+	mpGraphicsBufferManager->loadBuffer(FLOOR_SPRITE_ID, "../Assets/floor.png");
+
+	//setup sprites
+	GraphicsBuffer* pBackGroundBuffer = mpGraphicsBufferManager->getBuffer(BACKGROUND_ID);
+	GraphicsBuffer* pPlayerBuffer = mpGraphicsBufferManager->getBuffer(PLAYER_SPRITE_ID);
+	GraphicsBuffer* pEnemyBuffer = mpGraphicsBufferManager->getBuffer(ENEMY_SPRITE_ID);
+	GraphicsBuffer* pWallBuffer = mpGraphicsBufferManager->getBuffer(WALL_SPRITE_ID);
+	GraphicsBuffer* pFloorBuffer = mpGraphicsBufferManager->getBuffer(FLOOR_SPRITE_ID);
+
+	if (pBackGroundBuffer != NULL)
+	{
+		mpSpriteManager->createAndManageSprite(BACKGROUND_SPRITE_ID, pBackGroundBuffer, 0, 0, pBackGroundBuffer->getWidth(), pBackGroundBuffer->getHeight());
+	}
+
+	if (pPlayerBuffer != NULL)
+	{
+		mpSpriteManager->createAndManageSprite(PLAYER_SPRITE_ID, pPlayerBuffer, 0, 0, pPlayerBuffer->getWidth(), pPlayerBuffer->getHeight());
+	}
+
+	if (pEnemyBuffer != NULL)
+	{
+		mpSpriteManager->createAndManageSprite(ENEMY_SPRITE_ID, pEnemyBuffer, 0, 0, pEnemyBuffer->getWidth(), pEnemyBuffer->getHeight());
+	}
+
+	//load managers
 	mpInputManager = new InputManager();
 	mpInputManager->init();
 
@@ -94,7 +125,7 @@ bool GameApp::init()
 		ss.clear();
 	}
 
-	mpGridVisualizer = new GridVisualizer( mpGrid[0] );
+	mpGridVisualizer = new GridVisualizer( mpGrid[0], false);
 
 	//create the GridGraph for pathfinding
 	for (int i = 0; i < MAP_SIZE; ++i)
@@ -102,6 +133,11 @@ bool GameApp::init()
 		mpGridGraph[i] = new GridGraph(mpGrid[i]);
 		mpGridGraph[i]->init(); //inits nodes and connections
 	}
+
+	//init sound manager
+	mpSoundManager = new SoundManager();
+	mpSoundManager->init();
+	mpSoundManager->playSong(BATTLE_THEME_KEY);
 
 	//init pathfinders
 	mpDijkstra = new Dijkstra(mpGridGraph[0]);
@@ -112,31 +148,6 @@ bool GameApp::init()
 	//set default pathfinder to Dijkstra
 	mpPathfinder = mpDijkstra;
 	mPathfindType = DIJKSTRA;
-
-	//load buffers
-	mpGraphicsBufferManager->loadBuffer( BACKGROUND_ID, "wallpaper.bmp");
-	mpGraphicsBufferManager->loadBuffer(PLAYER_SPRITE_ID, "../Assets/rocket.png");
-	mpGraphicsBufferManager->loadBuffer(ENEMY_SPRITE_ID, "Serguei.png");
-
-	//setup sprites
-	GraphicsBuffer* pBackGroundBuffer = mpGraphicsBufferManager->getBuffer( BACKGROUND_ID );
-	GraphicsBuffer* pPlayerBuffer = mpGraphicsBufferManager->getBuffer(PLAYER_SPRITE_ID);
-	GraphicsBuffer* pEnemyBuffer = mpGraphicsBufferManager->getBuffer(ENEMY_SPRITE_ID);
-
-	if( pBackGroundBuffer != NULL )
-	{
-		mpSpriteManager->createAndManageSprite( BACKGROUND_SPRITE_ID, pBackGroundBuffer, 0, 0, pBackGroundBuffer->getWidth(), pBackGroundBuffer->getHeight() );
-	}
-
-	if (pPlayerBuffer != NULL)
-	{
-		mpSpriteManager->createAndManageSprite(PLAYER_SPRITE_ID, pPlayerBuffer, 0, 0, pPlayerBuffer->getWidth(), pPlayerBuffer->getHeight());
-	}
-
-	if (pEnemyBuffer != NULL)
-	{
-		mpSpriteManager->createAndManageSprite(ENEMY_SPRITE_ID, pEnemyBuffer, 0, 0, pEnemyBuffer->getWidth(), pEnemyBuffer->getHeight());
-	}
 
 	mpUnitManager->addUnit(mpSpriteManager->getSprite(PLAYER_SPRITE_ID), Vector2D(100, 100), Vector2D(0, 0), mPtr, mPtr, mPtr, 1.0f, "player", true);
 	mpUnitManager->addUnit(mpSpriteManager->getSprite(ENEMY_SPRITE_ID), Vector2D(200, 200), Vector2D(0, 0), mPtr, mPtr, mPtr, 1.0f, "enemy", false);
@@ -153,6 +164,9 @@ void GameApp::cleanup()
 {
 	delete mpMessageManager;
 	mpMessageManager = NULL;
+
+	delete mpSoundManager;
+	mpSoundManager = NULL;
 
 	delete mpInputManager;
 	mpInputManager = NULL;

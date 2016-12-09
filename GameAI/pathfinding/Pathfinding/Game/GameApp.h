@@ -22,8 +22,9 @@ class GridPathfinder;
 class DebugDisplay;
 class InputManager;
 class UnitManager;
+class SoundManager;
 
-const float LOOP_TARGET_TIME = 16.3f;//how long should each frame of execution take? 30fps = 33.3ms/frame
+const float LOOP_TARGET_TIME = 33.3f;//how long should each frame of execution take? 30fps = 33.3ms/frame
 
 const std::string FILE_NAME = "../Game/pathgrid";
 
@@ -51,6 +52,7 @@ public:
 
 	//accessors
 	inline GameMessageManager* getMessageManager() { return mpMessageManager; };
+	inline SoundManager* getSoundManager() { return mpSoundManager; };
 	inline GridVisualizer* getGridVisualizer() { return mpGridVisualizer; };
 	inline GridPathfinder* getPathfinder() { return mpPathfinder; };
 	inline Grid* getGrid(int gridNum) { return mpGrid[gridNum]; };
@@ -66,6 +68,7 @@ public:
 
 private:
 	GameMessageManager* mpMessageManager;
+	SoundManager* mpSoundManager;
 	Grid* mpGrid[MAP_SIZE];
 	GridVisualizer* mpGridVisualizer;
 	GridGraph* mpGridGraph[MAP_SIZE];

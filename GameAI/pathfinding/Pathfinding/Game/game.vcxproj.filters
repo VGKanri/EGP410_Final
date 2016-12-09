@@ -55,6 +55,12 @@
     <Filter Include="Source Files\Steering">
       <UniqueIdentifier>{4cdddfb7-515f-4992-9104-14dc3e7ab18d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Util">
+      <UniqueIdentifier>{b4c31497-0f01-4fa3-88b2-e9012bb762ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Util">
+      <UniqueIdentifier>{aef01a31-117c-49ef-9f71-cdbaaa16c9f2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameApp.h">
@@ -147,6 +153,12 @@
     <ClInclude Include="ArriveSteering.h">
       <Filter>Header Files\Steering</Filter>
     </ClInclude>
+    <ClInclude Include="Hitbox.h">
+      <Filter>Header Files\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Hitcircle.h">
+      <Filter>Header Files\Util</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -232,6 +244,12 @@
     </ClCompile>
     <ClCompile Include="Enemy.cpp">
       <Filter>Source Files\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Hitbox.cpp">
+      <Filter>Source Files\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="Hitcircle.cpp">
+      <Filter>Source Files\Util</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

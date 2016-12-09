@@ -1,6 +1,7 @@
 #pragma once
 
 #include "KinematicUnit.h"
+#include "Hitcircle.h"
 #include <string>
 
 const std::string PLAYER_SHEET_PATH = "../Assets/rocketSpriteSheet.png";
@@ -22,6 +23,9 @@ enum class PlayerState
 class Player : public KinematicUnit
 {
 private:
+	//hitcircle for collision
+	Hitcircle mCollider;
+
 	//will probably clean this up later to be an array
 	Animation* mpDownAnimation;
 	Animation* mpUpAnimation;
@@ -46,6 +50,7 @@ public:
 
 	void changeState(PlayerState newState);
 
+	inline Hitcircle getHitCircle() const { return mCollider; };
 	bool getIsCandied() { return mAlmightyCandy; };
 	inline CURRENT_DIRECTION& getCurrentDirection() { return mDirection; };
 };

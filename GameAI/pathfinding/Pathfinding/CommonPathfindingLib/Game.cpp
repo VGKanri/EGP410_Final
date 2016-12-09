@@ -182,7 +182,6 @@ void Game::processLoop()
 bool Game::endLoop()
 {
 	mpLoopTimer->sleepUntilElapsed(mLoopTargetTime);
-	std::cout << mLoopTargetTime << "    " << mpLoopTimer->getElapsedTime() << endl;
 	return mShouldExit;
 }
 

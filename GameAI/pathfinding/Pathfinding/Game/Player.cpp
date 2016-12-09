@@ -2,6 +2,7 @@
 #include "Sprite.h"
 #include "Animation.h"
 #include "GraphicsBuffer.h"
+#include "Hitcircle.h"
 
 Player::Player(Sprite *pSprite, const Vector2D position, float orientation, const Vector2D &velocity, float rotationVel, std::shared_ptr<float> maxVelocity
 	, std::shared_ptr<float> reactionRadius, std::shared_ptr<float> maxRotational, float maxAcceleration)
@@ -15,6 +16,8 @@ Player::Player(Sprite *pSprite, const Vector2D position, float orientation, cons
 	setReactionRadius(reactionRadius);
 	setMaxRotational(maxRotational);
 	setMaxAcceleration(maxAcceleration);
+
+	mCollider = Hitcircle(mPosition, 12);
 
 	mpSpriteSheet = new GraphicsBuffer(PLAYER_SHEET_PATH);
 
@@ -46,10 +49,10 @@ void Player::update(float time)
 	mpSprite = mpCurrentAnimation->getCurrentSprite();
 
 	//PUT IN CHECK WALL COLLISION STUFF HERE
-
 	Kinematic::update(time);
 	
 	//Hitbox / Hitcircle Stuff goes here
+	mCollider.update(mPosition.getX() - tempPos.getX(), mPosition.getY() - tempPos.getY());
 }
 
 void Player::changeState(PlayerState newState)

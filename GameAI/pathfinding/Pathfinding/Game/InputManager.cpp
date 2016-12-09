@@ -39,21 +39,21 @@ void InputManager::update()
 	al_get_keyboard_state(&keyboardState);
 
 
-	if (al_mouse_button_down(&mouseState, 1))//left mouse click
-	{
-		mStartPos = Vector2D(mouseState.x, mouseState.y);
+	//if (al_mouse_button_down(&mouseState, 1))//left mouse click
+	//{
+	//	mStartPos = Vector2D(mouseState.x, mouseState.y);
 
-		GameMessage* pMessage = new PathToMessage(mStartPos, mGoalPos);
-		gpGameApp->getMessageManager()->addMessage(pMessage, 0);
-	}
+	//	GameMessage* pMessage = new PathToMessage(mStartPos, mGoalPos);
+	//	gpGameApp->getMessageManager()->addMessage(pMessage, 0);
+	//}
 
-	if (al_mouse_button_down(&mouseState, 2))//right mouse click
-	{
-		mGoalPos = Vector2D(mouseState.x, mouseState.y);
+	//if (al_mouse_button_down(&mouseState, 2))//right mouse click
+	//{
+	//	mGoalPos = Vector2D(mouseState.x, mouseState.y);
 
-		GameMessage* pMessage = new PathToMessage(mStartPos, mGoalPos);
-		gpGameApp->getMessageManager()->addMessage(pMessage, 0);
-	}
+	//	GameMessage* pMessage = new PathToMessage(mStartPos, mGoalPos);
+	//	gpGameApp->getMessageManager()->addMessage(pMessage, 0);
+	//}
 
 	while (!al_event_queue_is_empty(mpEventQueue))
 	{

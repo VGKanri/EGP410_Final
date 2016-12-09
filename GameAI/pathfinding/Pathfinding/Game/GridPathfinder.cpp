@@ -31,7 +31,7 @@ void GridPathfinder::drawVisualization( Grid* pGrid, GraphicsBuffer* pDest )
 	//this is dean's code, handles drawing the nodes that were searched
 	if (mpVisualizer == NULL)
 	{
-		mpVisualizer = new GridVisualizer(pGrid);
+		mpVisualizer = new GridVisualizer(pGrid, false);
 	}
 	else
 	{
