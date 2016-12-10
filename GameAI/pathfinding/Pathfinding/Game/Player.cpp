@@ -11,7 +11,7 @@ Player::Player(Sprite *pSprite, const Vector2D position, float orientation, cons
 	, std::shared_ptr<float> reactionRadius, std::shared_ptr<float> maxRotational, float maxAcceleration)
 {
 	setSprite(pSprite);
-	setPosition(Vector2D(position.getX() + 16, position.getY() + 16));
+	setPosition(Vector2D(position.getX() - 16, position.getY() - 16));
 	setOrientation(orientation);
 	setVelocity(velocity);
 	setRotationalVelocity(rotationVel);
@@ -20,7 +20,7 @@ Player::Player(Sprite *pSprite, const Vector2D position, float orientation, cons
 	setMaxRotational(maxRotational);
 	setMaxAcceleration(maxAcceleration);
 
-	mCollider = Hitbox(Vector2D(position.getX() + PLAYER_WIDTH/2, position.getY() + PLAYER_WIDTH/2), PLAYER_WIDTH, PLAYER_HEIGHT);
+	mCollider = Hitbox(Vector2D(mPosition.getX() - (PLAYER_WIDTH - 16), mPosition.getY() - (PLAYER_HEIGHT - 16)), PLAYER_WIDTH, PLAYER_HEIGHT);
 
 	mpSpriteSheet = new GraphicsBuffer(PLAYER_SHEET_PATH);
 
