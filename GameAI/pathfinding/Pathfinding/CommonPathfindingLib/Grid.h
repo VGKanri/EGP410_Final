@@ -2,6 +2,7 @@
 
 #include <fstream>
 #include <vector>
+#include <map>
 #include "Trackable.h"
 
 class Vector2D;
@@ -33,6 +34,11 @@ public:
 	Vector2D getCenterOfSquare( int index ) const; 
 	inline int getSize() const { return mGridWidth*mGridHeight; };
 	int getIndexOfPlayerSpawn() const;
+	bool searchForValue(int value);
+
+	//these functions handle the linking of rooms
+	inline Grid* getLink(int doorValue) const { return mRoomLinks.at(doorValue); };
+	inline void setLink(int doorValue, Grid* room) { mRoomLinks.emplace(doorValue, room); };
 
 	void generateCoins();
 
@@ -50,6 +56,9 @@ public:
 	void load( std::ifstream& file );
 
 private:
+	//keeps track of room links
+	std::map<int, Grid*> mRoomLinks;
+
 	int* mpValues;
 	int mPixelWidth;
 	int mPixelHeight;

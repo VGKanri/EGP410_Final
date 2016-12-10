@@ -88,6 +88,19 @@ int Grid::getIndexOfPlayerSpawn() const
 	return 0;
 }
 
+bool Grid::searchForValue(int value)
+{
+	for (int i = 0; i < mGridWidth * mGridHeight; ++i)
+	{
+		if (getValueAtIndex(i) == value)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
 //Randomly generate coin drops
 void Grid::generateCoins()
 {

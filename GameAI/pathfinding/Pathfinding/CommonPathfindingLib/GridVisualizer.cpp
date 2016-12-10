@@ -217,7 +217,7 @@ void GridVisualizer::draw( GraphicsBuffer& dest )
 				{
 					mpCoinSprite->draw(dest, ulPos.getX(), ulPos.getY());
 				}
-				else if (mpGrid->getValueAtIndex(i) == DOOR_1 || mpGrid->getValueAtIndex(i) == DOOR_2 ||
+				else if (mpGrid->getValueAtIndex(i) == DOOR_1 || mpGrid->getValueAtIndex(i) == DOOR_2 ||  
 						 mpGrid->getValueAtIndex(i) == DOOR_3 || mpGrid->getValueAtIndex(i) == DOOR_4)
 				{
 					mpDoorSprite->draw(dest, ulPos.getX(), ulPos.getY());

@@ -67,6 +67,56 @@ void GameApp::changePathfindType(PathfindType type)
 	}
 }
 
+void GameApp::setRoomLinks()
+{
+	for (int i = 0; i < MAP_SIZE; ++i)
+	{
+		if (mpGrid[i]->searchForValue(DOOR_1))
+		{
+			for (int j = 0; j < MAP_SIZE; ++j)
+			{
+				if (j != i && mpGrid[j]->searchForValue(DOOR_1))
+				{
+					mpGrid[i]->setLink(DOOR_1, mpGrid[j]);
+				}
+			}
+		}
+
+		if (mpGrid[i]->searchForValue(DOOR_2))
+		{
+			for (int j = 0; j < MAP_SIZE; ++j)
+			{
+				if (j != i && mpGrid[j]->searchForValue(DOOR_2))
+				{
+					mpGrid[i]->setLink(DOOR_2, mpGrid[j]);
+				}
+			}
+		}
+
+		if (mpGrid[i]->searchForValue(DOOR_3))
+		{
+			for (int j = 0; j < MAP_SIZE; ++j)
+			{
+				if (j != i && mpGrid[j]->searchForValue(DOOR_3))
+				{
+					mpGrid[i]->setLink(DOOR_3, mpGrid[j]);
+				}
+			}
+		}
+
+		if (mpGrid[i]->searchForValue(DOOR_4))
+		{
+			for (int j = 0; j < MAP_SIZE; ++j)
+			{
+				if (j != i && mpGrid[j]->searchForValue(DOOR_4))
+				{
+					mpGrid[i]->setLink(DOOR_4, mpGrid[j]);
+				}
+			}
+		}
+	}
+}
+
 bool GameApp::init()
 {
 	bool retVal = Game::init();

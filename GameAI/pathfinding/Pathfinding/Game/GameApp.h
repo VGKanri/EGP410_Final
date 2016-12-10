@@ -65,6 +65,7 @@ public:
 	//inline void setPtr(float ptr) { mPtr = ptr; };
 
 	void changePathfindType(PathfindType type); //changes mpPathfinder to match pathfindertype that is passed in
+	void setRoomLinks(); //reads rooms to set appropriate room links
 
 private:
 	GameMessageManager* mpMessageManager;
