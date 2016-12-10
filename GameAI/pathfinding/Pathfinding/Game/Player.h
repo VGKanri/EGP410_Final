@@ -1,7 +1,7 @@
 #pragma once
 
 #include "KinematicUnit.h"
-#include "Hitcircle.h"
+#include "Hitbox.h"
 #include <string>
 
 const std::string PLAYER_SHEET_PATH = "../Assets/rocketSpriteSheet.png";
@@ -10,6 +10,7 @@ const float PLAYER_SPEED = 120;
 
 class Animation;
 class GraphicsBuffer;
+class Grid;
 
 enum class PlayerState
 {
@@ -20,11 +21,14 @@ enum class PlayerState
 	IDLE
 };
 
+const int PLAYER_WIDTH = 22;
+const int PLAYER_HEIGHT = 20;
+
 class Player : public KinematicUnit
 {
 private:
 	//hitcircle for collision
-	Hitcircle mCollider;
+	Hitbox mCollider;
 
 	//will probably clean this up later to be an array
 	Animation* mpDownAnimation;
@@ -50,7 +54,9 @@ public:
 
 	void changeState(PlayerState newState);
 
-	inline Hitcircle getHitCircle() const { return mCollider; };
+	bool checkWallCollision();
+
+	inline Hitbox getHitbox() const { return mCollider; };
 	bool getIsCandied() { return mAlmightyCandy; };
 	inline CURRENT_DIRECTION& getCurrentDirection() { return mDirection; };
 };

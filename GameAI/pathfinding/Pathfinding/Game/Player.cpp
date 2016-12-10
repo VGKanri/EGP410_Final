@@ -3,12 +3,15 @@
 #include "Animation.h"
 #include "GraphicsBuffer.h"
 #include "Hitcircle.h"
+#include "Grid.h"
+#include "Game.h"
+#include "GameApp.h"
 
 Player::Player(Sprite *pSprite, const Vector2D position, float orientation, const Vector2D &velocity, float rotationVel, std::shared_ptr<float> maxVelocity
 	, std::shared_ptr<float> reactionRadius, std::shared_ptr<float> maxRotational, float maxAcceleration)
 {
 	setSprite(pSprite);
-	setPosition(position);
+	setPosition(Vector2D(position.getX() + 16, position.getY() + 16));
 	setOrientation(orientation);
 	setVelocity(velocity);
 	setRotationalVelocity(rotationVel);
@@ -17,7 +20,7 @@ Player::Player(Sprite *pSprite, const Vector2D position, float orientation, cons
 	setMaxRotational(maxRotational);
 	setMaxAcceleration(maxAcceleration);
 
-	mCollider = Hitcircle(mPosition, 12);
+	mCollider = Hitbox(Vector2D(position.getX() + PLAYER_WIDTH/2, position.getY() + PLAYER_WIDTH/2), PLAYER_WIDTH, PLAYER_HEIGHT);
 
 	mpSpriteSheet = new GraphicsBuffer(PLAYER_SHEET_PATH);
 
@@ -50,9 +53,15 @@ void Player::update(float time)
 
 	//PUT IN CHECK WALL COLLISION STUFF HERE
 	Kinematic::update(time);
-	
+
 	//Hitbox / Hitcircle Stuff goes here
 	mCollider.update(mPosition.getX() - tempPos.getX(), mPosition.getY() - tempPos.getY());
+	if (checkWallCollision())
+	{
+		mCollider.update(tempPos.getX() - mPosition.getX(), tempPos.getY() - mPosition.getY());
+		mPosition = tempPos;
+		changeState(PlayerState::IDLE);
+	}
 }
 
 void Player::changeState(PlayerState newState)
@@ -102,3 +111,19 @@ void Player::populateAnimations()
 	mpIdleAnimation->pushSprite(new Sprite(*mpSprite));
 }
 
+bool Player::checkWallCollision()
+{
+	//+ mCollider.getWidth()
+	//check if any corner of the character is overlapping a wall
+	if ((gpGameApp->getGrid()->getValueAtIndex(gpGameApp->getGrid()->getSquareIndexFromPixelXY(mCollider.getPosition().getX(), mCollider.getPosition().getY())) == BLOCKING_VALUE) ||
+		(gpGameApp->getGrid()->getValueAtIndex(gpGameApp->getGrid()->getSquareIndexFromPixelXY(mCollider.getPosition().getX() + mCollider.getWidth(), mCollider.getPosition().getY())) == BLOCKING_VALUE) ||
+		(gpGameApp->getGrid()->getValueAtIndex(gpGameApp->getGrid()->getSquareIndexFromPixelXY(mCollider.getPosition().getX(), mCollider.getPosition().getY() + mCollider.getHeight())) == BLOCKING_VALUE) ||
+		(gpGameApp->getGrid()->getValueAtIndex(gpGameApp->getGrid()->getSquareIndexFromPixelXY(mCollider.getPosition().getX() + mCollider.getWidth(), mCollider.getPosition().getY() + mCollider.getHeight())) == BLOCKING_VALUE))
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}

@@ -42,6 +42,7 @@ GameApp::GameApp()
 {
 	mPtr = make_shared<float>(5.0f);
 	mLoopTargetTime = LOOP_TARGET_TIME;
+	mCurrentRoom = 0;
 }
 
 GameApp::~GameApp()

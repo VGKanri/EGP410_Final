@@ -24,7 +24,7 @@ class InputManager;
 class UnitManager;
 class SoundManager;
 
-const float LOOP_TARGET_TIME = 33.3f;//how long should each frame of execution take? 30fps = 33.3ms/frame
+const float LOOP_TARGET_TIME = 16.6f;//how long should each frame of execution take? 30fps = 33.3ms/frame
 
 const std::string FILE_NAME = "../Game/pathgrid";
 
@@ -56,7 +56,7 @@ public:
 	inline GridVisualizer* getGridVisualizer() { return mpGridVisualizer; };
 	inline GridPathfinder* getPathfinder() { return mpPathfinder; };
 	inline Grid* getGrid(int gridNum) { return mpGrid[gridNum]; };
-	inline Grid* getGrid() { return mpGrid[0]; };
+	inline Grid* getGrid() { return mpGrid[mCurrentRoom]; };
 	inline GridGraph* getGridGraph(int gridNum) { return mpGridGraph[gridNum]; };
 	inline GridGraph* getGridGraph() { return mpGridGraph[0]; };
 	inline InputManager* getInputManager() { return mpInputManager; };
@@ -83,6 +83,8 @@ private:
 	UnitManager* mpUnitManager;
 
 	PathfindType mPathfindType;
+
+	int mCurrentRoom;
 
 	//Shared pointers
 	std::shared_ptr<float> mPtr;
