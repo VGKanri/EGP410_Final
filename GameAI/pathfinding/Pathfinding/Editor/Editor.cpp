@@ -101,6 +101,7 @@ void Editor::beginLoop()
 {
 	//should be the first thing done
 	Game::beginLoop();
+	
 }
 
 void Editor::processLoop()

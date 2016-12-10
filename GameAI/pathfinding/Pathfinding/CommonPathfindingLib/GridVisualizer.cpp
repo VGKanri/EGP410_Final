@@ -21,6 +21,7 @@ GridVisualizer::GridVisualizer( Grid* pGrid, bool inEditor)
 		mpWallSprite = new Sprite(gpGame->getGraphicsBufferManager()->getBuffer(WALL_SPRITE_ID), 0, 0, 32, 32);
 		mpFloorSprite = new Sprite(gpGame->getGraphicsBufferManager()->getBuffer(FLOOR_SPRITE_ID), 0, 0, 32, 32);
 		mpCoinSprite = new Sprite(gpGame->getGraphicsBufferManager()->getBuffer(COIN_SPRITE_ID), 0, 0, 32, 32);
+		mpDoorSprite = new Sprite(gpGame->getGraphicsBufferManager()->getBuffer(DOOR_SPRITE_ID), 0, 0, 32, 32);
 	}
 }
 
@@ -31,6 +32,7 @@ GridVisualizer::~GridVisualizer()
 		delete mpWallSprite;
 		delete mpFloorSprite;
 		delete mpCoinSprite;
+		delete mpDoorSprite;
 	}
 }
 
@@ -45,7 +47,6 @@ void GridVisualizer::refresh()
 	if( mDirty )
 	{
 		//remove old entries first
-		removeAllEntriesOfColor(FLOOR_COLOR);
 		removeAllEntriesOfColor(WALL_COLOR);
 		removeAllEntriesOfColor(PLAYER_COLOR);
 		removeAllEntriesOfColor(ENEMY_COLOR);
@@ -61,9 +62,6 @@ void GridVisualizer::refresh()
 		{
  			switch (mpGrid->getValueAtIndex(i))
 			{
-			case CLEAR_VALUE:
-				addColor(i, FLOOR_COLOR);
-				break;
 			case BLOCKING_VALUE:
 				addColor(i, WALL_COLOR);
 				break;
@@ -159,7 +157,7 @@ void GridVisualizer::draw( GraphicsBuffer& dest )
 				Vector2D ulPos = mpGrid->getULCornerOfSquare(theIndices[i]);
 
 				//this is gonna get kinda gross, but for now, this is what needs to draw in the editor
-					al_draw_filled_rectangle(ulPos.getX(), ulPos.getY(), ulPos.getX() + squareSize, ulPos.getY() + squareSize, iter->first);
+				al_draw_filled_rectangle(ulPos.getX(), ulPos.getY(), ulPos.getX() + squareSize, ulPos.getY() + squareSize, iter->first);
 
 				//Check if square's color matches the start or goal colors, so we can draw the text
 				if (iter->first.r == startColor.r && iter->first.g == startColor.g && iter->first.b == startColor.b)
@@ -219,9 +217,14 @@ void GridVisualizer::draw( GraphicsBuffer& dest )
 				{
 					mpCoinSprite->draw(dest, ulPos.getX(), ulPos.getY());
 				}
+				else if (mpGrid->getValueAtIndex(i) == DOOR_1 || mpGrid->getValueAtIndex(i) == DOOR_2 ||
+						 mpGrid->getValueAtIndex(i) == DOOR_3 || mpGrid->getValueAtIndex(i) == DOOR_4)
+				{
+					mpDoorSprite->draw(dest, ulPos.getX(), ulPos.getY());
+				}
 			}
 			//if wall
-			else if ((mpGrid->getValueAtIndex(i) == BLOCKING_VALUE))
+			else if((mpGrid->getValueAtIndex(i) == BLOCKING_VALUE))
 			{
 				mpWallSprite->draw(dest, ulPos.getX(), ulPos.getY());
 			}

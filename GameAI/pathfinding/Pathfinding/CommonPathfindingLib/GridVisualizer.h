@@ -48,4 +48,5 @@ private:
 	Sprite* mpWallSprite;
 	Sprite* mpFloorSprite;
 	Sprite* mpCoinSprite;
+	Sprite* mpDoorSprite;
 };

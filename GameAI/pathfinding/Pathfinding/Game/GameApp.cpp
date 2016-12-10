@@ -83,6 +83,7 @@ bool GameApp::init()
 	mpGraphicsBufferManager->loadBuffer(WALL_SPRITE_ID, "../Assets/wall.png");
 	mpGraphicsBufferManager->loadBuffer(FLOOR_SPRITE_ID, "../Assets/floor.png");
 	mpGraphicsBufferManager->loadBuffer(COIN_SPRITE_ID, "../Assets/coin.png");
+	mpGraphicsBufferManager->loadBuffer(DOOR_SPRITE_ID, "../Assets/door.png");
 
 	//setup sprites
 	GraphicsBuffer* pBackGroundBuffer = mpGraphicsBufferManager->getBuffer(BACKGROUND_ID);
@@ -152,7 +153,8 @@ bool GameApp::init()
 	mpPathfinder = mpDijkstra;
 	mPathfindType = DIJKSTRA;
 
-	mpUnitManager->addUnit(mpSpriteManager->getSprite(PLAYER_SPRITE_ID), Vector2D(100, 100), Vector2D(0, 0), mPtr, mPtr, mPtr, 1.0f, "player", true);
+	//spawn player at the spawn player block of the grid
+	mpUnitManager->addUnit(mpSpriteManager->getSprite(PLAYER_SPRITE_ID), getGrid()->getCenterOfSquare(getGrid()->getIndexOfPlayerSpawn()), Vector2D(0, 0), mPtr, mPtr, mPtr, 1.0f, "player", true);
 	mpUnitManager->addUnit(mpSpriteManager->getSprite(ENEMY_SPRITE_ID), Vector2D(200, 200), Vector2D(0, 0), mPtr, mPtr, mPtr, 1.0f, "enemy", false);
 
 	//debug display

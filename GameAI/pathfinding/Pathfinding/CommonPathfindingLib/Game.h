@@ -31,6 +31,7 @@ const IDType ENEMY_SPRITE_ID = 2;
 const IDType WALL_SPRITE_ID = 3;
 const IDType FLOOR_SPRITE_ID = 4;
 const IDType COIN_SPRITE_ID = 5;
+const IDType DOOR_SPRITE_ID = 6;
 
 class Game:public Trackable
 {

@@ -67,6 +67,27 @@ Vector2D Grid::getULCornerOfSquare( int index ) const
 	return pos;
 }
 
+Vector2D Grid::getCenterOfSquare(int index) const
+{
+	int squareY = index / mGridWidth;
+	int squareX = index % mGridWidth;
+	Vector2D pos((float)(squareX * mSquareSize) + mSquareSize/2, (float)(squareY * mSquareSize) + mSquareSize/2);
+	return pos;
+}
+
+int Grid::getIndexOfPlayerSpawn() const
+{
+	for (int i = 0; i < mGridWidth * mGridHeight; ++i)
+	{
+		if (getValueAtIndex(i) == PLAYER_SPAWN)
+		{
+			return i;
+		}
+	}
+
+	return 0;
+}
+
 //Randomly generate coin drops
 void Grid::generateCoins()
 {
