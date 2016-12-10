@@ -6,6 +6,8 @@
 #include "Grid.h"
 #include "Game.h"
 #include "GameApp.h"
+#include "CoinPickUpMessage.h"
+#include "GameMessageManager.h"
 
 Player::Player(Sprite *pSprite, const Vector2D position, float orientation, const Vector2D &velocity, float rotationVel, std::shared_ptr<float> maxVelocity
 	, std::shared_ptr<float> reactionRadius, std::shared_ptr<float> maxRotational, float maxAcceleration)
@@ -62,6 +64,10 @@ void Player::update(float time)
 		mPosition = tempPos;
 		changeState(PlayerState::IDLE);
 	}
+	else 
+	{
+		checkCoinCollision();
+	}
 }
 
 void Player::changeState(PlayerState newState)
@@ -113,7 +119,6 @@ void Player::populateAnimations()
 
 bool Player::checkWallCollision()
 {
-	//+ mCollider.getWidth()
 	//check if any corner of the character is overlapping a wall
 	if ((gpGameApp->getGrid()->getValueAtIndex(gpGameApp->getGrid()->getSquareIndexFromPixelXY(mCollider.getPosition().getX(), mCollider.getPosition().getY())) == BLOCKING_VALUE) ||
 		(gpGameApp->getGrid()->getValueAtIndex(gpGameApp->getGrid()->getSquareIndexFromPixelXY(mCollider.getPosition().getX() + mCollider.getWidth(), mCollider.getPosition().getY())) == BLOCKING_VALUE) ||
@@ -125,5 +130,30 @@ bool Player::checkWallCollision()
 	else
 	{
 		return false;
+	}
+}
+
+void Player::checkCoinCollision()
+{
+	//check if any corner of the character is overlapping a coin
+	if (gpGameApp->getGrid()->getValueAtIndex(gpGameApp->getGrid()->getSquareIndexFromPixelXY(mCollider.getPosition().getX(), mCollider.getPosition().getY())) == COIN)
+	{
+		GameMessage* pMessage = new CoinPickUpMessage(gpGameApp->getGrid()->getSquareIndexFromPixelXY(mCollider.getPosition().getX(), mCollider.getPosition().getY()));
+		gpGameApp->getMessageManager()->addMessage(pMessage, 0);
+	}
+	else if (gpGameApp->getGrid()->getValueAtIndex(gpGameApp->getGrid()->getSquareIndexFromPixelXY(mCollider.getPosition().getX() + mCollider.getWidth(), mCollider.getPosition().getY())) == COIN)
+	{
+		GameMessage* pMessage = new CoinPickUpMessage(gpGameApp->getGrid()->getSquareIndexFromPixelXY(mCollider.getPosition().getX() + mCollider.getWidth(), mCollider.getPosition().getY()));
+		gpGameApp->getMessageManager()->addMessage(pMessage, 0);
+	}
+	else if (gpGameApp->getGrid()->getValueAtIndex(gpGameApp->getGrid()->getSquareIndexFromPixelXY(mCollider.getPosition().getX(), mCollider.getPosition().getY() + mCollider.getHeight())) == COIN)
+	{
+		GameMessage* pMessage = new CoinPickUpMessage(gpGameApp->getGrid()->getSquareIndexFromPixelXY(mCollider.getPosition().getX(), mCollider.getPosition().getY() + mCollider.getHeight()));
+		gpGameApp->getMessageManager()->addMessage(pMessage, 0);
+	}
+	else if (gpGameApp->getGrid()->getValueAtIndex(gpGameApp->getGrid()->getSquareIndexFromPixelXY(mCollider.getPosition().getX() + mCollider.getWidth(), mCollider.getPosition().getY() + mCollider.getHeight())) == COIN)
+	{
+		GameMessage* pMessage = new CoinPickUpMessage(gpGameApp->getGrid()->getSquareIndexFromPixelXY(mCollider.getPosition().getX() + mCollider.getWidth(), mCollider.getPosition().getY() + mCollider.getHeight()));
+		gpGameApp->getMessageManager()->addMessage(pMessage, 0);
 	}
 }

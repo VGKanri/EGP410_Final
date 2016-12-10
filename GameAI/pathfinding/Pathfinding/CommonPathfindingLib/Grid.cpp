@@ -8,6 +8,7 @@ Grid::Grid( int pixelWidth, int pixelHeight, int squareSize )
 ,mPixelHeight(pixelHeight)
 ,mSquareSize(squareSize)
 {
+	srand(time(NULL));
 	mGridWidth = pixelWidth / squareSize;
 	mGridHeight = pixelHeight / squareSize;
 	mpValues = new int[ mGridWidth * mGridHeight ];
@@ -64,6 +65,26 @@ Vector2D Grid::getULCornerOfSquare( int index ) const
 	int squareX = index % mGridWidth;
 	Vector2D pos( (float)(squareX * mSquareSize), (float)(squareY * mSquareSize) );
 	return pos;
+}
+
+//Randomly generate coin drops
+void Grid::generateCoins()
+{
+	int tmp;
+
+	for (int i = 0; i < mGridWidth * mGridHeight; ++i)
+	{
+		//only generate a coin if the area is clear
+		if (mpValues[i] == CLEAR_VALUE)
+		{
+			tmp = rand() % 10 + 1;
+
+			if (tmp == 1)
+			{
+				setValueAtIndex(i, COIN);
+			}
+		}		
+	}
 }
 
 //get adjacent grid square indices

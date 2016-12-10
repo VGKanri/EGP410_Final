@@ -47,4 +47,5 @@ private:
 	//tile sprites
 	Sprite* mpWallSprite;
 	Sprite* mpFloorSprite;
+	Sprite* mpCoinSprite;
 };

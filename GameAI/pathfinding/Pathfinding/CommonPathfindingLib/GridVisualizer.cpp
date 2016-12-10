@@ -20,6 +20,7 @@ GridVisualizer::GridVisualizer( Grid* pGrid, bool inEditor)
 	{
 		mpWallSprite = new Sprite(gpGame->getGraphicsBufferManager()->getBuffer(WALL_SPRITE_ID), 0, 0, 32, 32);
 		mpFloorSprite = new Sprite(gpGame->getGraphicsBufferManager()->getBuffer(FLOOR_SPRITE_ID), 0, 0, 32, 32);
+		mpCoinSprite = new Sprite(gpGame->getGraphicsBufferManager()->getBuffer(COIN_SPRITE_ID), 0, 0, 32, 32);
 	}
 }
 
@@ -29,6 +30,7 @@ GridVisualizer::~GridVisualizer()
 	{
 		delete mpWallSprite;
 		delete mpFloorSprite;
+		delete mpCoinSprite;
 	}
 }
 
@@ -144,19 +146,20 @@ void GridVisualizer::draw( GraphicsBuffer& dest )
 	static ALLEGRO_COLOR startColor = al_map_rgb(1, 255, 128);
 	static ALLEGRO_COLOR stopColor = al_map_rgb(255, 255, 0);
 
-	std::map< ALLEGRO_COLOR, std::vector<int>, AllegroColorCompare >::iterator iter;
-	for( iter = mColormap.begin(); iter != mColormap.end(); ++iter )
+	//the draw loop for the editor. Uses Dean's weird stuff.
+	if (mInEditor)
 	{
-		std::vector<int> theIndices = iter->second;
-
-		for( unsigned int i=0; i<theIndices.size(); i++ )
+		std::map< ALLEGRO_COLOR, std::vector<int>, AllegroColorCompare >::iterator iter;
+		for (iter = mColormap.begin(); iter != mColormap.end(); ++iter)
 		{
-			Vector2D ulPos = mpGrid->getULCornerOfSquare( theIndices[i] );
+			std::vector<int> theIndices = iter->second;
 
-			//this is gonna get kinda gross, but for now, this is what needs to draw in the editor
-			if (mInEditor)
+			for (unsigned int i = 0; i < theIndices.size(); i++)
 			{
-				al_draw_filled_rectangle(ulPos.getX(), ulPos.getY(), ulPos.getX() + squareSize, ulPos.getY() + squareSize, iter->first);
+				Vector2D ulPos = mpGrid->getULCornerOfSquare(theIndices[i]);
+
+				//this is gonna get kinda gross, but for now, this is what needs to draw in the editor
+					al_draw_filled_rectangle(ulPos.getX(), ulPos.getY(), ulPos.getX() + squareSize, ulPos.getY() + squareSize, iter->first);
 
 				//Check if square's color matches the start or goal colors, so we can draw the text
 				if (iter->first.r == startColor.r && iter->first.g == startColor.g && iter->first.b == startColor.b)
@@ -197,24 +200,34 @@ void GridVisualizer::draw( GraphicsBuffer& dest )
 				{
 					al_draw_text(gpGame->getFont(), al_map_rgb(0, 0, 0), ulPos.getX() + squareSize / 2, ulPos.getY(), ALLEGRO_ALIGN_CENTER, "4");
 				}
-				//mpBuffer->fillRegion( ulPos, Vector2D( ulPos.getX() + squareSize, ulPos.getY() + squareSize ), iter->first );
-			}
-
-			//this is what should be drawn in game
-			else
-			{
-				if (iter->first.r != WALL_COLOR.r && iter->first.g != WALL_COLOR.g && iter->first.b != WALL_COLOR.b)
-				{
-					mpFloorSprite->draw(dest, ulPos.getX(), ulPos.getY());
-				}
-				else if (iter->first.r == WALL_COLOR.r && iter->first.g == WALL_COLOR.g && iter->first.b == WALL_COLOR.b)
-				{
-					mpWallSprite->draw(dest, ulPos.getX(), ulPos.getY());
-				}
 			}
 		}
 	}
 
+	//the draw loop for the actual game
+	else
+	{
+		for (int i = 0; i < mpGrid->getSize(); ++i)
+		{
+			Vector2D ulPos = mpGrid->getULCornerOfSquare(i);
+			//if empty space
+			if (mpGrid->getValueAtIndex(i) != BLOCKING_VALUE)
+			{
+				mpFloorSprite->draw(dest, ulPos.getX(), ulPos.getY());
+
+				if (mpGrid->getValueAtIndex(i) == COIN)
+				{
+					mpCoinSprite->draw(dest, ulPos.getX(), ulPos.getY());
+				}
+			}
+			//if wall
+			else if ((mpGrid->getValueAtIndex(i) == BLOCKING_VALUE))
+			{
+				mpWallSprite->draw(dest, ulPos.getX(), ulPos.getY());
+			}
+		}		
+	}
+	
 	GraphicsSystem::switchTargetBitmap( pOldTarget );
 }
 

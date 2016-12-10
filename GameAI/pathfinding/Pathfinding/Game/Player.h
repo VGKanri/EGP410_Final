@@ -55,6 +55,7 @@ public:
 	void changeState(PlayerState newState);
 
 	bool checkWallCollision();
+	void checkCoinCollision();
 
 	inline Hitbox getHitbox() const { return mCollider; };
 	bool getIsCandied() { return mAlmightyCandy; };

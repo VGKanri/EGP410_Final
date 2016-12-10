@@ -82,13 +82,12 @@ bool GameApp::init()
 	mpGraphicsBufferManager->loadBuffer(ENEMY_SPRITE_ID, "Serguei.png");
 	mpGraphicsBufferManager->loadBuffer(WALL_SPRITE_ID, "../Assets/wall.png");
 	mpGraphicsBufferManager->loadBuffer(FLOOR_SPRITE_ID, "../Assets/floor.png");
+	mpGraphicsBufferManager->loadBuffer(COIN_SPRITE_ID, "../Assets/coin.png");
 
 	//setup sprites
 	GraphicsBuffer* pBackGroundBuffer = mpGraphicsBufferManager->getBuffer(BACKGROUND_ID);
 	GraphicsBuffer* pPlayerBuffer = mpGraphicsBufferManager->getBuffer(PLAYER_SPRITE_ID);
 	GraphicsBuffer* pEnemyBuffer = mpGraphicsBufferManager->getBuffer(ENEMY_SPRITE_ID);
-	GraphicsBuffer* pWallBuffer = mpGraphicsBufferManager->getBuffer(WALL_SPRITE_ID);
-	GraphicsBuffer* pFloorBuffer = mpGraphicsBufferManager->getBuffer(FLOOR_SPRITE_ID);
 
 	if (pBackGroundBuffer != NULL)
 	{
@@ -124,6 +123,9 @@ bool GameApp::init()
 		mpGrid[i]->load(fs);
 		fs.close();
 		ss.clear();
+		
+		//generate coins when initting grid
+		mpGrid[i]->generateCoins();
 	}
 
 	mpGridVisualizer = new GridVisualizer( mpGrid[0], false);

@@ -15,6 +15,7 @@ const int DOOR_1 = 5;
 const int DOOR_2 = 6;
 const int DOOR_3 = 7;
 const int DOOR_4 = 8;
+const int COIN = 9;
 
 class Grid:public Trackable
 {
@@ -29,6 +30,9 @@ public:
 	void setValueAtIndex( int index, int value );
 	void setValueAtPixelXY( int x, int y, int value );
 	Vector2D getULCornerOfSquare( int index ) const;
+	inline int getSize() const { return mGridWidth*mGridHeight; };
+
+	void generateCoins();
 
 	//accessors
 	int getPixelWidth() const { return mPixelWidth; };
