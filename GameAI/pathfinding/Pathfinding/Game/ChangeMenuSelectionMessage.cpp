@@ -1,5 +1,4 @@
 #include "ChangeMenuSelectionMessage.h"
-#include "GameMessageManager.h"
 #include "MainMenu.h"
 
 ChangeMenuSelectionMessage::ChangeMenuSelectionMessage(bool increase, bool mainMenu)
@@ -45,6 +44,5 @@ void ChangeMenuSelectionMessage::process()
 			}
 		}
 	}
-	std::cout << gpGameApp->getMainMenu()->getSelection() << std::endl;
 	//If it is on the help menu
 }

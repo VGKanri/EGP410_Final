@@ -45,7 +45,7 @@ GameApp::GameApp()
 	mPtr = make_shared<float>(5.0f);
 	mLoopTargetTime = LOOP_TARGET_TIME;
 	mCurrentRoom = 0;
-	mState = GameState::PLAYING;
+	mState = GameState::MAIN_MENU;
 }
 
 GameApp::~GameApp()
@@ -148,11 +148,13 @@ bool GameApp::init()
 	mpGraphicsBufferManager->loadBuffer(FLOOR_SPRITE_ID, "../Assets/floor.png");
 	mpGraphicsBufferManager->loadBuffer(COIN_SPRITE_ID, "../Assets/coin.png");
 	mpGraphicsBufferManager->loadBuffer(DOOR_SPRITE_ID, "../Assets/door.png");
+	mpGraphicsBufferManager->loadBuffer(MAIN_MENU_ID, "ROCKETO-SLIMU.png");
 
 	//setup sprites
 	GraphicsBuffer* pBackGroundBuffer = mpGraphicsBufferManager->getBuffer(BACKGROUND_ID);
 	GraphicsBuffer* pPlayerBuffer = mpGraphicsBufferManager->getBuffer(PLAYER_SPRITE_ID);
 	GraphicsBuffer* pEnemyBuffer = mpGraphicsBufferManager->getBuffer(ENEMY_SPRITE_ID);
+	GraphicsBuffer* pMainMenuBuffer = mpGraphicsBufferManager->getBuffer(MAIN_MENU_ID);
 
 	if (pBackGroundBuffer != NULL)
 	{
@@ -167,6 +169,11 @@ bool GameApp::init()
 	if (pEnemyBuffer != NULL)
 	{
 		mpSpriteManager->createAndManageSprite(ENEMY_SPRITE_ID, pEnemyBuffer, 0, 0, pEnemyBuffer->getWidth(), pEnemyBuffer->getHeight());
+	}
+
+	if (pMainMenuBuffer != NULL)
+	{
+		mpSpriteManager->createAndManageSprite(MAIN_MENU_ID, pMainMenuBuffer, 0, 0, pMainMenuBuffer->getWidth(), pMainMenuBuffer->getHeight());
 	}
 
 	//load managers
@@ -285,20 +292,30 @@ void GameApp::processLoop()
 {
 	//get back buffer
 	GraphicsBuffer* pBackBuffer = mpGraphicsSystem->getBackBuffer();
-	//copy to back buffer
-	mpGridVisualizer->draw(*pBackBuffer);
+
+	switch (mState)
+	{
+	case GameState::MAIN_MENU:
+		mpSpriteManager->getSprite(MAIN_MENU_ID)->draw(*pBackBuffer, 0, 0 ,0.0f);
+		break;
+	case GameState::PLAYING:
+		//copy to back buffer
+		mpGridVisualizer->draw(*pBackBuffer);
 #ifdef VISUALIZE_PATH
-	//show pathfinder visualizer
-    //mpPathfinder->drawVisualization(mpGrid[mCurrentRoom], pBackBuffer);
+		//show pathfinder visualizer
+		//mpPathfinder->drawVisualization(mpGrid[mCurrentRoom], pBackBuffer);
 #endif
 
+		mpUnitManager->update(LOOP_TARGET_TIME / 1000.0f);
+		break;
+	}
+	
 	mpDebugDisplay->draw(pBackBuffer);
 
 	mpMessageManager->processMessagesForThisframe();
 
 	mpInputManager->update();
-
-	mpUnitManager->update(LOOP_TARGET_TIME / 1000.0f);
+	
 	//should be last thing in processLoop
 	Game::processLoop();
 }
