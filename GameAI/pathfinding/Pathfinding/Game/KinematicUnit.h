@@ -57,6 +57,7 @@ public:
 	void setMaxRotational(std::shared_ptr<float> maxRot) { mMaxRotationalVelocity = maxRot; };
 	void setMaxAcceleration(float maxAccel) { mMaxAcceleration = maxAccel; };
 	void setSteering(Steering* pSteering);
+	void setSteeringFirst(Steering* pSteering);
 
 	//check collision
 	//bool checkCollisionWithWalls();

@@ -6,6 +6,7 @@
 #include "Steering.h"
 
 #include "GameMessageManager.h"
+#include "ArriveSteering.h"
 
 
 using namespace std;
@@ -133,6 +134,11 @@ bool KinematicUnit::checkCollisionWithWalls()
 void KinematicUnit::setSteering(Steering* pSteering)
 {
 	delete mpCurrentSteering;
+	mpCurrentSteering = pSteering;
+}
+
+void KinematicUnit::setSteeringFirst(Steering* pSteering)
+{
 	mpCurrentSteering = pSteering;
 }
 

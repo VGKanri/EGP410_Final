@@ -42,7 +42,7 @@ GameApp::GameApp()
 ,mpPathfinder(NULL)
 ,mpDebugDisplay(NULL)
 {
-	mPtr = make_shared<float>(5.0f);
+	mPtr = make_shared<float>(10.0f);
 	mLoopTargetTime = LOOP_TARGET_TIME;
 	mCurrentRoom = 0;
 	mState = GameState::MAIN_MENU;
@@ -239,13 +239,13 @@ bool GameApp::init()
 
 	mpUnitManager = new UnitManager();
 
-	//set default pathfinder to Dijkstra
-	mpPathfinder = mpDijkstra;
-	mPathfindType = DIJKSTRA;
+	//set default pathfinder to AStar
+	mpPathfinder = mpAStar;
+	mPathfindType = ASTAR;
 
 	//spawn player at the spawn player block of the grid
 	mpUnitManager->addUnit(mpSpriteManager->getSprite(PLAYER_SPRITE_ID), getGrid()->getULCornerOfSquare(getGrid()->getIndexOfPlayerSpawn()), Vector2D(0, 0), mPtr, mPtr, mPtr, 1.0f, "player", true);
-	mpUnitManager->addUnit(mpSpriteManager->getSprite(ENEMY_SPRITE_ID), Vector2D(200, 200), Vector2D(0, 0), mPtr, mPtr, mPtr, 1.0f, "enemy", false);
+	mpUnitManager->addUnit(mpSpriteManager->getSprite(ENEMY_SPRITE_ID), Vector2D(100, 100), Vector2D(0, 0), mPtr, mPtr, mPtr, 1.0f, "enemy", false);
 
 	mpMainMenu->setSprite(mpSpriteManager->getSprite(PLAYER_SPRITE_ID));
 	mpMainMenu->setAnimation(mpUnitManager->getPlayer()->getSideAnimation());

@@ -2,6 +2,7 @@
 
 #include "KinematicUnit.h"
 #include "Hitbox.h"
+#include "AStar.h"
 #include <string>
 
 const std::string PLAYER_SHEET_PATH = "../Assets/rocketSpriteSheet.png";
@@ -37,6 +38,8 @@ private:
 	Animation* mpIdleAnimation;
 	Animation* mpCurrentAnimation;
 
+	Node* mpCurrentNode;
+
 	GraphicsBuffer* mpSpriteSheet;
 
 	PlayerState mState = PlayerState::IDLE;
@@ -56,6 +59,8 @@ public:
 	void changeState(PlayerState newState);
 	void resetCollider();
 
+	void calcCurrentNode();
+
 	Animation* getSideAnimation() { return mpSideAnimation; };
 
 	bool checkWallCollision();
@@ -65,4 +70,5 @@ public:
 	inline Hitbox getHitbox() const { return mCollider; };
 	bool getIsCandied() { return mAlmightyCandy; };
 	inline CURRENT_DIRECTION& getCurrentDirection() { return mDirection; };
+	inline Node* getCurrentNode() { return mpCurrentNode; };
 };

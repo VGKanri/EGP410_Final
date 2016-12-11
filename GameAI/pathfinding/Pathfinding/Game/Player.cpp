@@ -6,6 +6,8 @@
 #include "Grid.h"
 #include "Game.h"
 #include "GameApp.h"
+#include "GridPathfinder.h"
+#include "GridGraph.h"
 #include "CoinPickUpMessage.h"
 #include "ChangeRoomMessage.h"
 #include "GameMessageManager.h"
@@ -38,6 +40,8 @@ Player::Player(Sprite *pSprite, const Vector2D position, float orientation, cons
 	populateAnimations();
 
 	mpCurrentAnimation = mpIdleAnimation;
+
+	calcCurrentNode();
 }
 
 Player::~Player()
@@ -51,6 +55,8 @@ Player::~Player()
 
 void Player::update(float time)
 {
+	calcCurrentNode();
+
 	Vector2D tempPos = mPosition;
 
 	//ANIMATION UPDATE
@@ -70,7 +76,7 @@ void Player::update(float time)
 	}
 
 	checkCoinCollision();
-	
+
 	//handle door logic
 	int result = checkDoorCollision();
 	if (result != -1 && !mInDoor)
@@ -207,4 +213,10 @@ int Player::checkDoorCollision()
 	{
 		return -1; //signifies no door collision is occuring
 	}
+}
+
+//Getting the node that the player is currently in
+void Player::calcCurrentNode()
+{
+	mpCurrentNode = gpGameApp->getGridGraph()->getNode(gpGameApp->getGrid()->getSquareIndexFromPixelXY(mCollider.getPosition().getX() + 16, mCollider.getPosition().getY()));
 }
