@@ -270,6 +270,9 @@ void GameApp::cleanup()
 
 	delete mpUnitManager;
 	mpUnitManager = NULL;
+
+	delete mpMainMenu;
+	mpMainMenu = NULL;
 }
 
 void GameApp::beginLoop()
