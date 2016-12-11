@@ -102,7 +102,6 @@ void InputManager::update()
 						break;
 					}
 				}
-
 				break;
 
 			case GameState::PLAYING:
@@ -142,17 +141,19 @@ void InputManager::update()
 					GameMessage* pMessage = new ChangePlayerDirectionMessage(3);
 					gpGameApp->getMessageManager()->addMessage(pMessage, 0);
 				}
+
+				if (mEvent.keyboard.keycode == ALLEGRO_KEY_ESCAPE)
+				{
+					//exit main game loop
+					GameMessage* pMessage = new ChangeStateMessage(GameState::MAIN_MENU);
+					gpGameApp->getMessageManager()->addMessage(pMessage, 0);
+				}
 				break;
 			case GameState::HELP_MENU:
 				break;
 
 			}
-			if (mEvent.keyboard.keycode == ALLEGRO_KEY_ESCAPE)
-			{
-				//exit main game loop
-				GameMessage* pMessage = new ExitGameMessage();
-				gpGameApp->getMessageManager()->addMessage(pMessage, 0);
-			}
+			
 		}
 	}
 }

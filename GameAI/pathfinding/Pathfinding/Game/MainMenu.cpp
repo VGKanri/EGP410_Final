@@ -2,6 +2,19 @@
 #include "GameApp.h"
 #include "GraphicsSystem.h"
 
+MainMenu::~MainMenu()
+{
+	if (mpSprite)
+	{
+		mpSprite = NULL;
+	}
+	
+	if (mpAnimation)
+	{
+		mpAnimation = NULL;
+	}
+}
+
 //Update function for the main menu
 void MainMenu::update(float timePassed)
 {
@@ -23,5 +36,4 @@ void MainMenu::update(float timePassed)
 		mpSprite->draw(*gpGameApp->getGraphicsSystem()->getBackBuffer(), SELECTOR_X, SELECTOR_Y_4, 0);
 		break;
 	}
-
 }

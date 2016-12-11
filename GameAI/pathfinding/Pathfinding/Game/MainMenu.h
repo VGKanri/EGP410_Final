@@ -29,7 +29,7 @@ private:
 	Sprite* mpSprite;
 public:
 	MainMenu() { mSelection = MainSelectionState::PLAY; };
-	~MainMenu() {};
+	~MainMenu();
 
 	inline void setSelection(MainSelectionState select) { mSelection = select; };
 	inline MainSelectionState getSelection() { return mSelection; };

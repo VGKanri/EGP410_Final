@@ -54,8 +54,6 @@ void Sprite::draw( GraphicsBuffer& dest, float dx, float dy, float rotationInRad
 	}
 }*/
 
-
-
 /*void Sprite::draw(GraphicsBuffer *pDestBuffer, int destX, int destY, float rotationInRadians)
 {
 	mpBuffer->copy( pDestBuffer, destX, destY, 0, 0, mWidth, mHeight, rotationInRadians );
