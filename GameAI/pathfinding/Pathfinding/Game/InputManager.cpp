@@ -81,26 +81,27 @@ void InputManager::update()
 
 				if (mEvent.keyboard.keycode == ALLEGRO_KEY_ENTER)
 				{
-					GameMessage* pMessage = new ChangeStateMessage(GameState::PLAYING);
-					switch (gpGameApp->getMainMenu()->getSelection())
+					//Determining what option is currently selected, now in an if because apparently switch statements break the messaging system.
+					if (gpGameApp->getMainMenu()->getSelection() == MainSelectionState::PLAY)
 					{
-					case MainSelectionState::PLAY:
-						pMessage = new ChangeStateMessage(GameState::PLAYING);
+						GameMessage* pMessage = new ChangeStateMessage(GameState::PLAYING);
 						gpGameApp->getMessageManager()->addMessage(pMessage, 0);
-						break;
-					case MainSelectionState::HELP:
-						pMessage = new ChangeStateMessage(GameState::HELP_MENU);
-						gpGameApp->getMessageManager()->addMessage(pMessage, 0);
-						break;
-					case MainSelectionState::CREDITS:
-						pMessage = new ChangeStateMessage(GameState::CREDITS_MENU);
-						gpGameApp->getMessageManager()->addMessage(pMessage, 0);
-						break;
-					case MainSelectionState::QUIT:
-						pMessage = new ExitGameMessage();
-						gpGameApp->getMessageManager()->addMessage(pMessage, 0);
-						break;
 					}
+					else if (gpGameApp->getMainMenu()->getSelection() == MainSelectionState::HELP)
+					{
+						GameMessage* pMessage = new ChangeStateMessage(GameState::HELP_MENU);
+						gpGameApp->getMessageManager()->addMessage(pMessage, 0);
+					}
+					else if (gpGameApp->getMainMenu()->getSelection() == MainSelectionState::CREDITS)
+					{
+						GameMessage* pMessage = new ChangeStateMessage(GameState::CREDITS_MENU);
+						gpGameApp->getMessageManager()->addMessage(pMessage, 0);
+					}
+					else if (gpGameApp->getMainMenu()->getSelection() == MainSelectionState::QUIT)
+					{
+						GameMessage* pMessage = new ExitGameMessage();
+						gpGameApp->getMessageManager()->addMessage(pMessage, 0);
+					}					
 				}
 				break;
 
