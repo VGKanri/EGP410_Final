@@ -92,7 +92,7 @@ bool Grid::searchForValue(int value)
 {
 	for (int i = 0; i < mGridWidth * mGridHeight; ++i)
 	{
-		if (getValueAtIndex(i) == value)
+		if (mpValues[i] == value)
 		{
 			return true;
 		}

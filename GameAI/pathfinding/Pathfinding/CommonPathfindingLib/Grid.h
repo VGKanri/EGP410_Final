@@ -21,7 +21,7 @@ const int COIN = 9;
 class Grid:public Trackable
 {
 public:
-	Grid( int pixelWidth, int pixelHeight, int squareSize );
+	Grid( int pixelWidth, int pixelHeight, int squareSize);
 	~Grid();
 
 	int getSquareIndexFromPixelXY( int x, int y ) const;
@@ -65,4 +65,5 @@ private:
 	int mSquareSize;
 	int mGridWidth;
 	int mGridHeight;
+
 };

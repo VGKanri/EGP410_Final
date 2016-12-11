@@ -66,6 +66,7 @@ public:
 
 	void changePathfindType(PathfindType type); //changes mpPathfinder to match pathfindertype that is passed in
 	void setRoomLinks(); //reads rooms to set appropriate room links
+	void changeCurrentRoom(Grid* pGrid); //changes the mCurrentRoom variable to match the current grid
 
 private:
 	GameMessageManager* mpMessageManager;

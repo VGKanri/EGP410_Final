@@ -22,6 +22,7 @@ public:
 public:
 	void drawVisualization( Grid* pGrid, GraphicsBuffer* pDest );
 	void drawPathCenterLines();
+	void switchGrid(Grid* pGrid);
 
 protected:
 	std::vector<Node*> mVisitedNodes;

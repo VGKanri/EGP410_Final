@@ -78,11 +78,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\..\..\Gabe%27s Final\EGP410_Final\GameAI\pathfinding\Pathfinding\Game\CoinPickUpMessage.h" />
     <ClInclude Include="ArriveSteering.h" />
     <ClInclude Include="AStar.h" />
     <ClInclude Include="ChangePathfindingMessage.h" />
     <ClInclude Include="ChangePlayerDirectionMessage.h" />
+    <ClInclude Include="ChangeRoomMessage.h" />
+    <ClInclude Include="CoinPickUpMessage.h" />
     <ClInclude Include="Connection.h" />
     <ClInclude Include="DebugContent.h" />
     <ClInclude Include="DebugDisplay.h" />
@@ -116,11 +117,12 @@
     <ClInclude Include="UnitManager.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\..\..\Gabe%27s Final\EGP410_Final\GameAI\pathfinding\Pathfinding\Game\CoinPickUpMessage.cpp" />
     <ClCompile Include="ArriveSteering.cpp" />
     <ClCompile Include="AStar.cpp" />
     <ClCompile Include="ChangePathfindingMessage.cpp" />
     <ClCompile Include="ChangePlayerDirectionMessage.cpp" />
+    <ClCompile Include="ChangeRoomMessage.cpp" />
+    <ClCompile Include="CoinPickUpMessage.cpp" />
     <ClCompile Include="Connection.cpp" />
     <ClCompile Include="DebugDisplay.cpp" />
     <ClCompile Include="DepthFirstPathfinder.cpp" />

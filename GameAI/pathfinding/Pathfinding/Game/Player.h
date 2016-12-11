@@ -42,6 +42,7 @@ private:
 	PlayerState mState = PlayerState::IDLE;
 
 	bool mAlmightyCandy; //Boolean to determine if the player has eaten the almighty candy recently
+	bool mInDoor;
 	CURRENT_DIRECTION mDirection;
 
 	void populateAnimations();
@@ -53,9 +54,11 @@ public:
 	void update(float time); //Update function for the Player
 
 	void changeState(PlayerState newState);
+	void resetCollider();
 
 	bool checkWallCollision();
 	void checkCoinCollision();
+	int checkDoorCollision(); //this function returns the index of the door collision so that the grid can handle the rest
 
 	inline Hitbox getHitbox() const { return mCollider; };
 	bool getIsCandied() { return mAlmightyCandy; };

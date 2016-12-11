@@ -117,6 +117,17 @@ void GameApp::setRoomLinks()
 	}
 }
 
+void GameApp::changeCurrentRoom(Grid* pGrid)
+{
+	for (int i = 0; i < MAP_SIZE; ++i)
+	{
+		if (pGrid == mpGrid[i])
+		{
+			mCurrentRoom = i;
+		}
+	}
+}
+
 bool GameApp::init()
 {
 	bool retVal = Game::init();
@@ -173,11 +184,13 @@ bool GameApp::init()
 		fs.open(ss.str());
 		mpGrid[i]->load(fs);
 		fs.close();
-		ss.clear();
+		ss.str(""); //clear string stream
 		
 		//generate coins when initting grid
 		mpGrid[i]->generateCoins();
 	}
+
+	setRoomLinks(); //vital for room transferring
 
 	mpGridVisualizer = new GridVisualizer( mpGrid[0], false);
 
@@ -204,7 +217,7 @@ bool GameApp::init()
 	mPathfindType = DIJKSTRA;
 
 	//spawn player at the spawn player block of the grid
-	mpUnitManager->addUnit(mpSpriteManager->getSprite(PLAYER_SPRITE_ID), getGrid()->getCenterOfSquare(getGrid()->getIndexOfPlayerSpawn()), Vector2D(0, 0), mPtr, mPtr, mPtr, 1.0f, "player", true);
+	mpUnitManager->addUnit(mpSpriteManager->getSprite(PLAYER_SPRITE_ID), getGrid()->getULCornerOfSquare(getGrid()->getIndexOfPlayerSpawn()), Vector2D(0, 0), mPtr, mPtr, mPtr, 1.0f, "player", true);
 	mpUnitManager->addUnit(mpSpriteManager->getSprite(ENEMY_SPRITE_ID), Vector2D(200, 200), Vector2D(0, 0), mPtr, mPtr, mPtr, 1.0f, "enemy", false);
 
 	//debug display
@@ -268,7 +281,7 @@ void GameApp::processLoop()
 	mpGridVisualizer->draw(*pBackBuffer);
 #ifdef VISUALIZE_PATH
 	//show pathfinder visualizer
-	mpPathfinder->drawVisualization(mpGrid[0], pBackBuffer);
+    //mpPathfinder->drawVisualization(mpGrid[mCurrentRoom], pBackBuffer);
 #endif
 
 	mpDebugDisplay->draw(pBackBuffer);
@@ -277,7 +290,6 @@ void GameApp::processLoop()
 
 	mpInputManager->update();
 
-	//mpUnitManager->update(mpLoopTimer->getElapsedTime());
 	mpUnitManager->update(LOOP_TARGET_TIME / 1000.0f);
 	//should be last thing in processLoop
 	Game::processLoop();

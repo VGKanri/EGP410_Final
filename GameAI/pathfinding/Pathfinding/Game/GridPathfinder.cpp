@@ -90,3 +90,8 @@ void GridPathfinder::drawPathCenterLines()
 	}	
 }
 #endif
+
+void GridPathfinder::switchGrid(Grid* pGrid)
+{
+	mpVisualizer->switchGrid(pGrid);
+}

@@ -7,13 +7,14 @@
 #include "Game.h"
 #include "GameApp.h"
 #include "CoinPickUpMessage.h"
+#include "ChangeRoomMessage.h"
 #include "GameMessageManager.h"
 
 Player::Player(Sprite *pSprite, const Vector2D position, float orientation, const Vector2D &velocity, float rotationVel, std::shared_ptr<float> maxVelocity
 	, std::shared_ptr<float> reactionRadius, std::shared_ptr<float> maxRotational, float maxAcceleration)
 {
 	setSprite(pSprite);
-	setPosition(Vector2D(position.getX() - 16, position.getY() - 16));
+	setPosition(Vector2D(position.getX(), position.getY()));
 	setOrientation(orientation);
 	setVelocity(velocity);
 	setRotationalVelocity(rotationVel);
@@ -23,6 +24,9 @@ Player::Player(Sprite *pSprite, const Vector2D position, float orientation, cons
 	setMaxAcceleration(maxAcceleration);
 
 	mCollider = Hitbox(Vector2D(mPosition.getX() - (PLAYER_WIDTH - 16), mPosition.getY() - (PLAYER_HEIGHT - 16)), PLAYER_WIDTH, PLAYER_HEIGHT);
+
+	mAlmightyCandy = false;
+	mInDoor = false;
 
 	mpSpriteSheet = new GraphicsBuffer(PLAYER_SHEET_PATH);
 
@@ -64,9 +68,21 @@ void Player::update(float time)
 		mPosition = tempPos;
 		changeState(PlayerState::IDLE);
 	}
-	else 
+
+	checkCoinCollision();
+	
+	//handle door logic
+	int result = checkDoorCollision();
+	if (result != -1 && !mInDoor)
 	{
-		checkCoinCollision();
+		mInDoor = true;
+		GameMessage* pMessage = new ChangeRoomMessage(result);
+		gpGameApp->getMessageManager()->addMessage(pMessage, 0);
+		
+	}
+	else if (result == -1)
+	{
+		mInDoor = false;
 	}
 }
 
@@ -94,6 +110,11 @@ void Player::changeState(PlayerState newState)
 		mpCurrentAnimation = mpIdleAnimation;
 		break;
 	}
+}
+
+void Player::resetCollider()
+{
+	mCollider = Hitbox(Vector2D(mPosition.getX() - (PLAYER_WIDTH - 16), mPosition.getY() - (PLAYER_HEIGHT - 16)), PLAYER_WIDTH, PLAYER_HEIGHT);
 }
 
 void Player::populateAnimations()
@@ -155,5 +176,35 @@ void Player::checkCoinCollision()
 	{
 		GameMessage* pMessage = new CoinPickUpMessage(gpGameApp->getGrid()->getSquareIndexFromPixelXY(mCollider.getPosition().getX() + mCollider.getWidth(), mCollider.getPosition().getY() + mCollider.getHeight()));
 		gpGameApp->getMessageManager()->addMessage(pMessage, 0);
+	}
+}
+
+int Player::checkDoorCollision()
+{
+	int corner1 = gpGameApp->getGrid()->getValueAtIndex(gpGameApp->getGrid()->getSquareIndexFromPixelXY(mCollider.getPosition().getX(), mCollider.getPosition().getY()));
+	int corner2 = gpGameApp->getGrid()->getValueAtIndex(gpGameApp->getGrid()->getSquareIndexFromPixelXY(mCollider.getPosition().getX() + mCollider.getWidth(), mCollider.getPosition().getY()));
+	int corner3 = gpGameApp->getGrid()->getValueAtIndex(gpGameApp->getGrid()->getSquareIndexFromPixelXY(mCollider.getPosition().getX(), mCollider.getPosition().getY() + mCollider.getHeight()));
+	int corner4 = gpGameApp->getGrid()->getValueAtIndex(gpGameApp->getGrid()->getSquareIndexFromPixelXY(mCollider.getPosition().getX() + mCollider.getWidth(), mCollider.getPosition().getY() + mCollider.getHeight()));
+
+	//check if any corner of the character is overlapping a door tile
+	if (corner1 >= DOOR_1 && corner1 <= DOOR_4)
+	{
+		return gpGameApp->getGrid()->getSquareIndexFromPixelXY(mCollider.getPosition().getX(), mCollider.getPosition().getY());
+	}
+	else if (corner2 >= DOOR_1 && corner2 <= DOOR_4)
+	{
+		return gpGameApp->getGrid()->getSquareIndexFromPixelXY(mCollider.getPosition().getX() + mCollider.getWidth(), mCollider.getPosition().getY());
+	}
+	else if (corner3 >= DOOR_1 && corner3 <= DOOR_4)
+	{
+		return gpGameApp->getGrid()->getSquareIndexFromPixelXY(mCollider.getPosition().getX(), mCollider.getPosition().getY() + mCollider.getHeight());
+	}
+	else if (corner4 >= DOOR_1 && corner4 <= DOOR_4)
+	{
+		return gpGameApp->getGrid()->getSquareIndexFromPixelXY(mCollider.getPosition().getX() + mCollider.getWidth(), mCollider.getPosition().getY() + mCollider.getHeight());
+	}
+	else
+	{
+		return -1; //signifies no door collision is occuring
 	}
 }

@@ -230,7 +230,7 @@ void GridVisualizer::draw( GraphicsBuffer& dest )
 			}
 		}		
 	}
-	
+
 	GraphicsSystem::switchTargetBitmap( pOldTarget );
 }
 

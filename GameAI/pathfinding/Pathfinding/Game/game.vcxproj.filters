@@ -174,7 +174,10 @@
     <ClInclude Include="HelpMenu.h">
       <Filter>Header Files\Menus</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\Gabe%27s Final\EGP410_Final\GameAI\pathfinding\Pathfinding\Game\CoinPickUpMessage.h">
+    <ClInclude Include="CoinPickUpMessage.h">
+      <Filter>Header Files\Messages</Filter>
+    </ClInclude>
+    <ClInclude Include="ChangeRoomMessage.h">
       <Filter>Header Files\Messages</Filter>
     </ClInclude>
   </ItemGroup>
@@ -272,7 +275,10 @@
     <ClCompile Include="MainMenu.cpp">
       <Filter>Source Files\Menus</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Gabe%27s Final\EGP410_Final\GameAI\pathfinding\Pathfinding\Game\CoinPickUpMessage.cpp">
+    <ClCompile Include="CoinPickUpMessage.cpp">
+      <Filter>Source Files\Messages</Filter>
+    </ClCompile>
+    <ClCompile Include="ChangeRoomMessage.cpp">
       <Filter>Source Files\Messages</Filter>
     </ClCompile>
   </ItemGroup>
