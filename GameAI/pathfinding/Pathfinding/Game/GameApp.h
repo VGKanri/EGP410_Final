@@ -36,6 +36,13 @@ enum PathfindType
 	ASTAR
 };
 
+enum GameState
+{
+	MAIN_MENU,
+	PLAYING,
+	HELP_MENU
+};
+
 class GameApp: public Game
 {
 public:
@@ -62,6 +69,8 @@ public:
 	inline InputManager* getInputManager() { return mpInputManager; };
 	inline const PathfindType getPathfindType() const { return mPathfindType; };
 	inline UnitManager* getUnitManager() { return mpUnitManager; };
+	inline GameState getState() { return mState; };
+	inline void setState(GameState state) { mState = state; };
 	//inline void setPtr(float ptr) { mPtr = ptr; };
 
 	void changePathfindType(PathfindType type); //changes mpPathfinder to match pathfindertype that is passed in
@@ -90,5 +99,7 @@ private:
 
 	//Shared pointers
 	std::shared_ptr<float> mPtr;
+
+	GameState mState;
 };
 

@@ -61,47 +61,57 @@ void InputManager::update()
 
 		if (mEvent.type == ALLEGRO_EVENT_KEY_DOWN) ///look for keyboard events
 		{
+			switch (gpGameApp->getState())
+			{
+			case GameState::MAIN_MENU:
+				break;
+
+			case GameState::PLAYING:
+				if (mEvent.keyboard.keycode == ALLEGRO_KEY_D)
+				{
+					GameMessage* pMessage = new ChangePathfindingMessage(DIJKSTRA, mStartPos, mGoalPos);
+					gpGameApp->getMessageManager()->addMessage(pMessage, 0);
+				}
+
+				if (mEvent.keyboard.keycode == ALLEGRO_KEY_A)
+				{
+					GameMessage* pMessage = new ChangePathfindingMessage(ASTAR, mStartPos, mGoalPos);
+					gpGameApp->getMessageManager()->addMessage(pMessage, 0);
+				}
+
+				//Player Input keyboard events
+				if (mEvent.keyboard.keycode == ALLEGRO_KEY_UP) //For if the player hits the up arrow
+				{
+					GameMessage* pMessage = new ChangePlayerDirectionMessage(0);
+					gpGameApp->getMessageManager()->addMessage(pMessage, 0);
+				}
+
+				if (mEvent.keyboard.keycode == ALLEGRO_KEY_RIGHT)
+				{
+					GameMessage* pMessage = new ChangePlayerDirectionMessage(1);
+					gpGameApp->getMessageManager()->addMessage(pMessage, 0);
+				}
+
+				if (mEvent.keyboard.keycode == ALLEGRO_KEY_DOWN)
+				{
+					GameMessage* pMessage = new ChangePlayerDirectionMessage(2);
+					gpGameApp->getMessageManager()->addMessage(pMessage, 0);
+				}
+
+				if (mEvent.keyboard.keycode == ALLEGRO_KEY_LEFT)
+				{
+					GameMessage* pMessage = new ChangePlayerDirectionMessage(3);
+					gpGameApp->getMessageManager()->addMessage(pMessage, 0);
+				}
+				break;
+			case GameState::HELP_MENU:
+				break;
+
+			}
 			if (mEvent.keyboard.keycode == ALLEGRO_KEY_ESCAPE)
 			{
 				//exit main game loop
 				GameMessage* pMessage = new ExitGameMessage();
-				gpGameApp->getMessageManager()->addMessage(pMessage, 0);
-			}
-
-			if (mEvent.keyboard.keycode == ALLEGRO_KEY_D)
-			{
-				GameMessage* pMessage = new ChangePathfindingMessage(DIJKSTRA, mStartPos, mGoalPos);
-				gpGameApp->getMessageManager()->addMessage(pMessage, 0);
-			}
-
-			if (mEvent.keyboard.keycode == ALLEGRO_KEY_A)
-			{
-				GameMessage* pMessage = new ChangePathfindingMessage(ASTAR, mStartPos, mGoalPos);
-				gpGameApp->getMessageManager()->addMessage(pMessage, 0);
-			}
-
-			//Player Input keyboard events
-			if (mEvent.keyboard.keycode == ALLEGRO_KEY_UP) //For if the player hits the up arrow
-			{
-				GameMessage* pMessage = new ChangePlayerDirectionMessage(0);
-				gpGameApp->getMessageManager()->addMessage(pMessage, 0);
-			}
-
-			if (mEvent.keyboard.keycode == ALLEGRO_KEY_RIGHT)
-			{
-				GameMessage* pMessage = new ChangePlayerDirectionMessage(1);
-				gpGameApp->getMessageManager()->addMessage(pMessage, 0);
-			}
-
-			if (mEvent.keyboard.keycode == ALLEGRO_KEY_DOWN)
-			{
-				GameMessage* pMessage = new ChangePlayerDirectionMessage(2);
-				gpGameApp->getMessageManager()->addMessage(pMessage, 0);
-			}
-
-			if (mEvent.keyboard.keycode == ALLEGRO_KEY_LEFT)
-			{
-				GameMessage* pMessage = new ChangePlayerDirectionMessage(3);
 				gpGameApp->getMessageManager()->addMessage(pMessage, 0);
 			}
 		}

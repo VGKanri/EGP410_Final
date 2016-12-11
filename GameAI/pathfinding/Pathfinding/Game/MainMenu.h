@@ -18,5 +18,8 @@ public:
 	MainMenu() { mSelection = MainSelectionState::PLAY; };
 	~MainMenu() {};
 
+	inline void setSelection(MainSelectionState select) { mSelection = select; };
+	inline MainSelectionState getSelection() { return mSelection; };
+
 	void update(float timePassed);
 };
