@@ -23,6 +23,7 @@ class DebugDisplay;
 class InputManager;
 class UnitManager;
 class SoundManager;
+class MainMenu;
 
 const float LOOP_TARGET_TIME = 16.6f;//how long should each frame of execution take? 30fps = 33.3ms/frame
 
@@ -69,6 +70,8 @@ public:
 	inline InputManager* getInputManager() { return mpInputManager; };
 	inline const PathfindType getPathfindType() const { return mPathfindType; };
 	inline UnitManager* getUnitManager() { return mpUnitManager; };
+	inline MainMenu* getMainMenu() { return mpMainMenu; };
+
 	inline GameState getState() { return mState; };
 	inline void setState(GameState state) { mState = state; };
 	//inline void setPtr(float ptr) { mPtr = ptr; };
@@ -94,6 +97,8 @@ private:
 	UnitManager* mpUnitManager;
 
 	PathfindType mPathfindType;
+
+	MainMenu* mpMainMenu;
 
 	int mCurrentRoom;
 

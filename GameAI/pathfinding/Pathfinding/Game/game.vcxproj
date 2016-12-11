@@ -80,6 +80,7 @@
   <ItemGroup>
     <ClInclude Include="ArriveSteering.h" />
     <ClInclude Include="AStar.h" />
+    <ClInclude Include="ChangeMenuSelectionMessage.h" />
     <ClInclude Include="ChangePathfindingMessage.h" />
     <ClInclude Include="ChangePlayerDirectionMessage.h" />
     <ClInclude Include="ChangeRoomMessage.h" />
@@ -119,6 +120,7 @@
   <ItemGroup>
     <ClCompile Include="ArriveSteering.cpp" />
     <ClCompile Include="AStar.cpp" />
+    <ClCompile Include="ChangeMenuSelectionMessage.cpp" />
     <ClCompile Include="ChangePathfindingMessage.cpp" />
     <ClCompile Include="ChangePlayerDirectionMessage.cpp" />
     <ClCompile Include="ChangeRoomMessage.cpp" />

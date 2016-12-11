@@ -6,6 +6,7 @@
 #include "PathToMessage.h"
 #include "ChangePathfindingMessage.h"
 #include "ChangePlayerDirectionMessage.h"
+#include "ChangeMenuSelectionMessage.h"
 
 InputManager::InputManager()
 {
@@ -59,11 +60,23 @@ void InputManager::update()
 	{
 		al_wait_for_event(mpEventQueue, &mEvent);
 
-		if (mEvent.type == ALLEGRO_EVENT_KEY_DOWN) ///look for keyboard events
+		if (mEvent.type == ALLEGRO_EVENT_KEY_DOWN) //look for keyboard events
 		{
 			switch (gpGameApp->getState())
 			{
 			case GameState::MAIN_MENU:
+				if (mEvent.keyboard.keycode == ALLEGRO_KEY_DOWN)
+				{
+					GameMessage* pMessage = new ChangeMenuSelectionMessage(true, true);
+					gpGameApp->getMessageManager()->addMessage(pMessage, 0);
+				}
+
+				if (mEvent.keyboard.keycode == ALLEGRO_KEY_UP)
+				{
+					GameMessage* pMessage = new ChangeMenuSelectionMessage(false, true);
+					gpGameApp->getMessageManager()->addMessage(pMessage, 0);
+				}
+
 				break;
 
 			case GameState::PLAYING:

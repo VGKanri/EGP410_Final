@@ -23,6 +23,8 @@
 #include "DebugDisplay.h"
 #include "PathfindingDebugContent.h"
 #include "UnitManager.h"
+#include "MainMenu.h"
+#include "HelpMenu.h"
 
 #include <fstream>
 #include <sstream>
@@ -170,6 +172,8 @@ bool GameApp::init()
 	//load managers
 	mpInputManager = new InputManager();
 	mpInputManager->init();
+
+	mpMainMenu = new MainMenu();
 
 	mpMessageManager = new GameMessageManager();
 
