@@ -150,7 +150,7 @@ bool GameApp::init()
 	mpGraphicsBufferManager->loadBuffer(DOOR_SPRITE_ID, "../Assets/door.png");
 	mpGraphicsBufferManager->loadBuffer(MAIN_MENU_ID, "../Assets/ROCKETO-SLIMU.png");
 	mpGraphicsBufferManager->loadBuffer(HELP_MENU_ID, "../Assets/Help_Menu.png");
-	mpGraphicsBufferManager->loadBuffer(CREDITS_ID, "../Assets/Help_Menu.png");
+	mpGraphicsBufferManager->loadBuffer(CREDITS_ID, "../Assets/Credits_Menu.png");
 
 	//setup sprites
 	GraphicsBuffer* pBackGroundBuffer = mpGraphicsBufferManager->getBuffer(BACKGROUND_ID);
@@ -335,6 +335,10 @@ void GameApp::processLoop()
 		break;
 	case GameState::HELP_MENU:
 		mpSpriteManager->getSprite(HELP_MENU_ID)->draw(*pBackBuffer, 0, 0, 0.0f);
+		mpHelpMenu->update(LOOP_TARGET_TIME / 1000.0f);
+		break;
+	case GameState::CREDITS_MENU: //Use the help menu's selection sprite because it is in the same spot
+		mpSpriteManager->getSprite(CREDITS_ID)->draw(*pBackBuffer, 0, 0, 0.0f);
 		mpHelpMenu->update(LOOP_TARGET_TIME / 1000.0f);
 		break;
 	}
