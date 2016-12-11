@@ -24,6 +24,7 @@ class InputManager;
 class UnitManager;
 class SoundManager;
 class MainMenu;
+class HelpMenu;
 
 const float LOOP_TARGET_TIME = 16.6f;//how long should each frame of execution take? 30fps = 33.3ms/frame
 
@@ -41,7 +42,8 @@ enum GameState
 {
 	MAIN_MENU,
 	PLAYING,
-	HELP_MENU
+	HELP_MENU,
+	CREDITS_MENU
 };
 
 class GameApp: public Game
@@ -99,6 +101,7 @@ private:
 	PathfindType mPathfindType;
 
 	MainMenu* mpMainMenu;
+	HelpMenu* mpHelpMenu;
 
 	int mCurrentRoom;
 

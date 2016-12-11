@@ -4,7 +4,8 @@
 
 MainMenu::~MainMenu()
 {
-	if (mpSprite)
+	/*
+	if (getSprite)
 	{
 		mpSprite = NULL;
 	}
@@ -13,27 +14,28 @@ MainMenu::~MainMenu()
 	{
 		mpAnimation = NULL;
 	}
+	*/
 }
 
 //Update function for the main menu
 void MainMenu::update(float timePassed)
 {
-	mpAnimation->update(timePassed);
-	mpSprite = mpAnimation->getCurrentSprite();
+	getAnimation()->update(timePassed);
+	setSprite(getAnimation()->getCurrentSprite());
 
 	switch (mSelection)
 	{
 	case MainSelectionState::PLAY:
-		mpSprite->draw(*gpGameApp->getGraphicsSystem()->getBackBuffer(), SELECTOR_X, SELECTOR_Y_1, 0);
+		getSprite()->draw(*gpGameApp->getGraphicsSystem()->getBackBuffer(), SELECTOR_X, SELECTOR_Y_1, 0);
 		break;
 	case MainSelectionState::HELP:
-		mpSprite->draw(*gpGameApp->getGraphicsSystem()->getBackBuffer(), SELECTOR_X, SELECTOR_Y_2, 0);
+		getSprite()->draw(*gpGameApp->getGraphicsSystem()->getBackBuffer(), SELECTOR_X, SELECTOR_Y_2, 0);
 		break;
 	case MainSelectionState::CREDITS:
-		mpSprite->draw(*gpGameApp->getGraphicsSystem()->getBackBuffer(), SELECTOR_X, SELECTOR_Y_3, 0);
+		getSprite()->draw(*gpGameApp->getGraphicsSystem()->getBackBuffer(), SELECTOR_X, SELECTOR_Y_3, 0);
 		break;
 	case MainSelectionState::QUIT:
-		mpSprite->draw(*gpGameApp->getGraphicsSystem()->getBackBuffer(), SELECTOR_X, SELECTOR_Y_4, 0);
+		getSprite()->draw(*gpGameApp->getGraphicsSystem()->getBackBuffer(), SELECTOR_X, SELECTOR_Y_4, 0);
 		break;
 	}
 }

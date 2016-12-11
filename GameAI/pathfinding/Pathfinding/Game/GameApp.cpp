@@ -148,13 +148,17 @@ bool GameApp::init()
 	mpGraphicsBufferManager->loadBuffer(FLOOR_SPRITE_ID, "../Assets/floor.png");
 	mpGraphicsBufferManager->loadBuffer(COIN_SPRITE_ID, "../Assets/coin.png");
 	mpGraphicsBufferManager->loadBuffer(DOOR_SPRITE_ID, "../Assets/door.png");
-	mpGraphicsBufferManager->loadBuffer(MAIN_MENU_ID, "ROCKETO-SLIMU.png");
+	mpGraphicsBufferManager->loadBuffer(MAIN_MENU_ID, "../Assets/ROCKETO-SLIMU.png");
+	mpGraphicsBufferManager->loadBuffer(HELP_MENU_ID, "../Assets/Help_Menu.png");
+	mpGraphicsBufferManager->loadBuffer(CREDITS_ID, "../Assets/Help_Menu.png");
 
 	//setup sprites
 	GraphicsBuffer* pBackGroundBuffer = mpGraphicsBufferManager->getBuffer(BACKGROUND_ID);
 	GraphicsBuffer* pPlayerBuffer = mpGraphicsBufferManager->getBuffer(PLAYER_SPRITE_ID);
 	GraphicsBuffer* pEnemyBuffer = mpGraphicsBufferManager->getBuffer(ENEMY_SPRITE_ID);
 	GraphicsBuffer* pMainMenuBuffer = mpGraphicsBufferManager->getBuffer(MAIN_MENU_ID);
+	GraphicsBuffer* pHelpMenuBuffer = mpGraphicsBufferManager->getBuffer(HELP_MENU_ID);
+	GraphicsBuffer* pCreditsBuffer = mpGraphicsBufferManager->getBuffer(CREDITS_ID);
 
 	if (pBackGroundBuffer != NULL)
 	{
@@ -176,11 +180,22 @@ bool GameApp::init()
 		mpSpriteManager->createAndManageSprite(MAIN_MENU_ID, pMainMenuBuffer, 0, 0, pMainMenuBuffer->getWidth(), pMainMenuBuffer->getHeight());
 	}
 
+	if (pHelpMenuBuffer != NULL)
+	{
+		mpSpriteManager->createAndManageSprite(HELP_MENU_ID, pHelpMenuBuffer, 0, 0, pHelpMenuBuffer->getWidth(), pHelpMenuBuffer->getHeight());
+	}
+
+	if (pCreditsBuffer != NULL)
+	{
+		mpSpriteManager->createAndManageSprite(CREDITS_ID, pCreditsBuffer, 0, 0, pCreditsBuffer->getWidth(), pCreditsBuffer->getHeight());
+	}
+
 	//load managers
 	mpInputManager = new InputManager();
 	mpInputManager->init();
 
 	mpMainMenu = new MainMenu();
+	mpHelpMenu = new HelpMenu();
 
 	mpMessageManager = new GameMessageManager();
 
@@ -235,6 +250,9 @@ bool GameApp::init()
 	mpMainMenu->setSprite(mpSpriteManager->getSprite(PLAYER_SPRITE_ID));
 	mpMainMenu->setAnimation(mpUnitManager->getPlayer()->getSideAnimation());
 
+	mpHelpMenu->setSprite(mpSpriteManager->getSprite(PLAYER_SPRITE_ID));
+	mpHelpMenu->setAnimation(mpUnitManager->getPlayer()->getSideAnimation());
+
 	//debug display
 	PathfindingDebugContent* pContent = new PathfindingDebugContent( mpPathfinder );
 	mpDebugDisplay = new DebugDisplay( Vector2D(0,12), pContent );
@@ -283,6 +301,9 @@ void GameApp::cleanup()
 
 	delete mpMainMenu;
 	mpMainMenu = NULL;
+
+	delete mpHelpMenu;
+	mpHelpMenu = NULL;
 }
 
 void GameApp::beginLoop()
@@ -311,6 +332,10 @@ void GameApp::processLoop()
 #endif
 
 		mpUnitManager->update(LOOP_TARGET_TIME / 1000.0f);
+		break;
+	case GameState::HELP_MENU:
+		mpSpriteManager->getSprite(HELP_MENU_ID)->draw(*pBackBuffer, 0, 0, 0.0f);
+		mpHelpMenu->update(LOOP_TARGET_TIME / 1000.0f);
 		break;
 	}
 	

@@ -89,7 +89,7 @@ void InputManager::update()
 						gpGameApp->getMessageManager()->addMessage(pMessage, 0);
 						break;
 					case MainSelectionState::HELP:
-						pMessage = new ChangeStateMessage(GameState::PLAYING);
+						pMessage = new ChangeStateMessage(GameState::HELP_MENU);
 						gpGameApp->getMessageManager()->addMessage(pMessage, 0);
 						break;
 					case MainSelectionState::CREDITS:
@@ -150,10 +150,16 @@ void InputManager::update()
 				}
 				break;
 			case GameState::HELP_MENU:
+				if (mEvent.keyboard.keycode == ALLEGRO_KEY_ENTER)
+				{
+					GameMessage* pMessage = new ChangeStateMessage(GameState::MAIN_MENU);
+					gpGameApp->getMessageManager()->addMessage(pMessage, 0);
+				}
 				break;
 
+			case GameState::CREDITS_MENU:
+				break;
 			}
-			
 		}
 	}
 }

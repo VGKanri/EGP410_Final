@@ -23,19 +23,13 @@ class MainMenu : public Menu
 {
 private:
 	MainSelectionState mSelection;
-
-	//Animation for the selector
-	Animation* mpAnimation;
-	Sprite* mpSprite;
+	
 public:
 	MainMenu() { mSelection = MainSelectionState::PLAY; };
 	~MainMenu();
 
+	void update(float timePassed);
+
 	inline void setSelection(MainSelectionState select) { mSelection = select; };
 	inline MainSelectionState getSelection() { return mSelection; };
-
-	inline void setAnimation(Animation* anim) { mpAnimation = anim; };
-	inline void setSprite(Sprite* sprite) { mpSprite = sprite; };
-
-	void update(float timePassed);
 };

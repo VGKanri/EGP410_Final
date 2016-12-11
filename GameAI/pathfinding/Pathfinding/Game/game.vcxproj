@@ -139,6 +139,7 @@
     <ClCompile Include="Graph.cpp" />
     <ClCompile Include="GridGraph.cpp" />
     <ClCompile Include="GridPathfinder.cpp" />
+    <ClCompile Include="HelpMenu.cpp" />
     <ClCompile Include="Hitbox.cpp" />
     <ClCompile Include="Hitcircle.cpp" />
     <ClCompile Include="InputManager.cpp" />
