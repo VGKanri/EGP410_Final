@@ -8,6 +8,7 @@
 #include "ChangePlayerDirectionMessage.h"
 #include "ChangeMenuSelectionMessage.h"
 #include "ChangeStateMessage.h"
+#include "MainMenu.h"
 
 InputManager::InputManager()
 {
@@ -81,7 +82,25 @@ void InputManager::update()
 				if (mEvent.keyboard.keycode == ALLEGRO_KEY_ENTER)
 				{
 					GameMessage* pMessage = new ChangeStateMessage(GameState::PLAYING);
-					gpGameApp->getMessageManager()->addMessage(pMessage, 0);
+					switch (gpGameApp->getMainMenu()->getSelection())
+					{
+					case MainSelectionState::PLAY:
+						pMessage = new ChangeStateMessage(GameState::PLAYING);
+						gpGameApp->getMessageManager()->addMessage(pMessage, 0);
+						break;
+					case MainSelectionState::HELP:
+						pMessage = new ChangeStateMessage(GameState::PLAYING);
+						gpGameApp->getMessageManager()->addMessage(pMessage, 0);
+						break;
+					case MainSelectionState::CREDITS:
+						pMessage = new ChangeStateMessage(GameState::PLAYING);
+						gpGameApp->getMessageManager()->addMessage(pMessage, 0);
+						break;
+					case MainSelectionState::QUIT:
+						pMessage = new ExitGameMessage();
+						gpGameApp->getMessageManager()->addMessage(pMessage, 0);
+						break;
+					}
 				}
 
 				break;

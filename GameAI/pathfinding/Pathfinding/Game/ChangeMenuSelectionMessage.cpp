@@ -21,6 +21,9 @@ void ChangeMenuSelectionMessage::process()
 				gpGameApp->getMainMenu()->setSelection(MainSelectionState::HELP);
 				break;
 			case MainSelectionState::HELP:
+				gpGameApp->getMainMenu()->setSelection(MainSelectionState::CREDITS);
+				break;
+			case MainSelectionState::CREDITS:
 				gpGameApp->getMainMenu()->setSelection(MainSelectionState::QUIT);
 				break;
 			case MainSelectionState::QUIT:
@@ -38,8 +41,11 @@ void ChangeMenuSelectionMessage::process()
 			case MainSelectionState::HELP:
 				gpGameApp->getMainMenu()->setSelection(MainSelectionState::PLAY);
 				break;
-			case MainSelectionState::QUIT:
+			case MainSelectionState::CREDITS:
 				gpGameApp->getMainMenu()->setSelection(MainSelectionState::HELP);
+				break;
+			case MainSelectionState::QUIT:
+				gpGameApp->getMainMenu()->setSelection(MainSelectionState::CREDITS);
 				break;
 			}
 		}

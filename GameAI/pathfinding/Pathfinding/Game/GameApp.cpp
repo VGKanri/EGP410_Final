@@ -232,6 +232,9 @@ bool GameApp::init()
 	mpUnitManager->addUnit(mpSpriteManager->getSprite(PLAYER_SPRITE_ID), getGrid()->getULCornerOfSquare(getGrid()->getIndexOfPlayerSpawn()), Vector2D(0, 0), mPtr, mPtr, mPtr, 1.0f, "player", true);
 	mpUnitManager->addUnit(mpSpriteManager->getSprite(ENEMY_SPRITE_ID), Vector2D(200, 200), Vector2D(0, 0), mPtr, mPtr, mPtr, 1.0f, "enemy", false);
 
+	mpMainMenu->setSprite(mpSpriteManager->getSprite(PLAYER_SPRITE_ID));
+	mpMainMenu->setAnimation(mpUnitManager->getPlayer()->getSideAnimation());
+
 	//debug display
 	PathfindingDebugContent* pContent = new PathfindingDebugContent( mpPathfinder );
 	mpDebugDisplay = new DebugDisplay( Vector2D(0,12), pContent );
@@ -297,6 +300,7 @@ void GameApp::processLoop()
 	{
 	case GameState::MAIN_MENU:
 		mpSpriteManager->getSprite(MAIN_MENU_ID)->draw(*pBackBuffer, 0, 0 ,0.0f);
+		mpMainMenu->update(LOOP_TARGET_TIME / 1000.0f);
 		break;
 	case GameState::PLAYING:
 		//copy to back buffer

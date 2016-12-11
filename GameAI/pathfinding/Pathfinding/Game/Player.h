@@ -56,6 +56,8 @@ public:
 	void changeState(PlayerState newState);
 	void resetCollider();
 
+	Animation* getSideAnimation() { return mpSideAnimation; };
+
 	bool checkWallCollision();
 	void checkCoinCollision();
 	int checkDoorCollision(); //this function returns the index of the door collision so that the grid can handle the rest
