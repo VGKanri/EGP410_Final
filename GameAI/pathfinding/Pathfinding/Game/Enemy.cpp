@@ -41,8 +41,8 @@ void Enemy::update(float time)
 	Node* pNextNode = mpPath->getAndRemoveNextNode();
 
 	//Here you can reset the steering's target Vector2D
-	//ArriveSteering* goalSteering = dynamic_cast<ArriveSteering*>(mpCurrentSteering);
-	//goalSteering->setTarget(newTarget);
+	ArriveSteering* goalSteering = dynamic_cast<ArriveSteering*>(mpCurrentSteering);
+	goalSteering->setTarget(gpGameApp->getGrid()->getULCornerOfSquare(mpPath->getAndRemoveNextNode()->getId()));
 
 	//vital for calculating mLinear
 	Steering* tmpSteering = mpCurrentSteering->getSteering();
