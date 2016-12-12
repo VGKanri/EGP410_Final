@@ -107,6 +107,7 @@ private:
 
 	//Shared pointers
 	std::shared_ptr<float> mPtr;
+	std::shared_ptr<float> mMaxVel;
 
 	GameState mState;
 };

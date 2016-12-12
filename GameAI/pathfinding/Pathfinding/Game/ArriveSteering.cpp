@@ -12,13 +12,13 @@ Steering* ArriveSteering::getSteering()
 {
 	mLinear = mTarget - mpMover->getPosition();
 
-	//Checking if inside the satisfaction radius
-	if (mLinear.getLengthSquared() < mSatisfactionRadius * mSatisfactionRadius)
-	{
-		mLinear = gZeroVector2D;
-		mAngular = mpMover->getOrientation();
-		return this;
-	}
+	////Checking if inside the satisfaction radius
+	//if (mLinear.getLengthSquared() < mSatisfactionRadius * mSatisfactionRadius)
+	//{
+	//	mLinear = gZeroVector2D;
+	//	mAngular = mpMover->getOrientation();
+	//	return this;
+	//}
 
 	mLinear /= mTimeToTarget;
 

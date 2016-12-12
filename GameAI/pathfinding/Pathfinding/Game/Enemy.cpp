@@ -21,7 +21,9 @@ Enemy::Enemy(Sprite *pSprite, const Vector2D position, float orientation, const 
 	setReactionRadius(reactionRadius);
 	setMaxRotational(maxRotational);
 	setMaxAcceleration(maxAcceleration);
-	Steering* tmpSteering = new ArriveSteering(this, mPosition);
+
+	//A temporary goal, you're going to have to figure out how to get the positoin of the node
+	Steering* tmpSteering = new ArriveSteering(this, Vector2D(500,500));
 	setSteeringFirst(tmpSteering);
 	calcCurrentNode();
 }
@@ -38,10 +40,13 @@ void Enemy::update(float time)
 
 	Node* pNextNode = mpPath->getAndRemoveNextNode();
 
-	Steering* tmpSteering = new ArriveSteering(this, gpGameApp->getGrid()->getCenterOfSquare(pNextNode->getId()));
-	//Steering* tmpSteering = new ArriveSteering(this, gpGameApp->getUnitManager()->getPlayer()->getPosition());
+	//Here you can reset the steering's target Vector2D
+	//ArriveSteering* goalSteering = dynamic_cast<ArriveSteering*>(mpCurrentSteering);
+	//goalSteering->setTarget(newTarget);
 
-	setSteering(tmpSteering);
+	//vital for calculating mLinear
+	Steering* tmpSteering = mpCurrentSteering->getSteering();
+	//Steering* tmpSteering = new ArriveSteering(this, gpGameApp->getUnitManager()->getPlayer()->getPosition());
 
 	//if (!tmpSteering->shouldApplyDirectly())
 	//{
@@ -49,7 +54,7 @@ void Enemy::update(float time)
 		if (getVelocity().getLengthSquared() > MIN_VELOCITY_TO_TURN_SQUARED)
 		{
 			setVelocity(tmpSteering->getLinear());
-			setOrientation(tmpSteering->getAngular());
+			//setOrientation(tmpSteering->getAngular());
 		}
 
 		//since we are applying the steering directly we don't want any rotational velocity
