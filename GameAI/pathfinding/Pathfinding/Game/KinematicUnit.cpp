@@ -22,6 +22,7 @@ KinematicUnit::KinematicUnit(Sprite *pSprite, const Vector2D position, float ori
 	, mMaxRotationalVelocity(maxRotational)
 	, mMaxAcceleration(maxAcceleration)
 {
+	mFlipH = false;
 }
 
 KinematicUnit::KinematicUnit()
@@ -35,10 +36,10 @@ KinematicUnit::~KinematicUnit()
 
 void KinematicUnit::draw(GraphicsBuffer* pBuffer)
 {
-	if (mFlip)
+	if (mFlipH)
 	{
 		mpSprite->draw(*pBuffer, mPosition.getX(), mPosition.getY(), mOrientation, 1);
-	}		
+	}
 	else
 	{
 		mpSprite->draw(*pBuffer, mPosition.getX(), mPosition.getY(), mOrientation, 0);

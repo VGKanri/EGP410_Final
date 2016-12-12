@@ -9,6 +9,7 @@
 #include "GridPathfinder.h"
 #include "GridGraph.h"
 #include "CoinPickUpMessage.h"
+#include "CandyPickUpMessage.h"
 #include "ChangeRoomMessage.h"
 #include "GameMessageManager.h"
 
@@ -27,15 +28,22 @@ Player::Player(Sprite *pSprite, const Vector2D position, float orientation, cons
 
 	mCollider = Hitbox(Vector2D(mPosition.getX() - (PLAYER_WIDTH - 16), mPosition.getY() - (PLAYER_HEIGHT - 16)), PLAYER_WIDTH, PLAYER_HEIGHT);
 
+	mCandyTimer = 0;
+
 	mAlmightyCandy = false;
 	mInDoor = false;
 
 	mpSpriteSheet = new GraphicsBuffer(PLAYER_SHEET_PATH);
+	mpPowerSheet = new GraphicsBuffer(POWER_SHEET_PATH);
 
 	mpDownAnimation = new Animation();
 	mpUpAnimation = new Animation();
 	mpSideAnimation = new Animation();
 	mpIdleAnimation = new Animation();
+
+	mpSidePAnimation = new Animation();
+	mpUpPAnimation = new Animation();
+	mpDownPAnimation = new Animation();
 
 	populateAnimations();
 
@@ -51,6 +59,11 @@ Player::~Player()
 	delete mpIdleAnimation;
 	delete mpDownAnimation;
 	delete mpSpriteSheet;
+
+	delete mpUpPAnimation;
+	delete mpDownPAnimation;
+	delete mpSidePAnimation;
+	delete mpPowerSheet;
 }
 
 void Player::update(float time)
@@ -76,6 +89,7 @@ void Player::update(float time)
 	}
 
 	checkCoinCollision();
+	checkCandyCollision();
 
 	//handle door logic
 	int result = checkDoorCollision();
@@ -90,6 +104,20 @@ void Player::update(float time)
 	{
 		mInDoor = false;
 	}
+
+	//handle candy timer logic
+	updateCandyTimer(time);
+}
+
+void Player::updateCandyTimer(float time)
+{
+	mCandyTimer += time;
+
+	if (mCandyTimer >= CANDY_LIMIT)
+	{
+		mCandyTimer = 0;
+		mAlmightyCandy = false;
+	}
 }
 
 void Player::changeState(PlayerState newState)
@@ -99,21 +127,41 @@ void Player::changeState(PlayerState newState)
 	switch (mState)
 	{
 	case PlayerState::UP:
-		mpCurrentAnimation = mpUpAnimation;
+		if (mAlmightyCandy)
+			mpCurrentAnimation = mpUpPAnimation;
+		else
+			mpCurrentAnimation = mpUpAnimation;
+
+		mFlipH = false;
 		break;
 	case PlayerState::LEFT:
-		mpCurrentAnimation = mpSideAnimation;
-		mFlip = true;
+		if (mAlmightyCandy)
+			mpCurrentAnimation = mpSidePAnimation;
+		else
+			mpCurrentAnimation = mpSideAnimation;
+
+		mFlipH = true;
 		break;
 	case PlayerState::RIGHT:
-		mpCurrentAnimation = mpSideAnimation;
-		mFlip = false;
+		if (mAlmightyCandy)
+			mpCurrentAnimation = mpSidePAnimation;
+		else
+			mpCurrentAnimation = mpSideAnimation;
+
+		mFlipH = false;
 		break;
 	case PlayerState::DOWN:
-		mpCurrentAnimation = mpDownAnimation;
+		if (mAlmightyCandy)
+			mpCurrentAnimation = mpDownPAnimation;
+		else
+			mpCurrentAnimation = mpDownAnimation;
+
+		mFlipH = false;
 		break;
 	case PlayerState::IDLE:
 		mpCurrentAnimation = mpIdleAnimation;
+
+		mFlipH = false;
 		break;
 	}
 }
@@ -125,6 +173,7 @@ void Player::resetCollider()
 
 void Player::populateAnimations()
 {
+	//Animations for normal player state
 	for (int i = 0; i < 10; ++i)
 	{
 		mpUpAnimation->pushSprite(new Sprite(mpSpriteSheet, i * SPRITE_SIZE, 0, SPRITE_SIZE, SPRITE_SIZE));
@@ -142,6 +191,22 @@ void Player::populateAnimations()
 
 	//will have an actual idle animation soon
 	mpIdleAnimation->pushSprite(new Sprite(*mpSprite));
+
+	//animations for powered up state
+	for (int i = 0; i < 10; ++i)
+	{
+		mpSidePAnimation->pushSprite(new Sprite(mpPowerSheet, i * SPRITE_SIZE, 0, SPRITE_SIZE, SPRITE_SIZE));
+	}
+
+	for (int i = 10; i < 20; ++i)
+	{
+		mpDownPAnimation->pushSprite(new Sprite(mpPowerSheet, i * SPRITE_SIZE, 0, SPRITE_SIZE, SPRITE_SIZE));
+	}
+
+	for (int i = 20; i < 30; ++i)
+	{
+		mpUpPAnimation->pushSprite(new Sprite(mpPowerSheet, i * SPRITE_SIZE, 0, SPRITE_SIZE, SPRITE_SIZE));
+	}
 }
 
 bool Player::checkWallCollision()
@@ -181,6 +246,31 @@ void Player::checkCoinCollision()
 	else if (gpGameApp->getGrid()->getValueAtIndex(gpGameApp->getGrid()->getSquareIndexFromPixelXY(mCollider.getPosition().getX() + mCollider.getWidth(), mCollider.getPosition().getY() + mCollider.getHeight())) == COIN)
 	{
 		GameMessage* pMessage = new CoinPickUpMessage(gpGameApp->getGrid()->getSquareIndexFromPixelXY(mCollider.getPosition().getX() + mCollider.getWidth(), mCollider.getPosition().getY() + mCollider.getHeight()));
+		gpGameApp->getMessageManager()->addMessage(pMessage, 0);
+	}
+}
+
+void Player::checkCandyCollision()
+{
+	//check if any corner of the character is overlapping a coin
+	if (gpGameApp->getGrid()->getValueAtIndex(gpGameApp->getGrid()->getSquareIndexFromPixelXY(mCollider.getPosition().getX(), mCollider.getPosition().getY())) == CANDY_SPAWN)
+	{
+		GameMessage* pMessage = new CandyPickUpMessage(gpGameApp->getGrid()->getSquareIndexFromPixelXY(mCollider.getPosition().getX(), mCollider.getPosition().getY()));
+		gpGameApp->getMessageManager()->addMessage(pMessage, 0);
+	}
+	else if (gpGameApp->getGrid()->getValueAtIndex(gpGameApp->getGrid()->getSquareIndexFromPixelXY(mCollider.getPosition().getX() + mCollider.getWidth(), mCollider.getPosition().getY())) == CANDY_SPAWN)
+	{
+		GameMessage* pMessage = new CandyPickUpMessage(gpGameApp->getGrid()->getSquareIndexFromPixelXY(mCollider.getPosition().getX() + mCollider.getWidth(), mCollider.getPosition().getY()));
+		gpGameApp->getMessageManager()->addMessage(pMessage, 0);
+	}
+	else if (gpGameApp->getGrid()->getValueAtIndex(gpGameApp->getGrid()->getSquareIndexFromPixelXY(mCollider.getPosition().getX(), mCollider.getPosition().getY() + mCollider.getHeight())) == CANDY_SPAWN)
+	{
+		GameMessage* pMessage = new CandyPickUpMessage(gpGameApp->getGrid()->getSquareIndexFromPixelXY(mCollider.getPosition().getX(), mCollider.getPosition().getY() + mCollider.getHeight()));
+		gpGameApp->getMessageManager()->addMessage(pMessage, 0);
+	}
+	else if (gpGameApp->getGrid()->getValueAtIndex(gpGameApp->getGrid()->getSquareIndexFromPixelXY(mCollider.getPosition().getX() + mCollider.getWidth(), mCollider.getPosition().getY() + mCollider.getHeight())) == CANDY_SPAWN)
+	{
+		GameMessage* pMessage = new CandyPickUpMessage(gpGameApp->getGrid()->getSquareIndexFromPixelXY(mCollider.getPosition().getX() + mCollider.getWidth(), mCollider.getPosition().getY() + mCollider.getHeight()));
 		gpGameApp->getMessageManager()->addMessage(pMessage, 0);
 	}
 }

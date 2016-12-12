@@ -186,6 +186,9 @@
     <ClInclude Include="ChangeStateMessage.h">
       <Filter>Header Files\Messages</Filter>
     </ClInclude>
+    <ClInclude Include="CandyPickUpMessage.h">
+      <Filter>Header Files\Messages</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -295,6 +298,9 @@
     </ClCompile>
     <ClCompile Include="HelpMenu.cpp">
       <Filter>Source Files\Menus</Filter>
+    </ClCompile>
+    <ClCompile Include="CandyPickUpMessage.cpp">
+      <Filter>Source Files\Messages</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

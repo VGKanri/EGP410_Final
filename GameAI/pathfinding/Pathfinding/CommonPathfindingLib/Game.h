@@ -35,6 +35,7 @@ const IDType DOOR_SPRITE_ID = 6;
 const IDType MAIN_MENU_ID = 7;
 const IDType HELP_MENU_ID = 8;
 const IDType CREDITS_ID = 9;
+const IDType CANDY_ID = 10;
 
 class Game:public Trackable
 {

@@ -22,6 +22,7 @@ GridVisualizer::GridVisualizer( Grid* pGrid, bool inEditor)
 		mpFloorSprite = new Sprite(gpGame->getGraphicsBufferManager()->getBuffer(FLOOR_SPRITE_ID), 0, 0, 32, 32);
 		mpCoinSprite = new Sprite(gpGame->getGraphicsBufferManager()->getBuffer(COIN_SPRITE_ID), 0, 0, 32, 32);
 		mpDoorSprite = new Sprite(gpGame->getGraphicsBufferManager()->getBuffer(DOOR_SPRITE_ID), 0, 0, 32, 32);
+		mpCandySprite = new Sprite(gpGame->getGraphicsBufferManager()->getBuffer(CANDY_ID), 0, 0, 32, 32);
 	}
 }
 
@@ -33,6 +34,7 @@ GridVisualizer::~GridVisualizer()
 		delete mpFloorSprite;
 		delete mpCoinSprite;
 		delete mpDoorSprite;
+		delete mpCandySprite;
 	}
 }
 
@@ -216,6 +218,10 @@ void GridVisualizer::draw( GraphicsBuffer& dest )
 				if (mpGrid->getValueAtIndex(i) == COIN)
 				{
 					mpCoinSprite->draw(dest, ulPos.getX(), ulPos.getY());
+				}
+				else if (mpGrid->getValueAtIndex(i) == CANDY_SPAWN)
+				{
+					mpCandySprite->draw(dest, ulPos.getX(), ulPos.getY());
 				}
 				else if (mpGrid->getValueAtIndex(i) == DOOR_1 || mpGrid->getValueAtIndex(i) == DOOR_2 ||  
 						 mpGrid->getValueAtIndex(i) == DOOR_3 || mpGrid->getValueAtIndex(i) == DOOR_4)

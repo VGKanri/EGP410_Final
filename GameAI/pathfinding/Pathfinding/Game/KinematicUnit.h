@@ -92,7 +92,7 @@ protected:
 	std::shared_ptr<float> mReactionRadius;
 	std::shared_ptr<float> mMaxRotationalVelocity;
 	bool mBounceVertically;//if false bounce horizontally
-	bool mFlip;//check if sprite should be flipped horizontally
+	bool mFlipH;//check if sprite should be flipped horizontally
 	//Hitcircle mHitcircle;
 
 	//void setSteering(Steering* pSteering);

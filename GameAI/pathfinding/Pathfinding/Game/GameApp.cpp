@@ -152,6 +152,7 @@ bool GameApp::init()
 	mpGraphicsBufferManager->loadBuffer(MAIN_MENU_ID, "../Assets/ROCKETO-SLIMU.png");
 	mpGraphicsBufferManager->loadBuffer(HELP_MENU_ID, "../Assets/Help_Menu.png");
 	mpGraphicsBufferManager->loadBuffer(CREDITS_ID, "../Assets/Credits_Menu.png");
+	mpGraphicsBufferManager->loadBuffer(CANDY_ID, "../Assets/candy.png");
 
 	//setup sprites
 	GraphicsBuffer* pBackGroundBuffer = mpGraphicsBufferManager->getBuffer(BACKGROUND_ID);
