@@ -10,6 +10,7 @@
 #include "GraphicsBuffer.h"
 #include "GameMessage.h"
 #include "PathToMessage.h"
+#include "GraphicsSystem.h"
 
 Enemy::Enemy(Sprite *pSprite, const Vector2D position, float orientation, const Vector2D &velocity, float rotationVel, std::shared_ptr<float> maxVelocity
 	, std::shared_ptr<float> reactionRadius, std::shared_ptr<float> maxRotational, float maxAcceleration)
@@ -25,7 +26,7 @@ Enemy::Enemy(Sprite *pSprite, const Vector2D position, float orientation, const 
 	setMaxAcceleration(maxAcceleration);
 
 	//A temporary goal, you're going to have to figure out how to get the position of the node
-	Steering* tmpSteering = new ArriveSteering(this, Vector2D(500,500));
+	Steering* tmpSteering = new ArriveSteering(this, Vector2D(0,0));
 	setSteeringFirst(tmpSteering);
 	calcCurrentNode();
 
@@ -40,6 +41,10 @@ Enemy::Enemy(Sprite *pSprite, const Vector2D position, float orientation, const 
 	populateAnimations();
 
 	mpCurrentAnimation = mpIdleAnimation;
+
+	mpPathfinder = new AStar(gpGameApp->getGridGraph());
+
+	mArrived = true;
 }
 
 Enemy::~Enemy()
@@ -65,14 +70,25 @@ void Enemy::update(float time)
 	
 	calcCurrentNode();
 
-	mpPath = new Path(gpGameApp->getPathfinder()->findPath(mpCurrentNode, gpGameApp->getUnitManager()->getPlayer()->getCurrentNode()));
+	//if (mArrived)
+	//{
+		mpPath = new Path(mpPathfinder->findPath(mpCurrentNode, gpGameApp->getUnitManager()->getPlayer()->getCurrentNode()));
 
-	Node* pNextNode = mpPath->getAndRemoveNextNode();
+		Node* pNextNode = mpPath->getAndRemoveNextNode();
 
-	//UNCOMMENT THIS WHEN NEEDED
-	//Here you can reset the steering's target Vector2D
-	ArriveSteering* goalSteering = dynamic_cast<ArriveSteering*>(mpCurrentSteering);
-	goalSteering->setTarget(gpGameApp->getGrid()->getULCornerOfSquare(mpPath->getAndRemoveNextNode()->getId()));
+		//UNCOMMENT THIS WHEN NEEDED
+		//Here you can reset the steering's target Vector2D
+		ArriveSteering* goalSteering = dynamic_cast<ArriveSteering*>(mpCurrentSteering);
+
+		goalSteering->setTarget(gpGameApp->getGrid()->getULCornerOfSquare(pNextNode->getId()));
+
+		//mArrived = false;
+	//}
+
+	//if (mPosition == gpGameApp->getGrid()->getULCornerOfSquare(mpCurrentNode->getId()))
+	//{
+		//mArrived = true;
+	//}
 
 	//vital for calculating mLinear
 	Steering* tmpSteering = mpCurrentSteering->getSteering();
@@ -97,7 +113,13 @@ void Enemy::update(float time)
 
 	delete mpPath;
 	mpPath = NULL;
-	
+
+#ifdef VISUALIZE_PATH
+	//show pathfinder visualizer
+	mpPathfinder->drawVisualization(mpCurrentGrid, gpGameApp->getGraphicsSystem()->getBackBuffer());
+#endif
+
+
 	//Hitbox / Hitcircle Stuff goes here
 
 	//update enemy state

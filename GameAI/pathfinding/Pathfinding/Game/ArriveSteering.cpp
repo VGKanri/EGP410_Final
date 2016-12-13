@@ -12,26 +12,9 @@ Steering* ArriveSteering::getSteering()
 {
 	mLinear = mTarget - mpMover->getPosition();
 
-	////Checking if inside the satisfaction radius
-	//if (mLinear.getLengthSquared() < mSatisfactionRadius * mSatisfactionRadius)
-	//{
-	//	mLinear = gZeroVector2D;
-	//	mAngular = mpMover->getOrientation();
-	//	return this;
-	//}
-
-	mLinear /= mTimeToTarget;
-
-	float maxVelocity = mpMover->getMaxVelocity();
-
-	if (mLinear.getLengthSquared() > maxVelocity * maxVelocity)//velocity too great?
-	{
-		//cap the velocity
-		mLinear.normalize();
-		mLinear *= maxVelocity;
-	}
-
-	mAngular = Kinematic::getOrientationFromVelocity(mpMover->getOrientation(), mLinear);
+	mLinear.normalize();
+	mLinear *= mpMover->getMaxVelocity();
+	mAngular = 0;
 
 	return this;
 }
