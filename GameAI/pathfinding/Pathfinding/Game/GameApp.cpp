@@ -128,6 +128,7 @@ void GameApp::changeCurrentRoom(Grid* pGrid)
 		if (pGrid == mpGrid[i])
 		{
 			mCurrentRoom = i;
+			mpPathfinder->switchGrid(mpGrid[i]);
 		}
 	}
 }
@@ -330,9 +331,8 @@ void GameApp::processLoop()
 		mpGridVisualizer->draw(*pBackBuffer);
 #ifdef VISUALIZE_PATH
 		//show pathfinder visualizer
-		//mpPathfinder->drawVisualization(mpGrid[mCurrentRoom], pBackBuffer);
+		mpPathfinder->drawVisualization(mpGrid[mCurrentRoom], pBackBuffer);
 #endif
-
 		mpUnitManager->update(LOOP_TARGET_TIME / 1000.0f);
 		break;
 	case GameState::HELP_MENU:

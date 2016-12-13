@@ -131,3 +131,9 @@ bool AStar::checkHeuristic(Node* pGoal, Node* pCurrent, Node* pNextToVisit) cons
 		return false;
 	}
 }
+
+void AStar::switchGrid(Grid* pGrid)
+{
+	//mpVisualizer->switchGrid(pGrid);
+	dynamic_cast<GridGraph*>(mpGraph)->setGrid(pGrid);
+}

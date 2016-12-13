@@ -94,4 +94,5 @@ void GridPathfinder::drawPathCenterLines()
 void GridPathfinder::switchGrid(Grid* pGrid)
 {
 	mpVisualizer->switchGrid(pGrid);
+	dynamic_cast<GridGraph*>(mpGraph)->setGrid(pGrid);
 }

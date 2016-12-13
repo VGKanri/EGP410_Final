@@ -17,6 +17,8 @@ public:
 
 	const Path& findPath(Node* pFrom, Node* pTo);//make sure to delete the path when you are done!
 
+	void switchGrid(Grid* pGrid);
+
 private:
 	bool checkHeuristic(Node* pGoal, Node* pCurrent, Node* pNextToVisit) const; //The Heuristic in question will be Euclidean Distance to the goal
 };

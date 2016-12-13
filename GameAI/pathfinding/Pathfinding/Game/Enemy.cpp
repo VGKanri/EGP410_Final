@@ -28,6 +28,11 @@ Enemy::Enemy(Sprite *pSprite, const Vector2D position, float orientation, const 
 	calcCurrentNode();
 }
 
+Enemy::~Enemy()
+{
+	setSteering(NULL);
+}
+
 void Enemy::update(float time)
 {
 	Vector2D tempPos = mPosition;
@@ -46,7 +51,6 @@ void Enemy::update(float time)
 
 	//vital for calculating mLinear
 	Steering* tmpSteering = mpCurrentSteering->getSteering();
-	//Steering* tmpSteering = new ArriveSteering(this, gpGameApp->getUnitManager()->getPlayer()->getPosition());
 
 	//if (!tmpSteering->shouldApplyDirectly())
 	//{
@@ -66,9 +70,6 @@ void Enemy::update(float time)
 
 	calcNewVelocities(*tmpSteering, time, *mMaxVelocity, *mMaxRotationalVelocity);
 
-	//delete tmpSteering;
-	//tmpSteering = NULL;
-
 	delete mpPath;
 	mpPath = NULL;
 	
@@ -78,4 +79,9 @@ void Enemy::update(float time)
 void Enemy::calcCurrentNode()
 {
 	mpCurrentNode = gpGameApp->getGridGraph()->getNode(gpGameApp->getGrid()->getSquareIndexFromPixelXY(mPosition.getX() + 16, mPosition.getY() + 16));
+}
+
+void Enemy::PathFind()
+{
+
 }

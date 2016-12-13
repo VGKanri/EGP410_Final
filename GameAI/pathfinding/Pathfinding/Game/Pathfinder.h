@@ -19,6 +19,8 @@ public:
 
 	virtual const Path& findPath( Node* pFrom, Node* pTo ) = 0;
 
+	Graph* getGraph() { return mpGraph; };
+
 protected:
 	Graph* mpGraph;
 	Path mPath;  //holds every node that was searched through during pathfinding	
