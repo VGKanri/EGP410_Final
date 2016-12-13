@@ -111,9 +111,6 @@
     <ClInclude Include="AStar.h">
       <Filter>Header Files\pathfinding</Filter>
     </ClInclude>
-    <ClInclude Include="ChangePathfindingMessage.h">
-      <Filter>Header Files\Messages</Filter>
-    </ClInclude>
     <ClInclude Include="PathfindingDebugContent.h">
       <Filter>Header Files\Debug Content</Filter>
     </ClInclude>
@@ -235,9 +232,6 @@
     </ClCompile>
     <ClCompile Include="AStar.cpp">
       <Filter>Source Files\pathfinding</Filter>
-    </ClCompile>
-    <ClCompile Include="ChangePathfindingMessage.cpp">
-      <Filter>Source Files\Messages</Filter>
     </ClCompile>
     <ClCompile Include="PathfindingDebugContent.cpp">
       <Filter>Source Files\Debug Content</Filter>

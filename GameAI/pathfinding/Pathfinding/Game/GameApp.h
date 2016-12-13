@@ -32,12 +32,6 @@ const std::string FILE_NAME = "../Game/pathgrid";
 
 const int MAP_SIZE = 4;
 
-enum PathfindType
-{
-	DIJKSTRA,
-	ASTAR
-};
-
 enum GameState
 {
 	MAIN_MENU,
@@ -64,13 +58,12 @@ public:
 	inline GameMessageManager* getMessageManager() { return mpMessageManager; };
 	inline SoundManager* getSoundManager() { return mpSoundManager; };
 	inline GridVisualizer* getGridVisualizer() { return mpGridVisualizer; };
-	inline GridPathfinder* getPathfinder() { return mpPathfinder; };
+	inline GridPathfinder* getPathfinder() { return mpPathfinder[mCurrentRoom]; };
 	inline Grid* getGrid(int gridNum) { return mpGrid[gridNum]; };
 	inline Grid* getGrid() { return mpGrid[mCurrentRoom]; };
 	inline GridGraph* getGridGraph(int gridNum) { return mpGridGraph[gridNum]; };
 	inline GridGraph* getGridGraph() { return mpGridGraph[0]; };
 	inline InputManager* getInputManager() { return mpInputManager; };
-	inline const PathfindType getPathfindType() const { return mPathfindType; };
 	inline UnitManager* getUnitManager() { return mpUnitManager; };
 	inline MainMenu* getMainMenu() { return mpMainMenu; };
 
@@ -78,7 +71,6 @@ public:
 	inline void setState(GameState state) { mState = state; };
 	//inline void setPtr(float ptr) { mPtr = ptr; };
 
-	void changePathfindType(PathfindType type); //changes mpPathfinder to match pathfindertype that is passed in
 	void setRoomLinks(); //reads rooms to set appropriate room links
 	void changeCurrentRoom(Grid* pGrid); //changes the mCurrentRoom variable to match the current grid
 
@@ -92,13 +84,9 @@ private:
 	DebugDisplay* mpDebugDisplay;
 	InputManager* mpInputManager;
 
-	GridPathfinder* mpPathfinder;
-	GridPathfinder* mpDijkstra;
-	GridPathfinder* mpAStar;
+	GridPathfinder* mpPathfinder[MAP_SIZE];
 
 	UnitManager* mpUnitManager;
-
-	PathfindType mPathfindType;
 
 	MainMenu* mpMainMenu;
 	HelpMenu* mpHelpMenu;

@@ -39,7 +39,6 @@ GameApp::GameApp()
 :mpMessageManager(NULL)
 ,mpGrid()
 ,mpGridGraph()
-,mpPathfinder(NULL)
 ,mpDebugDisplay(NULL)
 {
 	mPtr = make_shared<float>(10.0f);
@@ -52,23 +51,6 @@ GameApp::GameApp()
 GameApp::~GameApp()
 {
 	cleanup();
-}
-
-void GameApp::changePathfindType(PathfindType type)
-{
-	switch(type)
-	{
-	case DIJKSTRA:
-		mpPathfinder = mpDijkstra;
-		mpDebugDisplay->changePathfinderData(mpDijkstra);
-		mPathfindType = DIJKSTRA;
-		break;
-	case ASTAR:
-		mpPathfinder = mpAStar;
-		mpDebugDisplay->changePathfinderData(mpAStar);
-		mPathfindType = ASTAR;
-		break;
-	}
 }
 
 void GameApp::setRoomLinks()
@@ -128,7 +110,6 @@ void GameApp::changeCurrentRoom(Grid* pGrid)
 		if (pGrid == mpGrid[i])
 		{
 			mCurrentRoom = i;
-			mpPathfinder->switchGrid(mpGrid[i]);
 		}
 	}
 }
@@ -237,14 +218,12 @@ bool GameApp::init()
 	mpSoundManager->playSong(BATTLE_THEME_KEY);
 
 	//init pathfinders
-	mpDijkstra = new Dijkstra(mpGridGraph[0]);
-	mpAStar = new AStar(mpGridGraph[0]);
+	for (int i = 0; i < MAP_SIZE; ++i)
+	{
+		mpPathfinder[i] = new AStar(mpGridGraph[i]);
+	}
 
 	mpUnitManager = new UnitManager();
-
-	//set default pathfinder to AStar
-	mpPathfinder = mpAStar;
-	mPathfindType = ASTAR;
 
 	//spawn player at the spawn player block of the grid
 	mpUnitManager->addUnit(mpSpriteManager->getSprite(PLAYER_SPRITE_ID), getGrid()->getULCornerOfSquare(getGrid()->getIndexOfPlayerSpawn()), Vector2D(0, 0), mPtr, mPtr, mPtr, 1.0f, "player", true);
@@ -261,7 +240,7 @@ bool GameApp::init()
 	mpHelpMenu->setAnimation(mpUnitManager->getPlayer()->getSideAnimation());
 
 	//debug display
-	PathfindingDebugContent* pContent = new PathfindingDebugContent( mpPathfinder );
+	PathfindingDebugContent* pContent = new PathfindingDebugContent( mpPathfinder[0] );
 	mpDebugDisplay = new DebugDisplay( Vector2D(0,12), pContent );
 
 	mpMasterTimer->start();
@@ -294,11 +273,11 @@ void GameApp::cleanup()
 		mpGridGraph[i] = NULL;
 	}
 
-	delete mpDijkstra;
-	mpDijkstra = NULL;
-
-	delete mpAStar;
-	mpAStar = NULL;
+	for (int i = 0; i < MAP_SIZE; ++i)
+	{
+		delete mpPathfinder[i];
+		mpPathfinder[i] = NULL;
+	}
 
 	delete mpDebugDisplay;
 	mpDebugDisplay = NULL;
@@ -335,7 +314,7 @@ void GameApp::processLoop()
 		mpGridVisualizer->draw(*pBackBuffer);
 #ifdef VISUALIZE_PATH
 		//show pathfinder visualizer
-		mpPathfinder->drawVisualization(mpGrid[mCurrentRoom], pBackBuffer);
+		mpPathfinder[mCurrentRoom]->drawVisualization(mpGrid[mCurrentRoom], pBackBuffer);
 #endif
 		mpUnitManager->update(LOOP_TARGET_TIME / 1000.0f);
 		break;

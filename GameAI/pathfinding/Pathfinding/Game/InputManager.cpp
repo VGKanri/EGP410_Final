@@ -4,7 +4,6 @@
 
 #include "ExitGameMessage.h"
 #include "PathToMessage.h"
-#include "ChangePathfindingMessage.h"
 #include "ChangePlayerDirectionMessage.h"
 #include "ChangeMenuSelectionMessage.h"
 #include "ChangeStateMessage.h"
@@ -106,18 +105,6 @@ void InputManager::update()
 				break;
 
 			case GameState::PLAYING:
-				if (mEvent.keyboard.keycode == ALLEGRO_KEY_D)
-				{
-					GameMessage* pMessage = new ChangePathfindingMessage(DIJKSTRA, mStartPos, mGoalPos);
-					gpGameApp->getMessageManager()->addMessage(pMessage, 0);
-				}
-
-				if (mEvent.keyboard.keycode == ALLEGRO_KEY_A)
-				{
-					GameMessage* pMessage = new ChangePathfindingMessage(ASTAR, mStartPos, mGoalPos);
-					gpGameApp->getMessageManager()->addMessage(pMessage, 0);
-				}
-
 				//Player Input keyboard events
 				if (mEvent.keyboard.keycode == ALLEGRO_KEY_UP) //For if the player hits the up arrow
 				{

@@ -24,7 +24,7 @@ Enemy::Enemy(Sprite *pSprite, const Vector2D position, float orientation, const 
 	setMaxRotational(maxRotational);
 	setMaxAcceleration(maxAcceleration);
 
-	//A temporary goal, you're going to have to figure out how to get the positoin of the node
+	//A temporary goal, you're going to have to figure out how to get the position of the node
 	Steering* tmpSteering = new ArriveSteering(this, Vector2D(500,500));
 	setSteeringFirst(tmpSteering);
 	calcCurrentNode();
@@ -70,30 +70,30 @@ void Enemy::update(float time)
 	Node* pNextNode = mpPath->getAndRemoveNextNode();
 
 	//UNCOMMENT THIS WHEN NEEDED
-	////Here you can reset the steering's target Vector2D
-	//ArriveSteering* goalSteering = dynamic_cast<ArriveSteering*>(mpCurrentSteering);
-	//goalSteering->setTarget(gpGameApp->getGrid()->getULCornerOfSquare(mpPath->getAndRemoveNextNode()->getId()));
+	//Here you can reset the steering's target Vector2D
+	ArriveSteering* goalSteering = dynamic_cast<ArriveSteering*>(mpCurrentSteering);
+	goalSteering->setTarget(gpGameApp->getGrid()->getULCornerOfSquare(mpPath->getAndRemoveNextNode()->getId()));
 
-	////vital for calculating mLinear
-	//Steering* tmpSteering = mpCurrentSteering->getSteering();
+	//vital for calculating mLinear
+	Steering* tmpSteering = mpCurrentSteering->getSteering();
 
-	////if (!tmpSteering->shouldApplyDirectly())
-	////{
-	//	//not stopped
-	//	if (getVelocity().getLengthSquared() > MIN_VELOCITY_TO_TURN_SQUARED)
-	//	{
-	//		setVelocity(tmpSteering->getLinear());
-	//		//setOrientation(tmpSteering->getAngular());
-	//	}
+	//if (!tmpSteering->shouldApplyDirectly())
+	//{
+		//not stopped
+		if (getVelocity().getLengthSquared() > MIN_VELOCITY_TO_TURN_SQUARED)
+		{
+			setVelocity(tmpSteering->getLinear());
+			//setOrientation(tmpSteering->getAngular());
+		}
 
-	//	//since we are applying the steering directly we don't want any rotational velocity
-	//	setRotationalVelocity(0.0f);
-	//	tmpSteering->setAngular(0.0f);
-	////}
+		//since we are applying the steering directly we don't want any rotational velocity
+		setRotationalVelocity(0.0f);
+		tmpSteering->setAngular(0.0f);
+	//}
 
-	//Kinematic::update(time);
+	Kinematic::update(time);
 
-	//calcNewVelocities(*tmpSteering, time, *mMaxVelocity, *mMaxRotationalVelocity);
+	calcNewVelocities(*tmpSteering, time, *mMaxVelocity, *mMaxRotationalVelocity);
 
 	delete mpPath;
 	mpPath = NULL;

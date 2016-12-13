@@ -82,7 +82,6 @@
     <ClInclude Include="AStar.h" />
     <ClInclude Include="CandyPickUpMessage.h" />
     <ClInclude Include="ChangeMenuSelectionMessage.h" />
-    <ClInclude Include="ChangePathfindingMessage.h" />
     <ClInclude Include="ChangePlayerDirectionMessage.h" />
     <ClInclude Include="ChangeRoomMessage.h" />
     <ClInclude Include="ChangeStateMessage.h" />
@@ -124,7 +123,6 @@
     <ClCompile Include="AStar.cpp" />
     <ClCompile Include="CandyPickUpMessage.cpp" />
     <ClCompile Include="ChangeMenuSelectionMessage.cpp" />
-    <ClCompile Include="ChangePathfindingMessage.cpp" />
     <ClCompile Include="ChangePlayerDirectionMessage.cpp" />
     <ClCompile Include="ChangeRoomMessage.cpp" />
     <ClCompile Include="ChangeStateMessage.cpp" />

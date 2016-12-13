@@ -31,7 +31,7 @@ public:
 	~UnitManager();
 
 	void spawnEnemies(Grid* pGrid);
-	void setEnemyActive(Grid* pGrid);
+	void setEnemyActive(Grid* pGrid); //determines whether the enemy is in the current grid
 
 	void addUnit(Sprite* sprite, Vector2D& pos, Vector2D& vel, std::shared_ptr<float> maxVel, std::shared_ptr<float> reactionRadius
 		, std::shared_ptr<float> maxRotational, float maxAccel, std::string id, bool isPlayer);

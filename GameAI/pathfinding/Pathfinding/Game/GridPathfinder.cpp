@@ -40,14 +40,7 @@ void GridPathfinder::drawVisualization( Grid* pGrid, GraphicsBuffer* pDest )
 
 	//change path color depending on search algorithm being run
 	static ALLEGRO_COLOR pathColor;
-	if (gpGameApp->getPathfindType() == DIJKSTRA)
-	{
-		pathColor = al_map_rgb(255, 64, 64);
-	}
-	else
-	{
-		pathColor = al_map_rgb(64, 64, 255);
-	}
+	pathColor = al_map_rgb(64, 64, 255);
 
 	static ALLEGRO_COLOR startColor = al_map_rgb(1, 255, 128);
 	static ALLEGRO_COLOR stopColor = al_map_rgb(255, 255, 0);
