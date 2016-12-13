@@ -10,7 +10,7 @@ public:
 	GridGraph( Grid* pGrid );
 	virtual ~GridGraph();
 
-	void setGrid( Grid* pGrid ) { mpGrid = pGrid; };
+	void setGrid(Grid* pGrid) { mpGrid = pGrid; init(); };
 	void init();
 
 private:

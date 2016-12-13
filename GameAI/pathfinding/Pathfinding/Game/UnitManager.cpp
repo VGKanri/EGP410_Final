@@ -1,21 +1,61 @@
 #include "UnitManager.h"
 
 #include "Game.h"
+#include "GameApp.h"
 #include "GraphicsSystem.h"
-#include "Sprite.h"
+#include "SpriteManager.h"
+#include "Grid.h"
 
 #include <time.h>
 #include <stdlib.h>
+#include <sstream>
+#include <memory>
 
 UnitManager::UnitManager()
 {
 	mUnitCount = 0;
 	mpUnitList = new std::map<std::string, KinematicUnit*>;
+
+	//init shared pointers
+	mPtr = std::make_shared<float>(10.0f);
+	mMaxVel = std::make_shared<float>(100.0f);
 }
 
 UnitManager::~UnitManager()
 {
 	cleanUp();
+}
+
+//will expand this function later
+void UnitManager::spawnEnemies(Grid* pGrid)
+{
+	std::stringstream ss;
+
+	for (int i = 0; i < pGrid->getSize(); ++i)
+	{
+		if (pGrid->getValueAtIndex(i) == ENEMY_SPAWN)
+		{
+			ss << "Enemy" << mUnitCount;
+			mUnitCount++;
+
+			addUnit(gpGameApp->getSpriteManager()->getSprite(ENEMY_SPRITE_ID), pGrid->getULCornerOfSquare(i), Vector2D(0, 0), mMaxVel, mPtr, mPtr, 1.0f,ss.str(), false);
+			dynamic_cast<Enemy*>(getUnit(ss.str()))->setGrid(pGrid);
+
+			ss.str("");
+		}
+	}
+}
+
+void UnitManager::setEnemyActive(Grid* pGrid)
+{
+	std::stringstream ss;
+
+	for (int i = 0; i < mUnitCount; ++i)
+	{
+		ss << "Enemy" << i;
+		dynamic_cast<Enemy*>(getUnit(ss.str()))->isActive(pGrid);
+		ss.str("");
+	}
 }
 
 void UnitManager::addUnit(Sprite* sprite, Vector2D& pos, Vector2D& vel, std::shared_ptr<float> maxVel, std::shared_ptr<float> reactionRadius

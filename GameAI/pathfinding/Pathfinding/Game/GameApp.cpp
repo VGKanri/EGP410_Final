@@ -145,7 +145,7 @@ bool GameApp::init()
 	//load buffers
 	mpGraphicsBufferManager->loadBuffer(BACKGROUND_ID, "../Assets/background.png");
 	mpGraphicsBufferManager->loadBuffer(PLAYER_SPRITE_ID, "../Assets/rocket.png");
-	mpGraphicsBufferManager->loadBuffer(ENEMY_SPRITE_ID, "Serguei.png");
+	mpGraphicsBufferManager->loadBuffer(ENEMY_SPRITE_ID, "../Assets/enemy.png");
 	mpGraphicsBufferManager->loadBuffer(WALL_SPRITE_ID, "../Assets/wall.png");
 	mpGraphicsBufferManager->loadBuffer(FLOOR_SPRITE_ID, "../Assets/floor.png");
 	mpGraphicsBufferManager->loadBuffer(COIN_SPRITE_ID, "../Assets/coin.png");
@@ -248,7 +248,11 @@ bool GameApp::init()
 
 	//spawn player at the spawn player block of the grid
 	mpUnitManager->addUnit(mpSpriteManager->getSprite(PLAYER_SPRITE_ID), getGrid()->getULCornerOfSquare(getGrid()->getIndexOfPlayerSpawn()), Vector2D(0, 0), mPtr, mPtr, mPtr, 1.0f, "player", true);
-	mpUnitManager->addUnit(mpSpriteManager->getSprite(ENEMY_SPRITE_ID), Vector2D(100, 100), Vector2D(0, 0), mMaxVel, mPtr, mPtr, 1.0f, "enemy", false);
+
+	mpUnitManager->spawnEnemies(mpGrid[0]);
+	//mpUnitManager->addUnit(mpSpriteManager->getSprite(ENEMY_SPRITE_ID), Vector2D(100, 100), Vector2D(0, 0), mMaxVel, mPtr, mPtr, 1.0f, "enemy", false);
+	//mpUnitManager->addUnit(mpSpriteManager->getSprite(ENEMY_SPRITE_ID), Vector2D(400, 100), Vector2D(0, 0), mMaxVel, mPtr, mPtr, 1.0f, "enemy1", false);
+
 
 	mpMainMenu->setSprite(mpSpriteManager->getSprite(PLAYER_SPRITE_ID));
 	mpMainMenu->setAnimation(mpUnitManager->getPlayer()->getSideAnimation());

@@ -9,6 +9,7 @@
 #include "Enemy.h"
 
 class Sprite;
+class Grid;
 
 //Maybe take this out?
 enum BehaviourType
@@ -21,9 +22,16 @@ private:
 	std::map<std::string, KinematicUnit*>* mpUnitList;
 	int mUnitCount;
 
+	//Shared pointers
+	std::shared_ptr<float> mPtr;
+	std::shared_ptr<float> mMaxVel;
+
 public:
 	UnitManager();
 	~UnitManager();
+
+	void spawnEnemies(Grid* pGrid);
+	void setEnemyActive(Grid* pGrid);
 
 	void addUnit(Sprite* sprite, Vector2D& pos, Vector2D& vel, std::shared_ptr<float> maxVel, std::shared_ptr<float> reactionRadius
 		, std::shared_ptr<float> maxRotational, float maxAccel, std::string id, bool isPlayer);
