@@ -10,7 +10,7 @@ ArriveSteering::ArriveSteering(KinematicUnit *pMover, Vector2D target, float sat
 
 Steering* ArriveSteering::getSteering()
 {
-	mLinear = mTarget - mpMover->getPosition();
+	mLinear = mTarget - Vector2D(mpMover->getPosition().getX(), mpMover->getPosition().getY());
 
 	mLinear.normalize();
 	mLinear *= mpMover->getMaxVelocity();

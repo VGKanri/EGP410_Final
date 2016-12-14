@@ -1,10 +1,14 @@
 #pragma once
 
 #include "KinematicUnit.h"
+#include "Hitbox.h"
 #include "AStar.h"
 #include "ArriveSteering.h"
 
 const std::string ENEMY_SHEET_PATH = "../Assets/enemySpriteSheet.png";
+
+const int ENEMY_WIDTH = 28;
+const int ENEMY_HEIGHT = 22;
 
 class Animation;
 class GraphicsBuffer;
@@ -21,9 +25,13 @@ enum class EnemyState
 class Enemy : public KinematicUnit
 {
 private:
+	//hitcircle for collision
+	Hitbox mCollider;
+
 	CURRENT_DIRECTION mDirection;
 	Path* mpPath;
 	Node* mpCurrentNode;
+	Node* mpGoalNode;
 	Grid* mpCurrentGrid;
 
 	Animation* mpDownAnimation;
@@ -54,6 +62,9 @@ public:
 
 	void updateState();
 	void isActive(Grid* grid);
+
+	bool checkWallCollision();
+	bool checkIfGoalReached();
 
 	inline CURRENT_DIRECTION& getCurrentDirection() { return mDirection; };
 	inline void setPath(Path* path) { mpPath = path; };
