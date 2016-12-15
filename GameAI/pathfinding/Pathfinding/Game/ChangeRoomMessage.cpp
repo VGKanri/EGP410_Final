@@ -28,4 +28,7 @@ void ChangeRoomMessage::process()
 	gpGameApp->getUnitManager()->getPlayer()->setPosition(gpGameApp->getGrid()->getULCornerOfSquare(mIndex));
 	gpGameApp->getUnitManager()->getPlayer()->resetCollider();
 	gpGameApp->getUnitManager()->getPlayer()->changeState(PlayerState::IDLE);
+
+	//update enemy logic
+	gpGameApp->getUnitManager()->setEnemyActive(gpGameApp->getGrid());
 }

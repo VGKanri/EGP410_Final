@@ -71,4 +71,5 @@ public:
 	inline void setGrid(Grid* grid) { mpCurrentGrid = grid; };
 	inline AStar* getPathfinder() { return mpPathfinder; };
 	inline void setPathfinder(AStar* pathfinder) { mpPathfinder = pathfinder; };
+	inline bool getActive() { return mActive; };
 };

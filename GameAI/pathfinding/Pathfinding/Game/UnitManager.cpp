@@ -84,7 +84,11 @@ void UnitManager::draw()
 {
 	for (std::map<std::string, KinematicUnit*>::iterator i = mpUnitList->begin(); i != mpUnitList->end(); ++i)
 	{
-		i->second->draw(gpGame->getGraphicsSystem()->getBackBuffer());
+		//if the unit is not an enemy that isn't active, draw it.
+		if (!(i->first.substr(0, 5) == "Enemy" && !dynamic_cast<Enemy*>(i->second)->getActive()))
+		{
+			i->second->draw(gpGame->getGraphicsSystem()->getBackBuffer());
+		}		
 	}
 }
 

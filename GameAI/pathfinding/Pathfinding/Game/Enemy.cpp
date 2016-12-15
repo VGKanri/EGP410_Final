@@ -47,6 +47,7 @@ Enemy::Enemy(Sprite *pSprite, const Vector2D position, float orientation, const 
 	mpPathfinder = new AStar(gpGameApp->getGridGraph());
 
 	mArrived = true;
+	mActive = false;
 }
 
 Enemy::~Enemy()
@@ -66,72 +67,74 @@ void Enemy::update(float time)
 {
 	Vector2D tempPos = mPosition;
 
-	//PUT IN CHECK WALL COLLISION STUFF HERE
-
-	//animation update
-	mpCurrentAnimation->update(time);
-	mpSprite = mpCurrentAnimation->getCurrentSprite();
-	
-	calcCurrentNode();
-
-	//PATHFINDING HELL
-	Vector2D playerPos = gpGameApp->getUnitManager()->getPlayer()->getPosition();
-	if (mArrived)
+	if (mActive)
 	{
-		mpPath = new Path(mpPathfinder->findPath(gpGameApp->getUnitManager()->getPlayer()->getCurrentNode(), mpCurrentNode));
+		//PUT IN CHECK WALL COLLISION STUFF HERE
+		//animation update
+		mpCurrentAnimation->update(time);
+		mpSprite = mpCurrentAnimation->getCurrentSprite();
 
-		mpPath->getAndRemoveNextNode();
-		mpGoalNode = mpPath->getAndRemoveNextNode();
+		calcCurrentNode();
 
-		if (mpCurrentNode->getId() != gpGameApp->getUnitManager()->getPlayer()->getCurrentNode()->getId())
-			dynamic_cast<ArriveSteering*>(mpCurrentSteering)->setTarget(gpGameApp->getGrid()->getULCornerOfSquare(mpGoalNode->getId()));
+		//PATHFINDING HELL
+		Vector2D playerPos = gpGameApp->getUnitManager()->getPlayer()->getPosition();
+		if (mArrived)
+		{
+			mpPath = new Path(mpPathfinder->findPath(gpGameApp->getUnitManager()->getPlayer()->getCurrentNode(), mpCurrentNode));
+
+			mpPath->getAndRemoveNextNode();
+			mpGoalNode = mpPath->getAndRemoveNextNode();
+
+			if (mpCurrentNode->getId() != gpGameApp->getUnitManager()->getPlayer()->getCurrentNode()->getId())
+				dynamic_cast<ArriveSteering*>(mpCurrentSteering)->setTarget(gpGameApp->getGrid()->getULCornerOfSquare(mpGoalNode->getId()));
 
 
-		mArrived = false;
-	}
+			mArrived = false;
+		}
 
-	//CHECK ALL 4 CORNERS TO MATCH GRID ID
-	if ((mpGoalNode != NULL) && checkIfGoalReached())
-	{
-		mArrived = true;
-	}
+		//CHECK ALL 4 CORNERS TO MATCH GRID ID
+		if ((mpGoalNode != NULL) && checkIfGoalReached())
+		{
+			mArrived = true;
+		}
 
-	//vital for calculating mLinear
-	Steering* tmpSteering = mpCurrentSteering->getSteering();
+		//vital for calculating mLinear
+		Steering* tmpSteering = mpCurrentSteering->getSteering();
 
-	setVelocity(tmpSteering->getLinear());
+		setVelocity(tmpSteering->getLinear());
 
-	//since we are applying the steering directly we don't want any rotational velocity
-	setRotationalVelocity(0.0f);
-	tmpSteering->setAngular(0.0f);
+		//since we are applying the steering directly we don't want any rotational velocity
+		setRotationalVelocity(0.0f);
+		tmpSteering->setAngular(0.0f);
 
-	Kinematic::update(time);
+		Kinematic::update(time);
 
-	calcNewVelocities(*tmpSteering, time, *mMaxVelocity, *mMaxRotationalVelocity);
+		calcNewVelocities(*tmpSteering, time, *mMaxVelocity, *mMaxRotationalVelocity);
 
-	//Check collisions
-	mCollider.update(mPosition.getX() - tempPos.getX(), mPosition.getY() - tempPos.getY());
-	if (checkWallCollision())
-	{
-		mCollider.update(tempPos.getX() - mPosition.getX(), tempPos.getY() - mPosition.getY());
-		mPosition = tempPos;
-	}
+		//Check collisions
+		mCollider.update(mPosition.getX() - tempPos.getX(), mPosition.getY() - tempPos.getY());
+		if (checkWallCollision())
+		{
+			mCollider.update(tempPos.getX() - mPosition.getX(), tempPos.getY() - mPosition.getY());
+			mPosition = tempPos;
+		}
 
-	//mVelocity = Vector2D(0, 0);
+		//mVelocity = Vector2D(0, 0);
 
-	delete mpPath;
-	mpPath = NULL;
+		delete mpPath;
+		mpPath = NULL;
 
 #ifdef VISUALIZE_PATH
-	//show pathfinder visualizer
-	//mpPathfinder->drawVisualization(mpCurrentGrid, gpGameApp->getGraphicsSystem()->getBackBuffer());
+		//show pathfinder visualizer
+		//mpPathfinder->drawVisualization(mpCurrentGrid, gpGameApp->getGraphicsSystem()->getBackBuffer());
 #endif
 
 
 	//Hitbox / Hitcircle Stuff goes here
 
 	//update enemy state
-	updateState();
+		updateState();
+	}
 }
 
 void Enemy::calcCurrentNode()

@@ -228,7 +228,12 @@ bool GameApp::init()
 	//spawn player at the spawn player block of the grid
 	mpUnitManager->addUnit(mpSpriteManager->getSprite(PLAYER_SPRITE_ID), getGrid()->getULCornerOfSquare(getGrid()->getIndexOfPlayerSpawn()), Vector2D(0, 0), mPtr, mPtr, mPtr, 1.0f, "player", true);
 
-	mpUnitManager->spawnEnemies(mpGrid[0]);
+	for (int i = 0; i < MAP_SIZE; ++i)
+	{
+		mpUnitManager->spawnEnemies(mpGrid[i]);
+	}
+	
+	mpUnitManager->setEnemyActive(getGrid());
 	//mpUnitManager->addUnit(mpSpriteManager->getSprite(ENEMY_SPRITE_ID), Vector2D(100, 100), Vector2D(0, 0), mMaxVel, mPtr, mPtr, 1.0f, "enemy", false);
 	//mpUnitManager->addUnit(mpSpriteManager->getSprite(ENEMY_SPRITE_ID), Vector2D(400, 100), Vector2D(0, 0), mMaxVel, mPtr, mPtr, 1.0f, "enemy1", false);
 
