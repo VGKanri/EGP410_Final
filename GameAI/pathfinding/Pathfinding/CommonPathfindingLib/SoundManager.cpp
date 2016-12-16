@@ -19,6 +19,10 @@ void SoundManager::init()
 	mpSongs.emplace(TITLE_THEME_KEY, new Song(TITLE_THEME_PATH));
 	mpSongs.emplace(BATTLE_THEME_KEY, new Song(BATTLE_THEME_PATH));
 	mpSongs.emplace(POWER_UP_KEY, new Song(POWER_UP_PATH));
+
+	mpSoundEffects.emplace(COIN_KEY, new SoundEffect(COIN_EFFECT_PATH));
+	//mpSoundEffects.emplace(STAIR_KEY, new SoundEffect(STAIR_EFFECT_PATH));
+	mpSoundEffects.emplace(POWER_EFFECT_KEY, new SoundEffect(POWERUP_EFFECT_PATH));
 }
 
 void SoundManager::cleanUp()

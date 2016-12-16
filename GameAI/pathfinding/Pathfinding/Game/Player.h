@@ -82,6 +82,7 @@ public:
 	inline Hitbox getHitbox() const { return mCollider; };
 	inline bool getIsCandied() { return mAlmightyCandy; };
 	inline void setIsCandied(bool candy) { mAlmightyCandy = candy; };
+	inline void resetCandyTimer() { mCandyTimer = 0; };
 	inline PlayerState getPlayerState() { return mState; };
 	inline CURRENT_DIRECTION& getCurrentDirection() { return mDirection; };
 	inline Node* getCurrentNode() { return mpCurrentNode; };

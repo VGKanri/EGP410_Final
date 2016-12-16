@@ -8,5 +8,6 @@ play function to make it not loop*/
 class SoundEffect : public Song
 {
 public:
+	SoundEffect(std::string filePath);
 	void play();
 };

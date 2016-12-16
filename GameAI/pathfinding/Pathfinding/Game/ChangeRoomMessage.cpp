@@ -3,6 +3,7 @@
 #include "Grid.h"
 #include "GridVisualizer.h"
 #include "UnitManager.h"
+#include "SoundManager.h"
 
 
 ChangeRoomMessage::ChangeRoomMessage(int index) :
@@ -31,4 +32,7 @@ void ChangeRoomMessage::process()
 
 	//update enemy logic
 	gpGameApp->getUnitManager()->setEnemyActive(gpGameApp->getGrid());
+
+	//update sound
+	//gpGameApp->getSoundManager()->playSoundEffect(STAIR_KEY);
 }

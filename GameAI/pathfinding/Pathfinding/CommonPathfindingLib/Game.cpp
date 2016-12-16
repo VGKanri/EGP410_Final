@@ -90,7 +90,7 @@ bool Game::init()
 		return false;
 	}
  
-	if (!al_reserve_samples(1))
+	if (!al_reserve_samples(10))
 	{
 		fprintf(stderr, "failed to reserve samples!\n");
 		return false;

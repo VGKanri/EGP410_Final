@@ -6,11 +6,13 @@
 #include "Grid.h"
 #include "Game.h"
 #include "GameApp.h"
+#include "SoundManager.h"
 #include "GridPathfinder.h"
 #include "GridGraph.h"
 #include "CoinPickUpMessage.h"
 #include "CandyPickUpMessage.h"
 #include "ChangeRoomMessage.h"
+#include "PowerUpOverMessage.h"
 #include "GameMessageManager.h"
 
 Player::Player(Sprite *pSprite, const Vector2D position, float orientation, const Vector2D &velocity, float rotationVel, std::shared_ptr<float> maxVelocity
@@ -117,6 +119,10 @@ void Player::updateCandyTimer(float time)
 	{
 		mCandyTimer = 0;
 		mAlmightyCandy = false;
+
+		//I'm sorry, but it has to be done
+		gpGameApp->getSoundManager()->stopSong();
+		gpGameApp->getSoundManager()->playSong(BATTLE_THEME_KEY);
 	}
 }
 
