@@ -8,6 +8,9 @@
 #include "GameMessageManager.h"
 #include "ArriveSteering.h"
 
+#include "GameApp.h"
+#include "UnitManager.h"
+
 
 using namespace std;
 
@@ -147,6 +150,19 @@ void KinematicUnit::setSteeringFirst(Steering* pSteering)
 void KinematicUnit::setNewOrientation()
 {
 	mOrientation = getOrientationFromVelocity(mOrientation, mVelocity);
+}
+
+bool KinematicUnit::getInRadius()
+{
+	float dx = std::abs(gpGameApp->getUnitManager()->getPlayer()->getPosition().getX() - mPosition.getX());
+	if (dx > *mReactionRadius.get())
+		return false;
+
+	float dy = std::abs(gpGameApp->getUnitManager()->getPlayer()->getPosition().getY() - mPosition.getY());
+	if (dy > *mReactionRadius.get())
+		return false;
+
+	return true;
 }
 /*
 void KinematicUnit::seek(const Vector2D &target)

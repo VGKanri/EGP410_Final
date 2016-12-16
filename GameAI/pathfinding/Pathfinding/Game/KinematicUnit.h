@@ -58,6 +58,7 @@ public:
 	void setMaxAcceleration(float maxAccel) { mMaxAcceleration = maxAccel; };
 	void setSteering(Steering* pSteering);
 	void setSteeringFirst(Steering* pSteering);
+	bool getInRadius();
 
 	//check collision
 	//bool checkCollisionWithWalls();

@@ -46,6 +46,7 @@ public:
 
 class StateTransition : public Trackable
 {
+public:
 	StateTransition(TransitionType type, const SM_idType& targetID) :mType(type), mTargetStateID(targetID) {};
 	~StateTransition() {};
 
