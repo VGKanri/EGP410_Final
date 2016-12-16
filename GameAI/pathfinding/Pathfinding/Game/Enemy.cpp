@@ -48,6 +48,7 @@ Enemy::Enemy(Sprite *pSprite, const Vector2D position, float orientation, const 
 
 	mArrived = true;
 	mActive = false;
+	mDead = false;
 }
 
 Enemy::~Enemy()

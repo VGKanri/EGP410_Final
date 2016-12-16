@@ -1,4 +1,5 @@
 #include "Player.h"
+#include "Enemy.h"
 #include "Sprite.h"
 #include "Animation.h"
 #include "GraphicsBuffer.h"
@@ -92,6 +93,7 @@ void Player::update(float time)
 
 	checkCoinCollision();
 	checkCandyCollision();
+	checkEnemyCollision();
 
 	//handle door logic
 	int result = checkDoorCollision();
@@ -308,6 +310,26 @@ int Player::checkDoorCollision()
 	else
 	{
 		return -1; //signifies no door collision is occuring
+	}
+}
+
+void Player::checkEnemyCollision()
+{
+	std::vector<Enemy*> enemyList;
+
+	for (Enemy* enemy : enemyList)
+	{
+		if (mCollider.checkCollision(enemy->getCollider()))
+		{
+			if (mAlmightyCandy)
+			{
+				//kill enemies
+			}
+			else
+			{
+				//kill player
+			}
+		}
 	}
 }
 

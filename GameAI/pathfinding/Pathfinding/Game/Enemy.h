@@ -23,6 +23,13 @@ enum class EnemyState
 	IDLE
 };
 
+enum class SteeringState
+{
+	WANDER,
+	CHASE,
+	FLEE
+};
+
 class Enemy : public KinematicUnit
 {
 private:
@@ -51,6 +58,7 @@ private:
 	void populateAnimations();
 
 	bool mActive; //determines whether the unit is doing more than just pathfinding
+	bool mDead; //determines whether unit is dead or not
 	bool mArrived; //determines whether or not the unit has made it to the center of the next tile
 
 public:
@@ -72,6 +80,8 @@ public:
 	inline void setGrid(Grid* grid) { mpCurrentGrid = grid; };
 	inline Grid* getGrid() { return mpCurrentGrid; };
 	inline AStar* getPathfinder() { return mpPathfinder; };
+	inline Hitbox getCollider() const { return mCollider; };
 	inline void setPathfinder(Graph* graph) { delete mpPathfinder; mpPathfinder = new AStar(graph); };
-	inline bool getActive() { return mActive; };
+	inline bool getActive() const { return mActive; };
+	inline bool getDead() const { return mDead; };
 };

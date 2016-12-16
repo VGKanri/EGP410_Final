@@ -78,6 +78,7 @@ public:
 	void checkCoinCollision();
 	void checkCandyCollision();
 	int checkDoorCollision(); //this function returns the index of the door collision so that the grid can handle the rest
+	void checkEnemyCollision();
 
 	inline Hitbox getHitbox() const { return mCollider; };
 	inline bool getIsCandied() { return mAlmightyCandy; };
