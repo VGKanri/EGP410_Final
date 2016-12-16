@@ -60,8 +60,11 @@ private:
 	bool mActive; //determines whether the unit is doing more than just pathfinding
 	bool mDead; //determines whether unit is dead or not
 	bool mArrived; //determines whether or not the unit has made it to the center of the next tile
+	bool mPlayerNearby;
 
 	Vector2D mSpawn;
+
+	SteeringState mCurrentSteering;
 
 public:
 	Enemy(Sprite* pSprite, const Vector2D position, float orientation, const Vector2D& velocity, float rotationVel, std::shared_ptr<float> maxVelocity, std::shared_ptr<float> reactionRadius, std::shared_ptr<float> maxRotational, float maxAcceleration = 1.0f);
@@ -88,4 +91,6 @@ public:
 	inline bool getActive() const { return mActive; };
 	inline void setDead(bool dead) { mDead = dead; };
 	inline bool getDead() const { return mDead; };
+	inline SteeringState getCurrentSteering() const { return mCurrentSteering; };
+	inline void setCurrentSteering(SteeringState state) { mCurrentSteering = state; };
 };

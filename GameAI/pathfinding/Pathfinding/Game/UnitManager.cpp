@@ -17,7 +17,7 @@ UnitManager::UnitManager()
 	mpUnitList = new std::map<std::string, KinematicUnit*>;
 
 	//init shared pointers
-	mPtr = std::make_shared<float>(10.0f);
+	mPtr = std::make_shared<float>(100.0f);
 	mMaxVel = std::make_shared<float>(100.0f);
 }
 

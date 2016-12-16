@@ -1,11 +1,19 @@
 #pragma once
 
 #include "Trackable.h"
+#include "Enemy.h"
 #include <map>
 
 class StateTransition;
 
 typedef int SM_idType;
+
+enum TransitionType
+{
+	WANDER_TRANSITION = 0,
+	CHASE_TRANSITION = 1,
+	FLEE_TRANSITION = 2
+};
 
 //Struct that serves as the base state class
 struct State

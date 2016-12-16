@@ -11,6 +11,7 @@
 #include "GameMessage.h"
 #include "PathToMessage.h"
 #include "GraphicsSystem.h"
+#include "Connection.h"
 
 Enemy::Enemy(Sprite *pSprite, const Vector2D position, float orientation, const Vector2D &velocity, float rotationVel, std::shared_ptr<float> maxVelocity
 	, std::shared_ptr<float> reactionRadius, std::shared_ptr<float> maxRotational, float maxAcceleration)
@@ -51,6 +52,11 @@ Enemy::Enemy(Sprite *pSprite, const Vector2D position, float orientation, const 
 	mArrived = true;
 	mActive = false;
 	mDead = false;
+
+	mCurrentSteering = SteeringState::WANDER;
+
+	srand(time(NULL));
+	mPlayerNearby = false;
 }
 
 Enemy::~Enemy()
@@ -79,8 +85,52 @@ void Enemy::update(float time)
 
 		calcCurrentNode();
 
-		//PATHFINDING HELL
+		//Pathfinding code
 		Vector2D playerPos = gpGameApp->getUnitManager()->getPlayer()->getPosition();
+
+		if (mCurrentSteering == SteeringState::WANDER)
+		{
+			if (mArrived)
+			{
+				std::vector<Connection*> tmpVector = gpGameApp->getGridGraph()->getConnections(*mpCurrentNode);
+				int i = rand() % 3 + 0;
+				Node* tmpNode = tmpVector.at(i)->getToNode();
+
+				mpPath = new Path(mpPathfinder->findPath(tmpNode, mpCurrentNode));
+
+				mpPath->getAndRemoveNextNode();
+				mpGoalNode = mpPath->getAndRemoveNextNode();
+
+				if (mpCurrentNode->getId() != gpGameApp->getUnitManager()->getPlayer()->getCurrentNode()->getId())
+					dynamic_cast<ArriveSteering*>(mpCurrentSteering)->setTarget(gpGameApp->getGrid()->getULCornerOfSquare(mpGoalNode->getId()));
+
+
+				mArrived = false;
+			}
+		}
+
+		else if (mCurrentSteering == SteeringState::CHASE)
+		{
+			if (mArrived)
+			{
+				mpPath = new Path(mpPathfinder->findPath(gpGameApp->getUnitManager()->getPlayer()->getCurrentNode(), mpCurrentNode));
+
+				mpPath->getAndRemoveNextNode();
+				mpGoalNode = mpPath->getAndRemoveNextNode();
+
+				if (mpCurrentNode->getId() != gpGameApp->getUnitManager()->getPlayer()->getCurrentNode()->getId())
+					dynamic_cast<ArriveSteering*>(mpCurrentSteering)->setTarget(gpGameApp->getGrid()->getULCornerOfSquare(mpGoalNode->getId()));
+
+
+				mArrived = false;
+			}
+		}
+
+		else if (mCurrentSteering == SteeringState::FLEE)
+		{
+
+		}
+		/*
 		if (mArrived)
 		{
 			mpPath = new Path(mpPathfinder->findPath(gpGameApp->getUnitManager()->getPlayer()->getCurrentNode(), mpCurrentNode));
@@ -94,7 +144,7 @@ void Enemy::update(float time)
 
 			mArrived = false;
 		}
-
+		*/
 		//CHECK ALL 4 CORNERS TO MATCH GRID ID
 		if ((mpGoalNode != NULL) && checkIfGoalReached())
 		{
@@ -136,7 +186,18 @@ void Enemy::update(float time)
 
 	//Hitbox / Hitcircle Stuff goes here
 
-	//update enemy state
+		//Check if the player is in the radius
+		mPlayerNearby = getInRadius();
+		if (mPlayerNearby)
+		{
+			mCurrentSteering = SteeringState::CHASE;
+			
+		}
+		else if (!mPlayerNearby)
+		{
+			mCurrentSteering = SteeringState::WANDER;
+		}
+		//update enemy state
 		updateState();
 	}
 }

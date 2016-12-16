@@ -3,13 +3,6 @@
 #include "FiniteStateMachine.h"
 #include "Enemy.h"
 
-enum TransitionType
-{
-	WANDER_TRANSITION = 0,
-	CHASE_TRANSITION = 1,
-	FLEE_TRANSITION = 2
-};
-
 struct Chase : public State
 {
 	Chase(const SM_idType& id) :State(id) {};
@@ -27,6 +20,8 @@ struct Chase : public State
 	StateTransition* update()
 	{
 		std::cout << "Updating Chase" << std::endl;
+		return NULL;
+
 	};
 };
 
@@ -47,6 +42,7 @@ struct Wander : public State
 	StateTransition* update()
 	{
 		std::cout << "Updating Wander" << std::endl;
+		return NULL;
 	};
 };
 
@@ -67,6 +63,8 @@ struct Flee : public State
 	StateTransition* update()
 	{
 		std::cout << "Updating Flee" << std::endl;
+		return NULL;
+
 	};
 };
 

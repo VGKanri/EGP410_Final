@@ -305,6 +305,12 @@
     <ClCompile Include="PowerUpOverMessage.cpp">
       <Filter>Source Files\Messages</Filter>
     </ClCompile>
+    <ClCompile Include="EnemyStateMachine.cpp">
+      <Filter>Source Files\State Machines</Filter>
+    </ClCompile>
+    <ClCompile Include="Wander.cpp">
+      <Filter>Source Files\State Machines</Filter>
+    </ClCompile>
     <ClCompile Include="SpawnEnemyMessage.cpp">
       <Filter>Source Files\Messages</Filter>
     </ClCompile>

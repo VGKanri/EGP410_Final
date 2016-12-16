@@ -134,6 +134,7 @@
     <ClCompile Include="DepthFirstPathfinder.cpp" />
     <ClCompile Include="Dijkstra.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EnemyStateMachine.cpp" />
     <ClCompile Include="ExitGameMessage.cpp" />
     <ClCompile Include="GameApp.cpp" />
     <ClCompile Include="GameMessage.cpp" />
@@ -159,6 +160,7 @@
     <ClCompile Include="SpawnEnemyMessage.cpp" />
     <ClCompile Include="Steering.cpp" />
     <ClCompile Include="UnitManager.cpp" />
+    <ClCompile Include="Wander.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
