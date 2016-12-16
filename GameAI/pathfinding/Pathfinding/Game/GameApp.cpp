@@ -251,7 +251,7 @@ bool GameApp::init()
 
 	//debug display
 	//PathfindingDebugContent* pContent = new PathfindingDebugContent( mpPathfinder[0] );
-	mpDebugDisplay = new DebugDisplay( Vector2D(0,12));
+	mpDebugDisplay = new DebugDisplay( Vector2D(0,0));
 
 	mpMasterTimer->start();
 	return true;

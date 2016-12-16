@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "UnitManager.h"
+#include "DebugDisplay.h"
 #include "Sprite.h"
 #include "Animation.h"
 #include "GraphicsBuffer.h"
@@ -326,10 +327,13 @@ void Player::checkEnemyCollision()
 			if (mAlmightyCandy)
 			{
 				//kill enemies
+				if (enemy->getDead() == false)
+					gpGameApp->getDebugDisplay()->enemyKilled();
+
 				enemy->setDead(true);
 
 				GameMessage* pMessage = new SpawnEnemyMessage(enemy);
-				gpGameApp->getMessageManager()->addMessage(pMessage, 10000);
+				gpGameApp->getMessageManager()->addMessage(pMessage, 10000);		
 			}
 			else
 			{

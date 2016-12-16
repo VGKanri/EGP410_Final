@@ -1,5 +1,6 @@
 #include "DebugDisplay.h"
 #include <allegro5/allegro_ttf.h>
+#include <allegro5/allegro_primitives.h>
 #include "GraphicsBuffer.h"
 #include "GridPathfinder.h"
 #include "DebugContent.h"
@@ -32,7 +33,8 @@ void DebugDisplay::draw( GraphicsBuffer* pBuffer )
 	std::stringstream ss;
 	ss << "Score: " << mScore;
 
-	al_draw_text( mpFont, al_map_rgb( 255, 255, 255 ), mPos.getX(), mPos.getY(), ALLEGRO_ALIGN_LEFT, ss.str().c_str() );
+	al_draw_filled_rectangle(0, 0, 180, 30, al_map_rgb(255, 255, 255));
+	al_draw_text( mpFont, al_map_rgb( 0, 0, 0 ), mPos.getX(), mPos.getY(), ALLEGRO_ALIGN_LEFT, ss.str().c_str() );
 
 }
 

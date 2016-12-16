@@ -65,6 +65,7 @@ public:
 	inline InputManager* getInputManager() { return mpInputManager; };
 	inline UnitManager* getUnitManager() { return mpUnitManager; };
 	inline MainMenu* getMainMenu() { return mpMainMenu; };
+	inline DebugDisplay* getDebugDisplay() { return mpDebugDisplay; };
 
 	inline GameState getState() { return mState; };
 	inline void setState(GameState state) { mState = state; };
