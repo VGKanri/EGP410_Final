@@ -217,23 +217,31 @@ bool GameApp::init()
 	mpSoundManager->init();
 	mpSoundManager->playSong(BATTLE_THEME_KEY);
 
-	//init pathfinders
-	for (int i = 0; i < MAP_SIZE; ++i)
-	{
-		mpPathfinder[i] = new AStar(mpGridGraph[i]);
-	}
-
 	mpUnitManager = new UnitManager();
 
 	//spawn player at the spawn player block of the grid
 	mpUnitManager->addUnit(mpSpriteManager->getSprite(PLAYER_SPRITE_ID), getGrid()->getULCornerOfSquare(getGrid()->getIndexOfPlayerSpawn()), Vector2D(0, 0), mPtr, mPtr, mPtr, 1.0f, "player", true);
 
+	//init enemy values
 	for (int i = 0; i < MAP_SIZE; ++i)
 	{
 		mpUnitManager->spawnEnemies(mpGrid[i]);
 	}
+
+	//init enemy pathfinders - kidna janky, sorry about that
+	std::vector<Enemy*> enemyList = mpUnitManager->getEnemyList();
+	for (int i = 0; i < MAP_SIZE; ++i)
+	{
+		for (auto enemy : enemyList)
+		{
+			if (enemy->getGrid() == mpGrid[i])
+			{
+				enemy->setPathfinder(mpGridGraph[i]);
+			}
+		}
+	}
 	
-	mpUnitManager->setEnemyActive(getGrid());
+	mpUnitManager->setEnemyActive(getGrid()); 
 	//mpUnitManager->addUnit(mpSpriteManager->getSprite(ENEMY_SPRITE_ID), Vector2D(100, 100), Vector2D(0, 0), mMaxVel, mPtr, mPtr, 1.0f, "enemy", false);
 	//mpUnitManager->addUnit(mpSpriteManager->getSprite(ENEMY_SPRITE_ID), Vector2D(400, 100), Vector2D(0, 0), mMaxVel, mPtr, mPtr, 1.0f, "enemy1", false);
 
@@ -245,8 +253,8 @@ bool GameApp::init()
 	mpHelpMenu->setAnimation(mpUnitManager->getPlayer()->getSideAnimation());
 
 	//debug display
-	PathfindingDebugContent* pContent = new PathfindingDebugContent( mpPathfinder[0] );
-	mpDebugDisplay = new DebugDisplay( Vector2D(0,12), pContent );
+	//PathfindingDebugContent* pContent = new PathfindingDebugContent( mpPathfinder[0] );
+	//mpDebugDisplay = new DebugDisplay( Vector2D(0,12), pContent );
 
 	mpMasterTimer->start();
 	return true;
@@ -278,14 +286,8 @@ void GameApp::cleanup()
 		mpGridGraph[i] = NULL;
 	}
 
-	for (int i = 0; i < MAP_SIZE; ++i)
-	{
-		delete mpPathfinder[i];
-		mpPathfinder[i] = NULL;
-	}
-
-	delete mpDebugDisplay;
-	mpDebugDisplay = NULL;
+	/*delete mpDebugDisplay;
+	mpDebugDisplay = NULL;*/
 
 	delete mpUnitManager;
 	mpUnitManager = NULL;
@@ -317,10 +319,6 @@ void GameApp::processLoop()
 	case GameState::PLAYING:
 		//copy to back buffer
 		mpGridVisualizer->draw(*pBackBuffer);
-#ifdef VISUALIZE_PATH
-		//show pathfinder visualizer
-		mpPathfinder[mCurrentRoom]->drawVisualization(mpGrid[mCurrentRoom], pBackBuffer);
-#endif
 		mpUnitManager->update(LOOP_TARGET_TIME / 1000.0f);
 		break;
 	case GameState::HELP_MENU:
@@ -333,7 +331,7 @@ void GameApp::processLoop()
 		break;
 	}
 	
-	mpDebugDisplay->draw(pBackBuffer);
+	//mpDebugDisplay->draw(pBackBuffer);
 
 	mpMessageManager->processMessagesForThisframe();
 

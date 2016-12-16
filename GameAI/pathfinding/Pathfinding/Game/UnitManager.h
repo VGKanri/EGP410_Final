@@ -3,6 +3,7 @@
 #include <Trackable.h>
 #include <Vector2D.h>
 #include <map>
+#include <vector>
 
 #include "KinematicUnit.h"
 #include "Player.h"
@@ -10,6 +11,7 @@
 
 class Sprite;
 class Grid;
+class GridGraph;
 
 //Maybe take this out?
 enum BehaviourType
@@ -32,6 +34,7 @@ public:
 
 	void spawnEnemies(Grid* pGrid);
 	void setEnemyActive(Grid* pGrid); //determines whether the enemy is in the current grid
+	std::vector<Enemy*> getEnemyList();
 
 	void addUnit(Sprite* sprite, Vector2D& pos, Vector2D& vel, std::shared_ptr<float> maxVel, std::shared_ptr<float> reactionRadius
 		, std::shared_ptr<float> maxRotational, float maxAccel, std::string id, bool isPlayer);

@@ -12,6 +12,7 @@ const int ENEMY_HEIGHT = 22;
 
 class Animation;
 class GraphicsBuffer;
+class GridGraph;
 
 enum class EnemyState
 {
@@ -69,7 +70,8 @@ public:
 	inline CURRENT_DIRECTION& getCurrentDirection() { return mDirection; };
 	inline void setPath(Path* path) { mpPath = path; };
 	inline void setGrid(Grid* grid) { mpCurrentGrid = grid; };
+	inline Grid* getGrid() { return mpCurrentGrid; };
 	inline AStar* getPathfinder() { return mpPathfinder; };
-	inline void setPathfinder(AStar* pathfinder) { mpPathfinder = pathfinder; };
+	inline void setPathfinder(Graph* graph) { delete mpPathfinder; mpPathfinder = new AStar(graph); };
 	inline bool getActive() { return mActive; };
 };

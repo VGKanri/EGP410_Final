@@ -58,11 +58,10 @@ public:
 	inline GameMessageManager* getMessageManager() { return mpMessageManager; };
 	inline SoundManager* getSoundManager() { return mpSoundManager; };
 	inline GridVisualizer* getGridVisualizer() { return mpGridVisualizer; };
-	inline GridPathfinder* getPathfinder() { return mpPathfinder[mCurrentRoom]; };
 	inline Grid* getGrid(int gridNum) { return mpGrid[gridNum]; };
 	inline Grid* getGrid() { return mpGrid[mCurrentRoom]; };
 	inline GridGraph* getGridGraph(int gridNum) { return mpGridGraph[gridNum]; };
-	inline GridGraph* getGridGraph() { return mpGridGraph[0]; };
+	inline GridGraph* getGridGraph() { return mpGridGraph[mCurrentRoom]; };
 	inline InputManager* getInputManager() { return mpInputManager; };
 	inline UnitManager* getUnitManager() { return mpUnitManager; };
 	inline MainMenu* getMainMenu() { return mpMainMenu; };
@@ -83,8 +82,6 @@ private:
 
 	DebugDisplay* mpDebugDisplay;
 	InputManager* mpInputManager;
-
-	GridPathfinder* mpPathfinder[MAP_SIZE];
 
 	UnitManager* mpUnitManager;
 

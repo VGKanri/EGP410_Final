@@ -126,7 +126,8 @@ void Enemy::update(float time)
 
 #ifdef VISUALIZE_PATH
 		//show pathfinder visualizer
-		//mpPathfinder->drawVisualization(mpCurrentGrid, gpGameApp->getGraphicsSystem()->getBackBuffer());
+		/*if (mActive)
+			mpPathfinder->drawVisualization(mpCurrentGrid, gpGameApp->getGraphicsSystem()->getBackBuffer());*/
 #endif
 
 

@@ -46,6 +46,22 @@ void UnitManager::spawnEnemies(Grid* pGrid)
 	}
 }
 
+std::vector<Enemy*> UnitManager::getEnemyList()
+{
+	std::vector<Enemy*> enemyList;
+
+	for (std::map<std::string, KinematicUnit*>::iterator i = mpUnitList->begin(); i != mpUnitList->end(); ++i)
+	{
+		//if the unit is not an enemy that isn't active, draw it.
+		if (i->first.substr(0, 5) == "Enemy")
+		{
+			enemyList.push_back(dynamic_cast<Enemy*>(i->second));
+		}
+	}
+
+	return enemyList;
+}
+
 void UnitManager::setEnemyActive(Grid* pGrid)
 {
 	std::stringstream ss;
