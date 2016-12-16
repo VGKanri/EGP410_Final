@@ -135,6 +135,7 @@ bool GameApp::init()
 	mpGraphicsBufferManager->loadBuffer(HELP_MENU_ID, "../Assets/Help_Menu.png");
 	mpGraphicsBufferManager->loadBuffer(CREDITS_ID, "../Assets/Credits_Menu.png");
 	mpGraphicsBufferManager->loadBuffer(CANDY_ID, "../Assets/candy.png");
+	mpGraphicsBufferManager->loadBuffer(LOSE_ID, "../Assets/losescreen.png");
 
 	//setup sprites
 	GraphicsBuffer* pBackGroundBuffer = mpGraphicsBufferManager->getBuffer(BACKGROUND_ID);
@@ -143,6 +144,7 @@ bool GameApp::init()
 	GraphicsBuffer* pMainMenuBuffer = mpGraphicsBufferManager->getBuffer(MAIN_MENU_ID);
 	GraphicsBuffer* pHelpMenuBuffer = mpGraphicsBufferManager->getBuffer(HELP_MENU_ID);
 	GraphicsBuffer* pCreditsBuffer = mpGraphicsBufferManager->getBuffer(CREDITS_ID);
+	GraphicsBuffer* pLoseScreenBuffer = mpGraphicsBufferManager->getBuffer(LOSE_ID);
 
 	if (pBackGroundBuffer != NULL)
 	{
@@ -172,6 +174,11 @@ bool GameApp::init()
 	if (pCreditsBuffer != NULL)
 	{
 		mpSpriteManager->createAndManageSprite(CREDITS_ID, pCreditsBuffer, 0, 0, pCreditsBuffer->getWidth(), pCreditsBuffer->getHeight());
+	}
+
+	if (pLoseScreenBuffer != NULL)
+	{
+		mpSpriteManager->createAndManageSprite(LOSE_ID, pLoseScreenBuffer, 0, 0, pLoseScreenBuffer->getWidth(), pLoseScreenBuffer->getHeight());
 	}
 
 	//load managers
@@ -327,6 +334,8 @@ void GameApp::processLoop()
 		mpSpriteManager->getSprite(CREDITS_ID)->draw(*pBackBuffer, 0, 0, 0.0f);
 		mpHelpMenu->update(LOOP_TARGET_TIME / 1000.0f);
 		break;
+	case GameState::END:
+		mpSpriteManager->getSprite(LOSE_ID)->draw(*pBackBuffer, 0, 0, 0.0f);
 	}
 	
 	mpMessageManager->processMessagesForThisframe();

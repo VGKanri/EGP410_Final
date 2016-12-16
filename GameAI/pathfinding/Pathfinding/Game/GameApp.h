@@ -37,7 +37,8 @@ enum GameState
 	MAIN_MENU,
 	PLAYING,
 	HELP_MENU,
-	CREDITS_MENU
+	CREDITS_MENU,
+	END
 };
 
 class GameApp: public Game

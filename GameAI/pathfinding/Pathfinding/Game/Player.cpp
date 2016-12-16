@@ -338,6 +338,7 @@ void Player::checkEnemyCollision()
 			else
 			{
 				//kill player
+				gpGameApp->setState(END); //messy but we're out of time
 			}
 		}
 	}

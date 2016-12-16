@@ -36,6 +36,7 @@ const IDType MAIN_MENU_ID = 7;
 const IDType HELP_MENU_ID = 8;
 const IDType CREDITS_ID = 9;
 const IDType CANDY_ID = 10;
+const IDType LOSE_ID = 11;
 
 class Game:public Trackable
 {

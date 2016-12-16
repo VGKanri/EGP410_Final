@@ -19,12 +19,15 @@ public:
 	~DebugDisplay();
 
 	void draw( GraphicsBuffer* pBuffer );
+	void drawFinal(GraphicsBuffer* pBuffer);
 
 	void coinGot();
 	void enemyKilled();
 
 private:
 	ALLEGRO_FONT* mpFont;
+	ALLEGRO_FONT* mpFinalFont;
 	Vector2D mPos;
+	Vector2D mFinalPos;
 	int mScore;
 };
