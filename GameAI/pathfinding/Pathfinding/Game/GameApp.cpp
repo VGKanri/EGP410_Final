@@ -242,9 +242,6 @@ bool GameApp::init()
 	}
 	
 	mpUnitManager->setEnemyActive(getGrid()); 
-	//mpUnitManager->addUnit(mpSpriteManager->getSprite(ENEMY_SPRITE_ID), Vector2D(100, 100), Vector2D(0, 0), mMaxVel, mPtr, mPtr, 1.0f, "enemy", false);
-	//mpUnitManager->addUnit(mpSpriteManager->getSprite(ENEMY_SPRITE_ID), Vector2D(400, 100), Vector2D(0, 0), mMaxVel, mPtr, mPtr, 1.0f, "enemy1", false);
-
 
 	mpMainMenu->setSprite(mpSpriteManager->getSprite(PLAYER_SPRITE_ID));
 	mpMainMenu->setAnimation(mpUnitManager->getPlayer()->getSideAnimation());
@@ -254,7 +251,7 @@ bool GameApp::init()
 
 	//debug display
 	//PathfindingDebugContent* pContent = new PathfindingDebugContent( mpPathfinder[0] );
-	//mpDebugDisplay = new DebugDisplay( Vector2D(0,12), pContent );
+	mpDebugDisplay = new DebugDisplay( Vector2D(0,12));
 
 	mpMasterTimer->start();
 	return true;
@@ -286,8 +283,8 @@ void GameApp::cleanup()
 		mpGridGraph[i] = NULL;
 	}
 
-	/*delete mpDebugDisplay;
-	mpDebugDisplay = NULL;*/
+	delete mpDebugDisplay;
+	mpDebugDisplay = NULL;
 
 	delete mpUnitManager;
 	mpUnitManager = NULL;
@@ -319,6 +316,7 @@ void GameApp::processLoop()
 	case GameState::PLAYING:
 		//copy to back buffer
 		mpGridVisualizer->draw(*pBackBuffer);
+		mpDebugDisplay->draw(pBackBuffer);
 		mpUnitManager->update(LOOP_TARGET_TIME / 1000.0f);
 		break;
 	case GameState::HELP_MENU:
@@ -331,8 +329,6 @@ void GameApp::processLoop()
 		break;
 	}
 	
-	//mpDebugDisplay->draw(pBackBuffer);
-
 	mpMessageManager->processMessagesForThisframe();
 
 	mpInputManager->update();

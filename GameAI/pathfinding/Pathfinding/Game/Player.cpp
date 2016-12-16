@@ -1,5 +1,6 @@
 #include "Player.h"
 #include "Enemy.h"
+#include "UnitManager.h"
 #include "Sprite.h"
 #include "Animation.h"
 #include "GraphicsBuffer.h"
@@ -14,6 +15,7 @@
 #include "CandyPickUpMessage.h"
 #include "ChangeRoomMessage.h"
 #include "PowerUpOverMessage.h"
+#include "SpawnEnemyMessage.h"
 #include "GameMessageManager.h"
 
 Player::Player(Sprite *pSprite, const Vector2D position, float orientation, const Vector2D &velocity, float rotationVel, std::shared_ptr<float> maxVelocity
@@ -315,7 +317,7 @@ int Player::checkDoorCollision()
 
 void Player::checkEnemyCollision()
 {
-	std::vector<Enemy*> enemyList;
+	std::vector<Enemy*> enemyList = gpGameApp->getUnitManager()->getEnemyList();
 
 	for (Enemy* enemy : enemyList)
 	{
@@ -324,6 +326,10 @@ void Player::checkEnemyCollision()
 			if (mAlmightyCandy)
 			{
 				//kill enemies
+				enemy->setDead(true);
+
+				GameMessage* pMessage = new SpawnEnemyMessage(enemy);
+				gpGameApp->getMessageManager()->addMessage(pMessage, 10000);
 			}
 			else
 			{

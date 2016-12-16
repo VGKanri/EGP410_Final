@@ -189,6 +189,9 @@
     <ClInclude Include="PowerUpOverMessage.h">
       <Filter>Header Files\Messages</Filter>
     </ClInclude>
+    <ClInclude Include="SpawnEnemyMessage.h">
+      <Filter>Header Files\Messages</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -300,6 +303,9 @@
       <Filter>Source Files\Messages</Filter>
     </ClCompile>
     <ClCompile Include="PowerUpOverMessage.cpp">
+      <Filter>Source Files\Messages</Filter>
+    </ClCompile>
+    <ClCompile Include="SpawnEnemyMessage.cpp">
       <Filter>Source Files\Messages</Filter>
     </ClCompile>
   </ItemGroup>

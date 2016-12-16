@@ -101,7 +101,7 @@ void UnitManager::draw()
 	for (std::map<std::string, KinematicUnit*>::iterator i = mpUnitList->begin(); i != mpUnitList->end(); ++i)
 	{
 		//if the unit is not an enemy that isn't active, draw it.
-		if (!(i->first.substr(0, 5) == "Enemy" && !dynamic_cast<Enemy*>(i->second)->getActive()))
+		if (!(i->first.substr(0, 5) == "Enemy" && (!dynamic_cast<Enemy*>(i->second)->getActive() || dynamic_cast<Enemy*>(i->second)->getDead())))
 		{
 			i->second->draw(gpGame->getGraphicsSystem()->getBackBuffer());
 		}		
@@ -112,7 +112,11 @@ void UnitManager::update(float timePassed)
 {
 	for (std::map<std::string, KinematicUnit*>::iterator i = mpUnitList->begin(); i != mpUnitList->end(); ++i)
 	{
-		i->second->update(timePassed);
+		//if the unit is not an enemy that is dead, update it
+		if ((i->first.substr(0, 5) == "Enemy" && dynamic_cast<Enemy*>(i->second)->getDead()) == false)
+		{
+			i->second->update(timePassed);
+		}		
 	}
 	draw();
 }

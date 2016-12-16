@@ -3,37 +3,45 @@
 #include "GraphicsBuffer.h"
 #include "GridPathfinder.h"
 #include "DebugContent.h"
+#include <sstream>
 #include "PathfindingDebugContent.h"
 
 using namespace std;
 
-DebugDisplay::DebugDisplay( const Vector2D& pos, PathfindingDebugContent* pContent )
+DebugDisplay::DebugDisplay( const Vector2D& pos )
 	:mPos(pos)
-	,mpContent(pContent)
 {
 	//actually load the font
-	mpFont = al_load_ttf_font( "cour.ttf", 12, 0 );
+	mpFont = al_load_ttf_font( "cour.ttf", 24, 0 );
 	if( mpFont == NULL )
 	{
 		printf( "ttf font file not loaded properly!\n" ); 
 		assert(0);
 	}
+
+	mScore = 0;
 }
 
 DebugDisplay::~DebugDisplay()
 {
 	al_destroy_font(mpFont);
-	delete mpContent;
 }
 
 void DebugDisplay::draw( GraphicsBuffer* pBuffer )
 {
-	string toDisplay = mpContent->getDebugString();
-	al_draw_text( mpFont, al_map_rgb( 255, 255, 255 ), mPos.getX(), mPos.getY(), ALLEGRO_ALIGN_LEFT, toDisplay.c_str() );
+	std::stringstream ss;
+	ss << "Score: " << mScore;
+
+	al_draw_text( mpFont, al_map_rgb( 255, 255, 255 ), mPos.getX(), mPos.getY(), ALLEGRO_ALIGN_LEFT, ss.str().c_str() );
 
 }
 
-void DebugDisplay::changePathfinderData(GridPathfinder* pPathfinder)
+void DebugDisplay::coinGot()
 {
-	mpContent->setPathfinder(pPathfinder);
+	mScore += COIN_SCORE;
+}
+
+void DebugDisplay::enemyKilled()
+{
+	mScore += ENEMY_SCORE;
 }

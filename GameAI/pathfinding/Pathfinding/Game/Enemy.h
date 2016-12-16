@@ -61,6 +61,8 @@ private:
 	bool mDead; //determines whether unit is dead or not
 	bool mArrived; //determines whether or not the unit has made it to the center of the next tile
 
+	Vector2D mSpawn;
+
 public:
 	Enemy(Sprite* pSprite, const Vector2D position, float orientation, const Vector2D& velocity, float rotationVel, std::shared_ptr<float> maxVelocity, std::shared_ptr<float> reactionRadius, std::shared_ptr<float> maxRotational, float maxAcceleration = 1.0f);
 	~Enemy();
@@ -70,6 +72,7 @@ public:
 	void calcCurrentNode();
 
 	void updateState();
+	void respawn();
 	void isActive(Grid* grid);
 
 	bool checkWallCollision();
@@ -83,5 +86,6 @@ public:
 	inline Hitbox getCollider() const { return mCollider; };
 	inline void setPathfinder(Graph* graph) { delete mpPathfinder; mpPathfinder = new AStar(graph); };
 	inline bool getActive() const { return mActive; };
+	inline void setDead(bool dead) { mDead = dead; };
 	inline bool getDead() const { return mDead; };
 };

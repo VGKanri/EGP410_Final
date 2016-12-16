@@ -116,6 +116,7 @@
     <ClInclude Include="PathToMessage.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PowerUpOverMessage.h" />
+    <ClInclude Include="SpawnEnemyMessage.h" />
     <ClInclude Include="Steering.h" />
     <ClInclude Include="UnitManager.h" />
   </ItemGroup>
@@ -155,6 +156,7 @@
     <ClCompile Include="PathToMessage.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PowerUpOverMessage.cpp" />
+    <ClCompile Include="SpawnEnemyMessage.cpp" />
     <ClCompile Include="Steering.cpp" />
     <ClCompile Include="UnitManager.cpp" />
   </ItemGroup>

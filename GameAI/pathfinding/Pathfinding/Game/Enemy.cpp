@@ -25,6 +25,8 @@ Enemy::Enemy(Sprite *pSprite, const Vector2D position, float orientation, const 
 	setMaxRotational(maxRotational);
 	setMaxAcceleration(maxAcceleration);
 
+	mSpawn = position;
+
 	mCollider = Hitbox(Vector2D(mPosition.getX() - (ENEMY_WIDTH - 16), mPosition.getY()- (ENEMY_HEIGHT - 16)), ENEMY_WIDTH, ENEMY_HEIGHT);
 
 	//A temporary goal, you're going to have to figure out how to get the position of the node
@@ -188,6 +190,14 @@ void Enemy::updateState()
 		mFlipH = false;
 		break;
 	}
+}
+
+void Enemy::respawn()
+{
+	mDead = false;
+	mArrived = true;
+	mPosition = mSpawn;
+	mCollider = Hitbox(Vector2D(mSpawn.getX() - (ENEMY_WIDTH - 16), mSpawn.getY() - (ENEMY_HEIGHT - 16)), ENEMY_WIDTH, ENEMY_HEIGHT);
 }
 
 void Enemy::isActive(Grid* grid)

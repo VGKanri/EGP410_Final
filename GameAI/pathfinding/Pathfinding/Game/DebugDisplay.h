@@ -9,19 +9,22 @@ class PathfindingDebugContent;
 class GraphicsBuffer;
 class GridPathfinder;
 
+const int COIN_SCORE = 10;
+const int ENEMY_SCORE = 100;
+
 class DebugDisplay:public Trackable
 {
 public:
-	DebugDisplay( const Vector2D& pos, PathfindingDebugContent* pContent );
+	DebugDisplay( const Vector2D& pos);
 	~DebugDisplay();
 
 	void draw( GraphicsBuffer* pBuffer );
 
-	void changePathfinderData(GridPathfinder* pPathfinder);
+	void coinGot();
+	void enemyKilled();
 
 private:
 	ALLEGRO_FONT* mpFont;
-	PathfindingDebugContent* mpContent;
 	Vector2D mPos;
-
+	int mScore;
 };
