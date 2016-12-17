@@ -12,6 +12,8 @@
 #include "PathToMessage.h"
 #include "GraphicsSystem.h"
 #include "Connection.h"
+#include "EnemyStateMachine.h"
+#include "FiniteStateMachine.h"
 
 Enemy::Enemy(Sprite *pSprite, const Vector2D position, float orientation, const Vector2D &velocity, float rotationVel, std::shared_ptr<float> maxVelocity
 	, std::shared_ptr<float> reactionRadius, std::shared_ptr<float> maxRotational, float maxAcceleration)
@@ -57,6 +59,36 @@ Enemy::Enemy(Sprite *pSprite, const Vector2D position, float orientation, const 
 
 	srand(time(NULL));
 	mPlayerNearby = false;
+
+	mpStateMachine = new EnemyStateMachine();
+	
+	//Creating the states for the state machine
+	mpWanderState = new Wander(0);
+	mpChaseState = new Chase(1);
+	mpFleeState = new Flee(2);
+
+	//Creating transitions
+	mpToWanderTransition = new StateTransition(WANDER_TRANSITION, 0);
+	mpToFleeTransition = new StateTransition(FLEE_TRANSITION, 2);
+	mpToChaseTransition = new StateTransition(CHASE_TRANSITION, 1);
+
+	//Adding transitions
+	mpWanderState->addTransition(mpToFleeTransition);
+	mpWanderState->addTransition(mpToChaseTransition);
+
+	mpChaseState->addTransition(mpToWanderTransition);
+	mpChaseState->addTransition(mpToFleeTransition);
+
+	mpFleeState->addTransition(mpToWanderTransition);
+	mpFleeState->addTransition(mpToChaseTransition);
+
+	//Adding states to the state machine
+	mpStateMachine->addState(mpWanderState);
+	mpStateMachine->addState(mpFleeState);
+	mpStateMachine->addState(mpChaseState);
+
+	//Setting the initial states
+	mpStateMachine->setInitialStateID(1);
 }
 
 Enemy::~Enemy()
@@ -70,6 +102,16 @@ Enemy::~Enemy()
 	delete mpSpriteSheet;
 
 	delete mpPathfinder;
+	delete mpStateMachine;
+	
+	delete mpWanderState;
+	delete mpChaseState;
+	delete mpFleeState;
+
+	delete mpToWanderTransition;
+	delete mpToChaseTransition;
+	delete mpToFleeTransition;
+	
 }
 
 void Enemy::update(float time)
@@ -84,6 +126,10 @@ void Enemy::update(float time)
 		mpSprite = mpCurrentAnimation->getCurrentSprite();
 
 		calcCurrentNode();
+
+		Enemy* tmpEnemy = this;
+
+		mpStateMachine->update(tmpEnemy);
 
 		//Pathfinding code
 		Vector2D playerPos = gpGameApp->getUnitManager()->getPlayer()->getPosition();
@@ -206,11 +252,10 @@ void Enemy::update(float time)
 	//Hitbox / Hitcircle Stuff goes here
 
 		//Check if the player is in the radius
-		mPlayerNearby = getInRadius();
+		/*mPlayerNearby = getInRadius();
 		if (mPlayerNearby && !gpGameApp->getUnitManager()->getPlayer()->getIsCandied())
 		{
 			mCurrentSteering = SteeringState::CHASE;
-			
 		}
 		else if (mPlayerNearby && gpGameApp->getUnitManager()->getPlayer()->getIsCandied())
 		{
@@ -220,6 +265,7 @@ void Enemy::update(float time)
 		{
 			mCurrentSteering = SteeringState::WANDER;
 		}
+		*/
 		//update enemy state
 		updateState();
 	}

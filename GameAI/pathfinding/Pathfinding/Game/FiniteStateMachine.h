@@ -5,6 +5,7 @@
 #include <map>
 
 class StateTransition;
+class Enemy;
 
 typedef int SM_idType;
 
@@ -25,12 +26,13 @@ struct State
 	inline const SM_idType& getID() const { return mID; };
 
 	virtual void onEntrance(Enemy* me) = 0;
-	virtual void onExit() = 0;
+	virtual void onExit(Enemy* me) = 0;
 
-	virtual StateTransition* update() = 0;
+	virtual StateTransition* update(Enemy* me) = 0;
+	std::map<TransitionType, StateTransition*> mTransitions;
+
 protected: 
 	SM_idType mID;
-	std::map<TransitionType, StateTransition*> mTransitions;
 };
 
 class FiniteStateMachine : public Trackable
@@ -48,7 +50,7 @@ public:
 	void addState(State* pState);
 	void setInitialStateID(const SM_idType& id) { mInitialStateID = id; };
 
-	void update();
+	void update(Enemy* me);
 	void start();
 };
 

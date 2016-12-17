@@ -4,6 +4,8 @@
 #include "Hitbox.h"
 #include "AStar.h"
 #include "ArriveSteering.h"
+#include "EnemyStateMachine.h"
+#include "FiniteStateMachine.h"
 
 const std::string ENEMY_SHEET_PATH = "../Assets/enemySpriteSheet.png";
 
@@ -13,6 +15,9 @@ const int ENEMY_HEIGHT = 22;
 class Animation;
 class GraphicsBuffer;
 class GridGraph;
+class EnemyStateMachine;
+struct State;
+class StateTransition;
 
 enum class EnemyState
 {
@@ -66,6 +71,19 @@ private:
 
 	SteeringState mCurrentSteering;
 
+	EnemyStateMachine* mpStateMachine;
+
+	State* mpWanderState;
+	State* mpChaseState;
+	State* mpFleeState;
+
+	//Creating transitions
+	
+	StateTransition* mpToWanderTransition;
+	StateTransition* mpToFleeTransition;
+	StateTransition* mpToChaseTransition;
+	
+
 public:
 	Enemy(Sprite* pSprite, const Vector2D position, float orientation, const Vector2D& velocity, float rotationVel, std::shared_ptr<float> maxVelocity, std::shared_ptr<float> reactionRadius, std::shared_ptr<float> maxRotational, float maxAcceleration = 1.0f);
 	~Enemy();
@@ -93,4 +111,5 @@ public:
 	inline bool getDead() const { return mDead; };
 	inline SteeringState getCurrentSteering() const { return mCurrentSteering; };
 	inline void setCurrentSteering(SteeringState state) { mCurrentSteering = state; };
+	inline EnemyStateMachine* getStateMachine() { return mpStateMachine; };
 };
