@@ -152,6 +152,14 @@ void InputManager::update()
 					gpGameApp->getMessageManager()->addMessage(pMessage, 0);
 				}
 				break;
+
+			case GameState::END:
+				if (mEvent.keyboard.keycode == ALLEGRO_KEY_ESCAPE)
+				{
+					GameMessage* pMessage = new ExitGameMessage();
+					gpGameApp->getMessageManager()->addMessage(pMessage, 0);
+				}
+				break;
 			}
 		}
 	}
