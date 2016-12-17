@@ -3,10 +3,15 @@
 #include "FiniteStateMachine.h"
 #include "GameApp.h"
 
+/*
+Class for the enemy state machine, derived from the state machine class
+*/
 
 class UnitManager;
 class Enemy;
 
+
+//Struct for the chase state
 struct Chase : public State
 {
 	Chase(const SM_idType& id) :State(id) {};

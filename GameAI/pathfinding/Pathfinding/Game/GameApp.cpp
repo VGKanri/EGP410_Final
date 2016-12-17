@@ -336,6 +336,7 @@ void GameApp::processLoop()
 		break;
 	case GameState::END:
 		mpSpriteManager->getSprite(LOSE_ID)->draw(*pBackBuffer, 0, 0, 0.0f);
+		mpDebugDisplay->drawFinal(pBackBuffer);
 	}
 	
 	mpMessageManager->processMessagesForThisframe();

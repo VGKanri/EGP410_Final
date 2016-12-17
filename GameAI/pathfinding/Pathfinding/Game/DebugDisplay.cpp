@@ -29,7 +29,7 @@ DebugDisplay::DebugDisplay( const Vector2D& pos )
 	}
 
 	mScore = 0;
-	mFinalPos = Vector2D(400, 500);
+	mFinalPos = Vector2D(225, 400);
 }
 
 DebugDisplay::~DebugDisplay()
