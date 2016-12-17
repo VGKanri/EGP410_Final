@@ -328,6 +328,7 @@ void Enemy::respawn()
 	mArrived = true;
 	mPosition = mSpawn;
 	mCollider = Hitbox(Vector2D(mSpawn.getX() - (ENEMY_WIDTH - 16), mSpawn.getY() - (ENEMY_HEIGHT - 16)), ENEMY_WIDTH, ENEMY_HEIGHT);
+	mCurrentSteering = SteeringState::WANDER;
 }
 
 void Enemy::isActive(Grid* grid)
