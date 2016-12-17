@@ -322,7 +322,7 @@ void Player::checkEnemyCollision()
 
 	for (Enemy* enemy : enemyList)
 	{
-		if (mCollider.checkCollision(enemy->getCollider()))
+		if (enemy->getActive() && mCollider.checkCollision(enemy->getCollider()))
 		{
 			if (mAlmightyCandy)
 			{
@@ -335,7 +335,7 @@ void Player::checkEnemyCollision()
 				GameMessage* pMessage = new SpawnEnemyMessage(enemy);
 				gpGameApp->getMessageManager()->addMessage(pMessage, 10000);		
 			}
-			else
+			else if (enemy->getDead() == false)
 			{
 				//kill player
 				gpGameApp->setState(END); //messy but we're out of time

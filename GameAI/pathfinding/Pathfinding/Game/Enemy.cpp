@@ -93,7 +93,7 @@ void Enemy::update(float time)
 			if (mArrived)
 			{
 				std::vector<Connection*> tmpVector = gpGameApp->getGridGraph()->getConnections(*mpCurrentNode);
-				int i = rand() % 3 + 0;
+				int i = rand() % tmpVector.size() + 0;
 				Node* tmpNode = tmpVector.at(i)->getToNode();
 
 				mpPath = new Path(mpPathfinder->findPath(tmpNode, mpCurrentNode));
@@ -128,7 +128,26 @@ void Enemy::update(float time)
 
 		else if (mCurrentSteering == SteeringState::FLEE)
 		{
+			if (mArrived)
+			{
+				mpPath = new Path(mpPathfinder->findPath(gpGameApp->getGridGraph()->getNode(gpGameApp->getGrid()->getSquareIndexFromPixelXY(mSpawn.getX(), mSpawn.getY())), mpCurrentNode));
 
+				mpPath->getAndRemoveNextNode();
+				if (mpGoalNode != gpGameApp->getGridGraph()->getNode(gpGameApp->getGrid()->getSquareIndexFromPixelXY(mSpawn.getX(), mSpawn.getY())))
+				{
+					mpGoalNode = mpPath->getAndRemoveNextNode();
+				}
+				else
+				{
+					mpGoalNode = mpGoalNode;
+				}
+
+				if (mpCurrentNode->getId() != gpGameApp->getUnitManager()->getPlayer()->getCurrentNode()->getId())
+					dynamic_cast<ArriveSteering*>(mpCurrentSteering)->setTarget(gpGameApp->getGrid()->getULCornerOfSquare(mpGoalNode->getId()));
+
+
+				mArrived = false;
+			}
 		}
 		/*
 		if (mArrived)
@@ -188,12 +207,16 @@ void Enemy::update(float time)
 
 		//Check if the player is in the radius
 		mPlayerNearby = getInRadius();
-		if (mPlayerNearby)
+		if (mPlayerNearby && !gpGameApp->getUnitManager()->getPlayer()->getIsCandied())
 		{
 			mCurrentSteering = SteeringState::CHASE;
 			
 		}
-		else if (!mPlayerNearby)
+		else if (mPlayerNearby && gpGameApp->getUnitManager()->getPlayer()->getIsCandied())
+		{
+			mCurrentSteering = SteeringState::FLEE;
+		}
+		else if (!mPlayerNearby && gpGameApp->getUnitManager()->getPlayer()->getIsCandied())
 		{
 			mCurrentSteering = SteeringState::WANDER;
 		}
